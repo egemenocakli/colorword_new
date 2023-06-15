@@ -1,0 +1,41 @@
+import 'package:colorword_new/home/home_screen_view.dart';
+import 'package:flutter/material.dart';
+
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      
+      body: Center(
+        child: Column(children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 2,
+          ),
+          Text("ColorWord", style: Theme.of(context).textTheme.headlineLarge),
+          const Placeholder(
+            fallbackHeight: 200,
+            fallbackWidth: 300,
+          ),
+          const Text("Merhaba"),
+          const Text("Devam etmek için lütfen giriş yapınız."),
+          ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.orange)),
+              onPressed: () {
+                //TODO:AUTOROUTE
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomeScreenView()));
+              },
+              child: const Text("Google ile giriş"))
+        ]),
+      ),
+    );
+  }
+}
