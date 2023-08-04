@@ -37,6 +37,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_route: ^7.4.0
 
+  #State
+  provider: ^6.0.5
+
+  #Backend
+  google_sign_in: ^6.1.4
+  firebase_auth: ^4.7.2
+  firebase_core: ^2.15.0
+  cloud_firestore: ^4.8.4
+  firebase_crashlytics: ^3.3.4
+  firebase_analytics: ^10.4.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

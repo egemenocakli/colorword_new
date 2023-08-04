@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:colorword_new/home/home_screen_view.dart';
-import 'package:colorword_new/login/login_view.dart';
+import 'package:colorword_new/pages/login/login_view.dart';
+import 'package:colorword_new/pages/home/home_screen_view.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(
