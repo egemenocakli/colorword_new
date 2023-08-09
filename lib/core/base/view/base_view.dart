@@ -11,10 +11,10 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
         super(key: key);
 
   @override
-  _BaseViewState createState() => _BaseViewState<T>();
+  BaseViewState createState() => BaseViewState<T>();
 }
 
-class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
+class BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>.value(

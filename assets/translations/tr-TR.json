@@ -1,0 +1,13 @@
+{
+    "login": {
+        "loginMessage": "Merhaba \n Devam etmek için lütfen giriş yapınız.",
+        "loginWithGoogle": "Google ile giriş",
+        "tr": "Türkçe",
+        "en": "İngilizce"
+    },
+    "mainPage": {
+        "exitToolTip": "Çıkış",
+        "menuIconToolTip": "Menü Butonu",
+        "words": "İngilizce Kelimeler"
+    }
+}

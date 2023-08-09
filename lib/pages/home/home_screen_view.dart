@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
+import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
+import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/pages/home/home_screen_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -25,70 +27,36 @@ Widget _buildScreen(BuildContext context, HomeScreenViewModel viewModel) {
   return Scaffold(
     appBar: AppBar(
       title: const Text(
-        "ColorWord",
-
-        ///TODO: string değerler başka yerden
+        AppConstants.appName,
       ),
       centerTitle: true,
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.exit_to_app_outlined, size: 32),
-          tooltip: 'Exit',
+          icon: Icon(Icons.exit_to_app_outlined, size: 32, color: ColorConstants.iconColor),
+          tooltip: LocaleKeys.mainPage_exitToolTip.locale,
           onPressed: () {
             viewModel.signOutFromHome();
             context.router.pop();
           },
         ),
       ],
-      backgroundColor: ColorConstants.appBarColor,
+      flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: ColorConstants.appBarColors,
+      ))),
       leading: IconButton(
-        icon: const Icon(Icons.menu),
-        tooltip: 'Menu Icon',
+        icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: 30),
+        tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
         onPressed: () {},
       ),
     ),
     backgroundColor: ColorConstants.backgroundColor,
     body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      const Text("English Words"),
-      TextButton(
-          onPressed: () {
-            viewModel.signOutFromHome();
-            context.router.pop();
-          },
-          child: const Text("Cıkıs"))
+      Text(LocaleKeys.mainPage_words.locale),
     ])),
   );
 }
-
-
-
-
-
-
-
-
-
-
-/*
-@RoutePage()
-class HomeScreenView extends StatelessWidget {
-  const HomeScreenView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF725A7A),
-      body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const Text("English Words"),
-        TextButton(
-            onPressed: () {
-              context.router.pop();
-            },
-            child: const Text("Cıkıs"))
-      ])),
-    );
-  }
-}
-*/

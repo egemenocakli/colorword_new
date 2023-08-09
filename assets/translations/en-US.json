@@ -1,0 +1,13 @@
+{
+    "login": {
+        "loginMessage": "Hello \n Please login for continue.",
+        "loginWithGoogle": "Login With Google",
+        "tr": "Türkçe",
+        "en": "İngilizce"
+    },
+    "mainPage": {
+        "exitToolTip": "Exit",
+        "menuIconToolTip": "Menu Icon",
+        "words": "English Words"
+    }
+}

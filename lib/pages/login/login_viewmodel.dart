@@ -14,6 +14,15 @@ class LoginViewModel extends BaseViewModel {
     print("giriş $sonuc");
     return sonuc;
   }
+
+/*
+  int get rastgelebirsayi => _rastgelebirsayi;
+
+  set rastgelesayiyiarttir(int value) {
+    _rastgelebirsayi = value;
+    reloadState();
+  }
+*/
 /*
   late final GoogleSignInAccount? _googleUser;
   
