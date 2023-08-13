@@ -26,7 +26,7 @@ class LoginView extends StatefulWidget {
 }
 
 ///TODO: Sayfa düzenlenecek gösterim sadece taslaktır
-///TODO: Verilen değerler ekrana göre değişebilen esnek yapıya dönüştürülecek.
+///TODO: Verilen size değerleri ekrana göre değişebilen esnek yapıya dönüştürülecek.
 
 Widget _buildScreen(BuildContext context, LoginViewModel viewModel) {
   return Scaffold(

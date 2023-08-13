@@ -41,12 +41,14 @@ Widget _buildScreen(BuildContext context, HomeScreenViewModel viewModel) {
         ),
       ],
       flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: ColorConstants.appBarColors,
-      ))),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: ColorConstants.appBarColors,
+          ),
+        ),
+      ),
       leading: IconButton(
         icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: 30),
         tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
@@ -55,8 +57,13 @@ Widget _buildScreen(BuildContext context, HomeScreenViewModel viewModel) {
     ),
     backgroundColor: ColorConstants.backgroundColor,
     body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text(LocaleKeys.mainPage_words.locale),
-    ])),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(LocaleKeys.mainPage_words.locale),
+        TextButton(
+          onPressed: () => throw Exception(),
+          child: const Text("Throw Test Exception"),
+        ),
+      ]),
+    ),
   );
 }

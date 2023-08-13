@@ -18,6 +18,8 @@ class AuthenticationFirebaseService {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      print("giriş yapan mail: ${googleUser!.email}");
+      print("giriş yapan adı: ${googleUser.displayName}");
 
       // Once signed in, return the UserCredential
       await FirebaseAuth.instance.signInWithCredential(credential);

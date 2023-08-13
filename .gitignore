@@ -137,3 +137,8 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 !.vscode/settings.json
 android/local.properties
+.crashlytics/dump_syms.exe
+.crashlytics/libgcc_s_seh-1.dll
+.crashlytics/libssp-0.dll
+.crashlytics/libwinpthread-1.dll
+.crashlytics/libstdc++-6.dll
