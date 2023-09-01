@@ -3,6 +3,7 @@ import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
+import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/pages/home/home_screen_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BaseView<HomeScreenViewModel>(vmBuilder: (_) => HomeScreenViewModel(), builder: _buildScreen),
+      body:
+          BaseView<HomeScreenViewModel>(viewModelBuilder: (_) => locator<HomeScreenViewModel>(), builder: _buildScreen),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/language_manager.dart';
 import 'package:colorword_new/core/navigator/app_router.dart';
 import 'package:colorword_new/firebase_options.dart';
-import 'package:colorword_new/pages/login/login_viewmodel.dart';
+import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -10,7 +10,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'locator.dart';
+
 Future<void> main() async {
+  setupLocator();
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   initFirebaseServices();
@@ -43,7 +47,7 @@ MultiProvider buildApp() {
 }
 
 get providers => [
-      ChangeNotifierProvider<LoginViewModel>(create: (context) => LoginViewModel()),
+      ChangeNotifierProvider<AuthViewModel>(create: (context) => AuthViewModel()),
     ];
 
 class MyApp extends StatelessWidget {

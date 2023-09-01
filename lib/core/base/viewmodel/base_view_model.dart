@@ -1,12 +1,20 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import '../../utility/view_helper.dart';
 
-abstract class BaseViewModel extends ChangeNotifier {
-  bool _isLoading = false;
-  bool _isDisposed = false;
-  bool _isInitialized = false;
+enum ViewState {
+  idle,
+  loading,
+  loaded,
+  error,
+  disposed,
+}
 
+abstract class BaseViewModel extends ChangeNotifier with ViewHelper {
+  late ViewState _viewState;
   FutureOr<void> _initState;
+  bool refreshIndicatorRunning = false;
+  Future<void> refreshData();
 
   BaseViewModel() {
     load();
@@ -15,33 +23,28 @@ abstract class BaseViewModel extends ChangeNotifier {
   FutureOr<void> init();
 
   void load() async {
-    isLoading = true;
+    viewState = ViewState.loading;
     _initState = init();
     await _initState;
-    _isInitialized = true;
-    isLoading = false;
+    viewState = ViewState.loaded;
   }
 
-  //Getters
-  bool get isLoading => _isLoading;
-  bool get isInitialized => _isInitialized;
-  bool get isDisposed => _isDisposed;
+  ViewState get viewState => _viewState;
 
-  //Setters
-  set isLoading(bool value) {
-    _isLoading = value;
+  set viewState(ViewState value) {
+    _viewState = value;
     scheduleMicrotask(() {
-      if (!_isDisposed) notifyListeners();
+      notifyListeners();
     });
-  }
+  } //Setters
 
   void reloadState() {
-    if (!isLoading) notifyListeners();
+    if (viewState != ViewState.loading) notifyListeners();
   }
 
   @override
   void dispose() {
-    _isDisposed = true;
+    viewState = ViewState.disposed;
     super.dispose();
   }
 }

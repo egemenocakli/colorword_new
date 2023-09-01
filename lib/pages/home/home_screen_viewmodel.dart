@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
-import 'package:colorword_new/core/services/auth/auth_firebase_service.dart';
+import 'package:colorword_new/pages/auth/service/auth_firebase_service.dart';
 
 class HomeScreenViewModel extends BaseViewModel {
   @override
@@ -11,8 +11,14 @@ class HomeScreenViewModel extends BaseViewModel {
   //setter
 
   Future<void> signOutFromHome() async {
-    AuthenticationFirebaseService authenticationFirebaseService = AuthenticationFirebaseService();
+    FirebaseAuthService authenticationFirebaseService = FirebaseAuthService();
 
     authenticationFirebaseService.signOut();
+  }
+
+  @override
+  Future<void> refreshData() {
+    // TODO: implement refreshData
+    throw UnimplementedError();
   }
 }

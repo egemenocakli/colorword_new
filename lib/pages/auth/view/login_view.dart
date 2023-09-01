@@ -4,18 +4,10 @@ import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/core/navigator/app_router.dart';
-import 'package:colorword_new/pages/login/login_viewmodel.dart';
-import 'package:colorword_new/pages/login/widgets/text_button_widget.dart';
+import 'package:colorword_new/locator.dart';
+import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
+import 'package:colorword_new/pages/auth/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
-
-class _LoginViewState extends State<LoginView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: BaseView<LoginViewModel>(vmBuilder: (_) => LoginViewModel(), builder: _buildScreen),
-    );
-  }
-}
 
 @RoutePage()
 class LoginView extends StatefulWidget {
@@ -25,10 +17,19 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
+class _LoginViewState extends State<LoginView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BaseView<AuthViewModel>(viewModelBuilder: (_) => locator<AuthViewModel>(), builder: _buildScreen),
+    );
+  }
+}
+
 ///TODO: Sayfa düzenlenecek gösterim sadece taslaktır
 ///TODO: Verilen size değerleri ekrana göre değişebilen esnek yapıya dönüştürülecek.
 
-Widget _buildScreen(BuildContext context, LoginViewModel viewModel) {
+Widget _buildScreen(BuildContext context, AuthViewModel viewModel) {
   return Scaffold(
     body: Container(
         decoration: const BoxDecoration(
@@ -58,19 +59,18 @@ Widget _buildScreen(BuildContext context, LoginViewModel viewModel) {
   );
 }
 
-Positioned loginButton(BuildContext context, LoginViewModel viewModel) {
+Positioned loginButton(BuildContext context, AuthViewModel viewModel) {
   return Positioned(
     top: MediaQuery.of(context).size.height * 0.3,
     right: MediaQuery.of(context).size.width * 0.3,
     child: ElevatedButton(
         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(ColorConstants.buttonColor)),
         onPressed: () async {
-          bool sonuc = await viewModel.signIn();
-          if (sonuc) {
-            context.router.push(const HomeScreenRoute());
-          } else {
-            context.router.push(const LoginRoute());
-          }
+          await viewModel.signInWithGoogle().then((value) {
+            if (value != null) {
+              context.router.push(const HomeScreenRoute());
+            } else {}
+          });
         },
         child: Text(
           LocaleKeys.login_loginWithGoogle.locale,

@@ -20,4 +20,18 @@ CRASHANALYTCS++
 
 
 
+
+Repository katmanı
+debug release seçenek katmanı
+kullanıcının giriş çıkış ve o anki user ı tutan katman
+fakeuser
+user modeli
+userviewmodeli
+locator ile tanımlanmış sayfalar
+
+önce giriş yapma çıkış vs sayfası
+
+splash(force update kontrolü+oturup açıksa otomatik yönlendirme)
+
+
 */
