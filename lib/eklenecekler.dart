@@ -34,4 +34,22 @@ locator ile tanımlanmış sayfalar
 splash(force update kontrolü+oturup açıksa otomatik yönlendirme)
 
 
+
+
+Kelimelerin firebase den alındığı bir sayfa
+bu sayfa view- viewmodel- repostory katmanı- kelimelerin alındığı katman şeklinde çağrılcak
+
+şöyle bir sorun var veritabanında userslar ayrılmamış
+bir users ın words listesine kaydediliyor her şey
+
+her kullanıcıya ait users altında bir unique kod açılıp words ona yazılmalı ÖNCELİK
+
 */
+
+
+      /*
+        TextButton(
+          onPressed: () => throw Exception(),
+          child: const Text("Throw Test Exception"),
+        ),
+        */

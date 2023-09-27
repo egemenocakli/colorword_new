@@ -6,6 +6,7 @@ import 'package:colorword_new/pages/auth/service/auth_service_interface.dart';
 
 class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   late final AuthRepository _authRepository;
+  late AppUser? appUser;
 
   AuthViewModel() {
     _authRepository = AuthRepository();
@@ -21,8 +22,6 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
 
   @override
   Future<AppUser?> signInWithGoogle() async {
-    AppUser? appUser;
-
     try {
       viewState = ViewState.loading;
       appUser = await _authRepository.signInWithGoogle();
