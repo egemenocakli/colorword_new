@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/core/app_data/db/firestore_service.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/material.dart';
 class HomeScreenViewModel extends BaseViewModel {
   final FirestoreService _firestoreService = FirestoreService();
   late List<Word?>? words = [];
-  late Word word = Word();
+  // late Word word = Word();
+  int number = 0;
 
   @override
   FutureOr<void> init() {}
@@ -23,26 +25,27 @@ class HomeScreenViewModel extends BaseViewModel {
     viewState = ViewState.loading;
     words = await _firestoreService.readWords();
     viewState = ViewState.loaded;
-    getOneWord(words);
-    /*
-    if (words![0] == null) {
-      words![0]!.word = "empty";
-      return words;
-    }
-    */
+
     return words;
   }
 
-  Future<Word?> getOneWord(List<Word?>? words) async {
-    if (words != null) {
-      word = words[0]!;
-    }
-    return word;
+  Word createEmptyWord() {
+    Word emptyWord = Word(
+        addDate: Timestamp.now(),
+        color: Helpers.randomColor(),
+        lastUpdateDate: Timestamp.now(),
+        score: 0,
+        translatedWords: ["Boş"],
+        word: "Empty",
+        wordId: "1");
+
+    return emptyWord;
   }
 
   Future<void> addWord() async {
     Color wordColor = Helpers.randomColor();
-    Word newWord = Word(word: "5.kelime", color: wordColor, translatedWords: ["5.kelime anlamı"]);
+    number = number + 1;
+    Word newWord = Word(word: "$number.kelime", color: wordColor, translatedWords: ["$number.kelime anlamı"]);
     await _firestoreService.addWord(newWord);
   }
 

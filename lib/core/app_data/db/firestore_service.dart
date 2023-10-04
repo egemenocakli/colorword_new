@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/core/app_data/db/db_base.dart';
+import 'package:colorword_new/core/models/user_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -52,12 +53,17 @@ class FirestoreService implements DbBase {
     List<Word> words = [];
 
     try {
-      //TODO: .doc düzeltilecek "_userViewModel.user.userId"
       await db.collection("users").doc(appUser?.userId).collection("words").get().then((value) {
         for (var element in value.docs) {
           words.add(Word.fromMap(element.data()));
         }
       });
+
+      // ignore: unnecessary_null_comparison
+      //Eğer kişi ilk defa giriyorsa userinfo çalışsın kişi bilgileri kaydedilsin.
+      if (words.isEmpty) {
+        createUserInfo();
+      }
     } catch (e) {
       debugPrint("db_firestore_service.readWords işleminde hata:$e");
     }
@@ -125,5 +131,24 @@ class FirestoreService implements DbBase {
     });
 
     return true;
+  }
+
+  //Words collectionuyla aynı dizinde bir kullanıcı bilgileri tutmak lazım
+  //loginden sonra bunları eklemek lazım ama sadece bir kere eklenmeli
+  Future<bool> createUserInfo() async {
+    bool sonuc = false;
+    try {
+      User user = User(
+          email: appUser!.email,
+          userId: appUser!.userId,
+          lastname: appUser!.lastname,
+          name: appUser!.name,
+          photo: "empty");
+      await db.collection("users").doc(appUser?.userId).collection("userInfo").add(user.toMap());
+    } catch (e) {
+      sonuc = false;
+      debugPrint("db_firestore_service.addWord işleminde hata:$e");
+    }
+    return sonuc;
   }
 }
