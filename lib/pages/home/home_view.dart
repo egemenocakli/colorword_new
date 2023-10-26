@@ -5,19 +5,20 @@ import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/core/models/word_model.dart';
+import 'package:colorword_new/core/navigator/app_router.dart';
 import 'package:colorword_new/locator.dart';
-import 'package:colorword_new/pages/home/home_screen_viewmodel.dart';
+import 'package:colorword_new/pages/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class HomeScreenView extends StatefulWidget {
-  const HomeScreenView({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreenView> createState() => _HomeScreenViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeScreenViewState extends State<HomeScreenView> {
+class _HomeViewState extends State<HomeView> {
   final HomeScreenViewModel viewModel = locator<HomeScreenViewModel>();
 
   @override
@@ -97,7 +98,10 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   FloatingActionButton addNewWordFAB(HomeScreenViewModel viewModel) {
     return FloatingActionButton.extended(
       onPressed: () {
-        viewModel.addWord();
+        //viewModel.addWord();
+        //context.router.push(const NewWordScreenView() as PageRouteInfo); //TODO: anlamadım neden cast ihtiyac duyduk
+        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewWordScreenView()));
+        context.router.push(const NewWordRoute());
       },
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30.0)), side: BorderSide(width: 1, color: Colors.white)),

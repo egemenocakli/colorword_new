@@ -9,5 +9,8 @@
         "exitToolTip": "Çıkış",
         "menuIconToolTip": "Menü Butonu",
         "words": "İngilizce Kelimeler"
+    },
+    "addNewWordPage": {
+        "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin."
     }
 }

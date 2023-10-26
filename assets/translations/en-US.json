@@ -9,5 +9,8 @@
         "exitToolTip": "Exit",
         "menuIconToolTip": "Menu Icon",
         "words": "English Words"
+    },
+    "addNewWordPage": {
+        "addNewWord": "Please enter the word you want to add."
     }
 }
