@@ -30,6 +30,11 @@ class _NewWordViewState extends State<NewWordView> {
   }
 
   Widget _buildScreen(BuildContext context, NewWordViewModel newWordViewModel) {
+    /*
+    TextEditingController textController = TextEditingController();
+    String translatedWord = "";
+    */
+
     {
       return Scaffold(
         appBar: AppBar(
@@ -83,6 +88,7 @@ class _NewWordViewState extends State<NewWordView> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: (context.width / 7), vertical: context.height / 10),
                           child: TextFormField(
+                            controller: newWordViewModel.textController,
                             style: customTextStyle,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -97,26 +103,29 @@ class _NewWordViewState extends State<NewWordView> {
                             ),
                           ),
                         ),
+                        OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.green,
+                                textStyle: const TextStyle(fontSize: 20)),
+                            onPressed: () async {
+                              newWordViewModel.translatedWord =
+                                  await viewModel.wordTranslate(newWordViewModel.textController.text) ??
+                                      "Something is Wrong";
+                            },
+                            child: const Text("Translate")),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: Text(newWordViewModel.translatedWord,
+                              style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 36,
+                                  color: ColorConstants.white)),
+                        ),
                       ],
                     ),
                   )),
-
-              /**
-               * Expanded(
-                flex: 1,
-                child: (viewModel.words?.length == null) || ((viewModel.words?.length ?? 0) <= 0)
-                    ? buildEmptyWordListPageInfo()
-                    : PageView.builder(
-                        reverse: false,
-                        itemCount: viewModel.words?.length ?? 0,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return wordPage(context: context, word: viewModel.words?[index]);
-                        },
-                      ),
-              ),
-               * 
-               */
             ],
           ),
         ),
@@ -129,4 +138,26 @@ class _NewWordViewState extends State<NewWordView> {
   TextStyle customTextStyle2 =
       TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w400, color: ColorConstants.greySh4);
 //TODO:extension
+
+/*
+  final gt = SimplyTranslator(EngineType.google);
+
+  Future<String?> wordTranslate(String? word) async {
+    String sourceLanguage = "tr";
+    String translateLanguage = "en";
+    String? translateResponse;
+
+    if (word != null) {
+      translateResponse = await gt.trSimply(word, translateLanguage, sourceLanguage);
+    }
+    print(translateResponse);
+
+    if (translateResponse != null) {
+      return translateResponse;
+    } else {
+      translateResponse = "Something wrong";
+    }
+    return translateResponse;
+  }
+  */
 }

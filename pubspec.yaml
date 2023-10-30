@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.0.5
   easy_localization: ^3.0.2
   get_it: ^7.6.0
+  simplytranslate: ^1.2.4
 
   #Google Services
   google_sign_in: ^6.1.4
