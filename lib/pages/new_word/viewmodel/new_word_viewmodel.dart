@@ -58,13 +58,13 @@ class NewWordViewModel extends BaseViewModel {
     //TODO: Elimle atama yaptım eğer diğer dilleri de eklersek aşağıdaki mantık yürümeyecek.
     if (sourceLanguage == TranslateLanguages.turkish.languageShortName) {
       viewState = ViewState.loading;
-      sourceLanguage = TranslateLanguages.english.languageShortName!;
-      translateLanguage = TranslateLanguages.turkish.languageShortName!;
+      sourceLanguage = TranslateLanguages.english.languageShortName;
+      translateLanguage = TranslateLanguages.turkish.languageShortName;
       viewState = ViewState.loaded;
     } else {
       viewState = ViewState.loading;
-      sourceLanguage = TranslateLanguages.turkish.languageShortName!;
-      translateLanguage = TranslateLanguages.english.languageShortName!;
+      sourceLanguage = TranslateLanguages.turkish.languageShortName;
+      translateLanguage = TranslateLanguages.english.languageShortName;
       viewState = ViewState.loaded;
     }
   }
