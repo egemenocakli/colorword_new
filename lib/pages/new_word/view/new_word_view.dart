@@ -61,73 +61,72 @@ class _NewWordViewState extends State<NewWordView> {
           ),
         ),
         backgroundColor: ColorConstants.backgroundColor,
-        body: Center(
-          child: Column(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: context.height,
-                    width: context.width,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomCenter,
-                        colors: ColorConstants.appBarColors,
-                      ),
+        body: Column(
+          children: [
+            Expanded(
+                flex: 1,
+                child: Container(
+                  height: context.height,
+                  width: context.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomCenter,
+                      colors: ColorConstants.appBarColors,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(LocaleKeys.addNewWordPage_addNewWord.locale,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: context.height * 0.06),
+                      Text(LocaleKeys.addNewWordPage_addNewWord.locale,
+                          style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              color: ColorConstants.white)),
+                      languageField(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: (context.width / 7), vertical: context.height / 10),
+                        child: TextFormField(
+                          controller: newWordViewModel.textController,
+                          style: customTextStyle,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                borderSide: BorderSide(color: ColorConstants.greySh4)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: ColorConstants.greySh4),
+                              borderRadius: const BorderRadius.all(Radius.circular(30)),
+                            ),
+                            labelText: 'Enter New Word',
+                            labelStyle: customTextStyle2,
+                          ),
+                        ),
+                      ),
+                      OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green,
+                              textStyle: const TextStyle(fontSize: 20)),
+                          onPressed: () async {
+                            newWordViewModel.translatedWord =
+                                await viewModel.wordTranslate(newWordViewModel.textController.text) ??
+                                    LocaleKeys.addNewWordPage_cantFindWord; //"Something is Wrong.";
+                          },
+                          child: const Text("Translate")),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Text(newWordViewModel.translatedWord,
                             style: TextStyle(
                                 fontFamily: 'Manrope',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 20,
+                                fontSize: 36,
                                 color: ColorConstants.white)),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: (context.width / 7), vertical: context.height / 10),
-                          child: TextFormField(
-                            controller: newWordViewModel.textController,
-                            style: customTextStyle,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                  borderSide: BorderSide(color: ColorConstants.greySh4)),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: ColorConstants.greySh4),
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                              ),
-                              labelText: 'Enter New Word',
-                              labelStyle: customTextStyle2,
-                            ),
-                          ),
-                        ),
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.green,
-                                textStyle: const TextStyle(fontSize: 20)),
-                            onPressed: () async {
-                              newWordViewModel.translatedWord =
-                                  await viewModel.wordTranslate(newWordViewModel.textController.text) ??
-                                      "Something is Wrong";
-                            },
-                            child: const Text("Translate")),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Text(newWordViewModel.translatedWord,
-                              style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 36,
-                                  color: ColorConstants.white)),
-                        ),
-                      ],
-                    ),
-                  )),
-            ],
-          ),
+                      ),
+                    ],
+                  ),
+                )),
+          ],
         ),
       );
     }
@@ -139,25 +138,42 @@ class _NewWordViewState extends State<NewWordView> {
       TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w400, color: ColorConstants.greySh4);
 //TODO:extension
 
-/*
-  final gt = SimplyTranslator(EngineType.google);
-
-  Future<String?> wordTranslate(String? word) async {
-    String sourceLanguage = "tr";
-    String translateLanguage = "en";
-    String? translateResponse;
-
-    if (word != null) {
-      translateResponse = await gt.trSimply(word, translateLanguage, sourceLanguage);
-    }
-    print(translateResponse);
-
-    if (translateResponse != null) {
-      return translateResponse;
-    } else {
-      translateResponse = "Something wrong";
-    }
-    return translateResponse;
+  Row languageField() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+            alignment: Alignment.center,
+            height: 80,
+            width: 60,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.black12,
+                side: const BorderSide(width: 0.1, strokeAlign: 20, color: Colors.transparent),
+              ),
+              onPressed: (null),
+              child: Text(viewModel.translateLanguage, style: TextStyle(color: ColorConstants.white)),
+            )),
+        SizedBox(width: context.width * 0.1),
+        IconButton(
+            onPressed: () async {
+              await viewModel.changeLanguage();
+            },
+            icon: const Icon(Icons.cached_outlined)),
+        SizedBox(width: context.width * 0.1),
+        Container(
+            alignment: Alignment.center,
+            height: 80,
+            width: 60,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.black12,
+                side: const BorderSide(width: 0.1, strokeAlign: 20, color: Colors.transparent),
+              ),
+              onPressed: (null),
+              child: Text(viewModel.sourceLanguage, style: TextStyle(color: ColorConstants.white)),
+            ))
+      ],
+    );
   }
-  */
 }

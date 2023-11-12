@@ -11,6 +11,7 @@
         "words": "İngilizce Kelimeler"
     },
     "addNewWordPage": {
-        "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin."
+        "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",
+        "cantFindWord": "Bir şeyler yanlış."
     }
 }
