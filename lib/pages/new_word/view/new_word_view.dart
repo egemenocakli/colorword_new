@@ -37,6 +37,8 @@ class _NewWordViewState extends State<NewWordView> {
 
     {
       return Scaffold(
+        floatingActionButton: addNewWordFAB(),
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 2,
           title: const Text(
@@ -72,57 +74,17 @@ class _NewWordViewState extends State<NewWordView> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomCenter,
-                      colors: ColorConstants.appBarColors,
+                      colors: ColorConstants.backgroundGradientColors,
                     ),
                   ),
                   child: Column(
                     children: [
                       SizedBox(height: context.height * 0.06),
-                      Text(LocaleKeys.addNewWordPage_addNewWord.locale,
-                          style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: ColorConstants.white)),
+                      pleaseEnterWordText(),
                       languageField(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: (context.width / 7), vertical: context.height / 10),
-                        child: TextFormField(
-                          controller: newWordViewModel.textController,
-                          style: customTextStyle,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                borderSide: BorderSide(color: ColorConstants.greySh4)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: ColorConstants.greySh4),
-                              borderRadius: const BorderRadius.all(Radius.circular(30)),
-                            ),
-                            labelText: 'Enter New Word',
-                            labelStyle: customTextStyle2,
-                          ),
-                        ),
-                      ),
-                      OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.green,
-                              textStyle: const TextStyle(fontSize: 20)),
-                          onPressed: () async {
-                            newWordViewModel.translatedWord =
-                                await viewModel.wordTranslate(newWordViewModel.textController.text) ??
-                                    LocaleKeys.addNewWordPage_cantFindWord; //"Something is Wrong.";
-                          },
-                          child: const Text("Translate")),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Text(newWordViewModel.translatedWord,
-                            style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 36,
-                                color: ColorConstants.white)),
-                      ),
+                      enteredWordTextFormField(newWordViewModel),
+                      translateButton(newWordViewModel),
+                      translatedWord(newWordViewModel),
                     ],
                   ),
                 )),
@@ -132,11 +94,11 @@ class _NewWordViewState extends State<NewWordView> {
     }
   }
 
-  TextStyle customTextStyle =
-      TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 20, color: ColorConstants.white);
-  TextStyle customTextStyle2 =
-      TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w400, color: ColorConstants.greySh4);
-//TODO:extension
+  Text pleaseEnterWordText() {
+    return Text(LocaleKeys.addNewWordPage_addNewWord.locale,
+        style:
+            TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 20, color: ColorConstants.white));
+  }
 
   Row languageField() {
     return Row(
@@ -176,4 +138,67 @@ class _NewWordViewState extends State<NewWordView> {
       ],
     );
   }
+
+  Padding enteredWordTextFormField(NewWordViewModel newWordViewModel) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 15),
+      child: TextFormField(
+        maxLines: (viewModel.textController!.text.length > 30) ? 2 : 1,
+        controller: newWordViewModel.textController,
+        style: customTextStyle,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(30)),
+              borderSide: BorderSide(color: ColorConstants.greySh4)),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: ColorConstants.greySh4),
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
+          ),
+          labelText: LocaleKeys.addNewWordPage_enterNewWord.locale,
+          labelStyle: customTextStyle2,
+        ),
+      ),
+    );
+  }
+
+  OutlinedButton translateButton(NewWordViewModel newWordViewModel) {
+    return OutlinedButton(
+        style: OutlinedButton.styleFrom(
+            foregroundColor: ColorConstants.white,
+            backgroundColor: ColorConstants.buttonColorPink,
+            textStyle: const TextStyle(fontSize: 20)),
+        onPressed: () async {
+          newWordViewModel.translatedWord = await viewModel.wordTranslate(newWordViewModel.textController?.text) ??
+              LocaleKeys.addNewWordPage_cantFindWord;
+        },
+        child: Text(LocaleKeys.addNewWordPage_translate.locale));
+  }
+
+  Padding translatedWord(NewWordViewModel newWordViewModel) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+      child: Text(newWordViewModel.translatedWord,
+          style:
+              TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 36, color: ColorConstants.white)),
+    );
+  }
+
+  FloatingActionButton addNewWordFAB() {
+    return FloatingActionButton(
+        backgroundColor: ColorConstants.buttonColor,
+        foregroundColor: ColorConstants.white,
+        onPressed: () {
+          viewModel.addWord(viewModel.textController?.text, viewModel.translatedWord);
+        },
+        child: const Icon(
+          Icons.task_alt_outlined,
+          size: 28,
+        ));
+  }
+
+  TextStyle customTextStyle =
+      TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 20, color: ColorConstants.white);
+  TextStyle customTextStyle2 =
+      TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w400, color: ColorConstants.greySh4);
+//TODO:extension
 }

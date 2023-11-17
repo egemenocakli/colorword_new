@@ -12,6 +12,8 @@
     },
     "addNewWordPage": {
         "addNewWord": "Please enter the word you want to add.",
-        "cantFindWord": "Something is Wrong."
+        "cantFindWord": "Something is Wrong.",
+        "translate": "Translate",
+        "enterNewWord": "Enter New Word"
     }
 }

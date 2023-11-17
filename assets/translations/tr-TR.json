@@ -12,6 +12,8 @@
     },
     "addNewWordPage": {
         "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",
-        "cantFindWord": "Bir şeyler yanlış."
+        "cantFindWord": "Bir şeyler yanlış.",
+        "translate": "Çevir",
+        "enterNewWord": "Yeni Kelime Girin"
     }
 }

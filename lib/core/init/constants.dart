@@ -11,13 +11,18 @@ class ColorConstants {
   static Color white = Colors.white;
   static Color black = Colors.black;
   static Color buttonColor = const Color(0xFF68B2A0);
-  static Color greySh4 = Colors.grey.shade400;
+  static Color greySh4 = Colors.grey.shade300;
+  static Color buttonColorPink = const Color(0xFFCD6688);
   //static List<Color> appBarColors = [const Color(0xFF2c6975), const Color(0xFF2c6975), const Color(0xFFCDE0C9)];
   static List<Color> appBarColors = [
     const Color(0xFF6868AC),
     const Color(0xFFCF9893),
     const Color(0xFF119DA4),
     const Color(0xFFFDE789)
+  ];
+  static List<Color> backgroundGradientColors = [
+    const Color(0xFF6868AC),
+    const Color(0xFF119DA4),
   ];
   static Color iconColor = const Color(0xFF273748);
 }

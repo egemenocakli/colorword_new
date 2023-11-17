@@ -8,7 +8,7 @@ extension StringExtension on String {
 }
 
 extension LanguageEnumExtension on TranslateLanguages {
-  String? get languageShortName {
+  String get languageShortName {
     switch (this) {
       case TranslateLanguages.turkish:
         return "TR";
@@ -17,12 +17,11 @@ extension LanguageEnumExtension on TranslateLanguages {
       case TranslateLanguages.bulgarian:
         return "BG";
       case TranslateLanguages.german:
-        "DE";
+        return "DE";
       case TranslateLanguages.spanish:
-        "ES";
+        return "ES";
       default:
         return "There is no Language";
     }
-    return null;
   }
 }

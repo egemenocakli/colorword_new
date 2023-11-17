@@ -5,13 +5,11 @@ import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/core/utility/helpers.dart';
 import 'package:colorword_new/pages/auth/service/auth_firebase_service.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreenViewModel extends BaseViewModel {
   final FirestoreService _firestoreService = FirestoreService();
   late List<Word?>? words = [];
   // late Word word = Word();
-  int number = 0;
 
   @override
   FutureOr<void> init() {}
@@ -40,13 +38,6 @@ class HomeScreenViewModel extends BaseViewModel {
         wordId: "1");
 
     return emptyWord;
-  }
-
-  Future<void> addWord() async {
-    Color wordColor = Helpers.randomColor();
-    number = number + 1;
-    Word newWord = Word(word: "$number.kelime", color: wordColor, translatedWords: ["$number.kelime anlamı"]);
-    await _firestoreService.addWord(newWord);
   }
 
   Future<void> signOutFromHome() async {

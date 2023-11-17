@@ -99,8 +99,6 @@ class _HomeViewState extends State<HomeView> {
     return FloatingActionButton.extended(
       onPressed: () {
         //viewModel.addWord();
-        //context.router.push(const NewWordScreenView() as PageRouteInfo); //TODO: anlamadım neden cast ihtiyac duyduk
-        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewWordScreenView()));
         context.router.push(const NewWordRoute());
       },
       shape: const RoundedRectangleBorder(

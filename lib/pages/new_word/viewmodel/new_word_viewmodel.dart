@@ -1,17 +1,17 @@
 import 'dart:async';
 
+import 'package:colorword_new/core/app_data/db/firestore_service.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/enums/enum.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
+import 'package:colorword_new/core/models/word_model.dart';
+import 'package:colorword_new/core/utility/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:simplytranslate/simplytranslate.dart';
 
 class NewWordViewModel extends BaseViewModel {
-  //final FirestoreService _firestoreService = FirestoreService();
-
-  // late Word word = Word();
-  int number = 0;
-  TextEditingController textController = TextEditingController();
+  final FirestoreService _firestoreService = FirestoreService();
+  TextEditingController? textController = TextEditingController();
   String translatedWord = "";
   String? translateResponse;
   final gt = SimplyTranslator(EngineType.google);
@@ -52,6 +52,12 @@ class NewWordViewModel extends BaseViewModel {
       translateResponse = "Something wrong";
     }
     return translateResponse;
+  }
+
+  Future<void> addWord(enteredWord, translatedWord) async {
+    Color wordColor = Helpers.randomColor();
+    Word newWord = Word(word: enteredWord, color: wordColor, translatedWords: [translatedWord]);
+    await _firestoreService.addWord(newWord);
   }
 
   changeLanguage() {
