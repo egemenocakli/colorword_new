@@ -6,6 +6,8 @@ import 'package:colorword_new/core/enums/enum.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/core/utility/helpers.dart';
+import 'package:colorword_new/locator.dart';
+import 'package:colorword_new/pages/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:simplytranslate/simplytranslate.dart';
 
@@ -17,6 +19,7 @@ class NewWordViewModel extends BaseViewModel {
   final gt = SimplyTranslator(EngineType.google);
   String sourceLanguage = "TR";
   String translateLanguage = "EN";
+  final HomeScreenViewModel homeScreenViewModel = locator<HomeScreenViewModel>();
 
   @override
   FutureOr<void> init() {}
@@ -30,6 +33,10 @@ class NewWordViewModel extends BaseViewModel {
   //getter
 
   //setter
+
+  Future<void> reloadWords() async {
+    await homeScreenViewModel.getWordList();
+  }
 
   Future<String?> wordTranslate(String? word) async {
     if (word != null) {

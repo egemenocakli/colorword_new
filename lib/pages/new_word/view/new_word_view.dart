@@ -36,59 +36,63 @@ class _NewWordViewState extends State<NewWordView> {
     */
 
     {
-      return Scaffold(
-        floatingActionButton: addNewWordFAB(),
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          elevation: 2,
-          title: const Text(
-            AppConstants.appName,
-          ),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: ColorConstants.appBarColors,
+      return WillPopScope(
+        onWillPop: onWillPop,
+        child: Scaffold(
+          floatingActionButton: addNewWordFAB(),
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            elevation: 2,
+            title: const Text(
+              AppConstants.appName,
+            ),
+            centerTitle: true,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: ColorConstants.appBarColors,
+                ),
               ),
             ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_outlined, color: ColorConstants.iconColor, size: 30),
+              tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
+              onPressed: () {
+                context.router.pop();
+                viewModel.reloadWords();
+              },
+            ),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_outlined, color: ColorConstants.iconColor, size: 30),
-            tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
-            onPressed: () {
-              context.router.pop();
-            },
-          ),
-        ),
-        backgroundColor: ColorConstants.backgroundColor,
-        body: Column(
-          children: [
-            Expanded(
-                flex: 1,
-                child: Container(
-                  height: context.height,
-                  width: context.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
-                      colors: ColorConstants.backgroundGradientColors,
+          backgroundColor: ColorConstants.backgroundColor,
+          body: Column(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: context.height,
+                    width: context.width,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomCenter,
+                        colors: ColorConstants.backgroundGradientColors,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: context.height * 0.06),
-                      pleaseEnterWordText(),
-                      languageField(),
-                      enteredWordTextFormField(newWordViewModel),
-                      translateButton(newWordViewModel),
-                      translatedWord(newWordViewModel),
-                    ],
-                  ),
-                )),
-          ],
+                    child: Column(
+                      children: [
+                        SizedBox(height: context.height * 0.06),
+                        pleaseEnterWordText(),
+                        languageField(),
+                        enteredWordTextFormField(newWordViewModel),
+                        translateButton(newWordViewModel),
+                        translatedWord(newWordViewModel),
+                      ],
+                    ),
+                  )),
+            ],
+          ),
         ),
       );
     }
@@ -187,18 +191,25 @@ class _NewWordViewState extends State<NewWordView> {
     return FloatingActionButton(
         backgroundColor: ColorConstants.buttonColor,
         foregroundColor: ColorConstants.white,
-        onPressed: () {
-          viewModel.addWord(viewModel.textController?.text, viewModel.translatedWord);
-        },
+        onPressed: viewModel.translateResponse != null && viewModel.translateResponse != ""
+            ? () {
+                viewModel.addWord(viewModel.textController?.text, viewModel.translatedWord);
+              }
+            : null,
         child: const Icon(
           Icons.task_alt_outlined,
           size: 28,
         ));
   }
 
+//TODO:extension
   TextStyle customTextStyle =
       TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 20, color: ColorConstants.white);
   TextStyle customTextStyle2 =
       TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w400, color: ColorConstants.greySh4);
-//TODO:extension
+
+  Future<bool> onWillPop() async {
+    await viewModel.reloadWords();
+    return true;
+  }
 }

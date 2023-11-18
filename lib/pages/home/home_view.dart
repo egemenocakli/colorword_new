@@ -34,57 +34,60 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildScreen(BuildContext context, HomeScreenViewModel homeScreenViewModel) {
     {
-      return Scaffold(
-        floatingActionButton: addNewWordFAB(viewModel),
-        appBar: AppBar(
-          elevation: 2,
-          title: const Text(
-            AppConstants.appName,
-          ),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.exit_to_app_outlined, size: 32, color: ColorConstants.iconColor),
-              tooltip: LocaleKeys.mainPage_exitToolTip.locale,
-              onPressed: () {
-                viewModel.signOutFromHome();
-                context.router.pop();
-              },
+      return WillPopScope(
+        onWillPop: onWillPop,
+        child: Scaffold(
+          floatingActionButton: addNewWordFAB(viewModel),
+          appBar: AppBar(
+            elevation: 2,
+            title: const Text(
+              AppConstants.appName,
             ),
-          ],
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: ColorConstants.appBarColors,
-              ),
-            ),
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: 30),
-            tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
-            onPressed: () {},
-          ),
-        ),
-        backgroundColor: ColorConstants.backgroundColor,
-        body: Center(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: (viewModel.words?.length == null) || ((viewModel.words?.length ?? 0) <= 0)
-                    ? buildEmptyWordListPageInfo()
-                    : PageView.builder(
-                        reverse: false,
-                        itemCount: viewModel.words?.length ?? 0,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return wordPage(context: context, word: viewModel.words?[index]);
-                        },
-                      ),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.exit_to_app_outlined, size: 32, color: ColorConstants.iconColor),
+                tooltip: LocaleKeys.mainPage_exitToolTip.locale,
+                onPressed: () {
+                  viewModel.signOutFromHome();
+                  context.router.pop();
+                },
               ),
             ],
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: ColorConstants.appBarColors,
+                ),
+              ),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: 30),
+              tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
+              onPressed: () {},
+            ),
+          ),
+          backgroundColor: ColorConstants.backgroundColor,
+          body: Center(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: (viewModel.words?.length == null) || ((viewModel.words?.length ?? 0) <= 0)
+                      ? buildEmptyWordListPageInfo()
+                      : PageView.builder(
+                          reverse: false,
+                          itemCount: viewModel.words?.length ?? 0,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return wordPage(context: context, word: viewModel.words?[index]);
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -134,5 +137,9 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
     );
+  }
+
+  Future<bool> onWillPop() async {
+    return false;
   }
 }
