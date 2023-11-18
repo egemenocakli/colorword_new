@@ -4,9 +4,12 @@ import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
+import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/pages/new_word/viewmodel/new_word_viewmodel.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/utility/helpers.dart';
 
 @RoutePage()
 class NewWordView extends StatefulWidget {
@@ -191,11 +194,7 @@ class _NewWordViewState extends State<NewWordView> {
     return FloatingActionButton(
         backgroundColor: ColorConstants.buttonColor,
         foregroundColor: ColorConstants.white,
-        onPressed: viewModel.translateResponse != null && viewModel.translateResponse != ""
-            ? () {
-                viewModel.addWord(viewModel.textController?.text, viewModel.translatedWord);
-              }
-            : null,
+        onPressed: viewModel.translateResponse != null && viewModel.translateResponse != "" ? addWord : null,
         child: const Icon(
           Icons.task_alt_outlined,
           size: 28,
@@ -211,5 +210,21 @@ class _NewWordViewState extends State<NewWordView> {
   Future<bool> onWillPop() async {
     await viewModel.reloadWords();
     return true;
+  }
+
+  addWord() async {
+    viewModel
+        .addWord(
+      Word(
+        word: viewModel.textController?.text,
+        translatedWords: [
+          viewModel.translatedWord,
+        ],
+        color: Helpers.randomColor(),
+      ),
+    )
+        .whenComplete(() {
+      viewModel.clearVeriables();
+    });
   }
 }

@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
                 tooltip: LocaleKeys.mainPage_exitToolTip.locale,
                 onPressed: () {
                   viewModel.signOutFromHome();
-                  context.router.pop();
+                  context.replaceRoute(const LoginRoute());
                 },
               ),
             ],

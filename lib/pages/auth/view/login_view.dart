@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
           onPressed: () async {
             await viewModel.signInWithGoogle().then((value) {
               if (value != null) {
-                context.router.push(const HomeRoute());
+                context.replaceRoute(const HomeRoute());
               } else {}
             });
           },
