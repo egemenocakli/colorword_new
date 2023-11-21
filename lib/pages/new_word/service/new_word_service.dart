@@ -6,12 +6,7 @@ class NewWordService implements INewWordService {
   final FirestoreService _firestoreService = FirestoreService();
 
   @override
-  Future<bool> addWord(Word word) async {
-    return await _firestoreService.addWord(word);
-  }
-
-  @override
-  Future<bool> deleteWord(Word word) async {
-    return await _firestoreService.deleteWord(word);
+  Future<bool> addWord(Word? word) async {
+    return await _firestoreService.addWord(word!);
   }
 }

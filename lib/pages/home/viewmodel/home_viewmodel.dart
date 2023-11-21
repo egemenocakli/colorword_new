@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colorword_new/core/app_data/db/firestore_service.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/core/utility/helpers.dart';
 import 'package:colorword_new/pages/auth/service/auth_firebase_service.dart';
+import 'package:colorword_new/pages/home/service/home_service.dart';
+import 'package:colorword_new/pages/home/service/home_service_interface.dart';
 
-class HomeScreenViewModel extends BaseViewModel {
-  final FirestoreService _firestoreService = FirestoreService();
+class HomeScreenViewModel extends BaseViewModel implements IHomeService {
+  final HomeService _homeService = HomeService();
+
   late List<Word?>? words = [];
   // late Word word = Word();
+  Word? onPageWord;
 
   @override
   FutureOr<void> init() {}
@@ -17,15 +20,15 @@ class HomeScreenViewModel extends BaseViewModel {
   //getter
 
   //setter
-
+/*
   Future<List<Word?>?> getWordList() async {
-    ///TODO: BURADA ÖNCE STATE DEĞİŞİMİ SONRASINDA STATE DEĞİŞİMİ EKLİYCEM Kİ SAYFA YENİLENSİN
     viewState = ViewState.loading;
     words = await _firestoreService.readWords();
     viewState = ViewState.loaded;
 
     return words;
   }
+  */
 
   Word createEmptyWord() {
     Word emptyWord = Word(
@@ -50,5 +53,32 @@ class HomeScreenViewModel extends BaseViewModel {
   Future<void> refreshData() {
     // TODO: implement refreshData
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> deleteWord(Word? word) async {
+    if (word != null) {
+      viewState = ViewState.loading;
+      //await _firestoreService.deleteWord(word).whenComplete(() {
+      _homeService.deleteWord(word).whenComplete(
+        () {
+          readWords();
+        },
+      );
+
+      viewState = ViewState.loaded;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<List<Word?>?> readWords() async {
+    viewState = ViewState.loading;
+    words = await _homeService.readWords();
+    viewState = ViewState.loaded;
+
+    return words;
   }
 }

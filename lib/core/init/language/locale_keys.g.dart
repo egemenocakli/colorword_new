@@ -9,6 +9,7 @@ abstract class  LocaleKeys {
   static const mainPage_exitToolTip = 'mainPage.exitToolTip';
   static const mainPage_menuIconToolTip = 'mainPage.menuIconToolTip';
   static const mainPage_words = 'mainPage.words';
+  static const mainPage_addNewWord = 'mainPage.addNewWord';
   static const mainPage = 'mainPage';
   static const addNewWordPage_addNewWord = 'addNewWordPage.addNewWord';
   static const addNewWordPage_cantFindWord = 'addNewWordPage.cantFindWord';

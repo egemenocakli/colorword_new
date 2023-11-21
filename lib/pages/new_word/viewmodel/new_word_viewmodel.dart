@@ -4,7 +4,7 @@ import 'package:colorword_new/core/enums/enum.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
-import 'package:colorword_new/pages/home/home_viewmodel.dart';
+import 'package:colorword_new/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:colorword_new/pages/new_word/service/new_word_service.dart';
 import 'package:colorword_new/pages/new_word/service/new_word_service_interface.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   //setter
 
   Future<void> reloadWords() async {
-    await homeScreenViewModel.getWordList();
+    await homeScreenViewModel.readWords();
   }
 
   Future<String?> wordTranslate(String? word) async {
@@ -75,11 +75,6 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
     }
   }
 
-  @override
-  Future<bool> deleteWord(Word word) async {
-    return await _newWordService.deleteWord(word);
-  }
-
   void clearVeriables() {
     translatedWord = "";
     translateResponse = "";
@@ -87,7 +82,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   }
 
   @override
-  Future<bool> addWord(Word word) async {
+  Future<bool> addWord(Word? word) async {
     return await _newWordService.addWord(word);
   }
 }

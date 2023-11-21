@@ -14,17 +14,16 @@ class FirestoreService implements DbBase {
   //üsttekiler ile Appuser bilgilerine ulaşabiliriz
 
   @override
-  Future<bool> deleteWord(Word word) async {
+  Future<bool> deleteWord(Word? word) async {
     bool sonuc = false;
     try {
-      await db.collection("users").doc(appUser?.userId).collection("words").doc(word.wordId).delete().then((value) {
+      await db.collection("users").doc(appUser?.userId).collection("words").doc(word!.wordId).delete().then((value) {
         sonuc = true;
       });
     } catch (e) {
       sonuc = false;
       debugPrint("db_firestore_service.deleteWord işleminde hata:$e");
     }
-
     return sonuc;
   }
 
@@ -49,7 +48,7 @@ class FirestoreService implements DbBase {
   }
 
   @override
-  Future<List<Word>> readWords() async {
+  Future<List<Word?>?> readWords() async {
     List<Word> words = [];
 
     try {
@@ -59,7 +58,6 @@ class FirestoreService implements DbBase {
         }
       });
 
-      // ignore: unnecessary_null_comparison
       //Eğer kişi ilk defa giriyorsa userinfo çalışsın kişi bilgileri kaydedilsin.
       if (words.isEmpty) {
         createUserInfo();

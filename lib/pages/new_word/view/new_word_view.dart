@@ -46,8 +46,10 @@ class _NewWordViewState extends State<NewWordView> {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 2,
-            title: const Text(
+            title: Text(
               AppConstants.appName,
+              style: TextStyle(
+                  fontFamily: 'Manrope', fontWeight: FontWeight.w700, fontSize: 26, color: ColorConstants.white),
             ),
             centerTitle: true,
             flexibleSpace: Container(

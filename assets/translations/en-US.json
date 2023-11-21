@@ -8,7 +8,8 @@
     "mainPage": {
         "exitToolTip": "Exit",
         "menuIconToolTip": "Menu Icon",
-        "words": "English Words"
+        "words": "English Words",
+        "addNewWord": "Add New Word"
     },
     "addNewWordPage": {
         "addNewWord": "Please enter the word you want to add.",
