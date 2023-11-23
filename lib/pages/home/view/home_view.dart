@@ -42,10 +42,9 @@ class _HomeViewState extends State<HomeView> {
               alignment: WrapAlignment.end,
               crossAxisAlignment: WrapCrossAlignment.end,
               children: [
-                addLearnedWordButton(),
                 deleteWordButton(viewModel.onPageWord),
                 addNewWordFAB(),
-              ]), //addNewWordFAB(viewModel),
+              ]),
           appBar: AppBar(
             elevation: 2,
             title: Text(
@@ -93,7 +92,6 @@ class _HomeViewState extends State<HomeView> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           viewModel.onPageWord = viewModel.words?[index];
-                          print(viewModel.onPageWord?.word);
                           return wordPage(context: context, word: viewModel.words?[index]);
                         },
                       ),
@@ -107,11 +105,10 @@ class _HomeViewState extends State<HomeView> {
 
   Container deleteWordButton(Word? onPageWord) {
     return Container(
-        margin: const EdgeInsets.only(bottom: 16, right: 10, top: 10, left: 10),
+        margin: const EdgeInsets.all(10),
         child: FloatingActionButton(
           heroTag: "deleteButton",
           onPressed: () async {
-            //Buraya word ün indexini ulaştırmalıyım
             await viewModel.deleteWord(viewModel.onPageWord);
           },
           backgroundColor: ColorConstants.deleteButtonColor,
@@ -123,44 +120,21 @@ class _HomeViewState extends State<HomeView> {
         ));
   }
 
-  Container addLearnedWordButton() {
-    return Container(
-        margin: const EdgeInsets.all(10),
-        child: FloatingActionButton(
-          heroTag: "learnedButton",
-          onPressed: () {},
-          backgroundColor: ColorConstants.learnedWordButton,
-          child: Icon(
-            Icons.task_alt_outlined,
-            size: SizeConstants.iconSize,
-            color: ColorConstants.iconWhiteColor,
-          ),
-        ));
-  }
-
   Widget buildEmptyWordListPageInfo() {
     return wordPage(context: context, word: viewModel.createEmptyWord());
   }
 
-  FloatingActionButton addNewWordFAB() {
-    return FloatingActionButton.extended(
-      heroTag: "addNewButton",
-      onPressed: () {
-        context.router.push(const NewWordRoute());
-      },
-      shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-          side: BorderSide(width: 1, color: ColorConstants.white)),
-      icon: const Icon(Icons.add, size: 28),
-      backgroundColor: ColorConstants.transparent,
-      splashColor: ColorConstants.transparent,
-      focusColor: ColorConstants.transparent,
-      disabledElevation: 0,
-      highlightElevation: 0,
-      hoverColor: ColorConstants.transparent, //tıkladığındaki
-      foregroundColor: ColorConstants.white, //yazı rengi
-      label: Text(LocaleKeys.mainPage_addNewWord.locale, style: const TextStyle(fontSize: 20)),
-      elevation: 0,
+  Container addNewWordFAB() {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: FloatingActionButton(
+        heroTag: "addNewButton",
+        onPressed: () {
+          context.router.push(const NewWordRoute());
+        },
+        backgroundColor: ColorConstants.learnedWordButton,
+        child: Icon(Icons.add, size: SizeConstants.iconSize, color: ColorConstants.iconWhiteColor),
+      ),
     );
   }
 

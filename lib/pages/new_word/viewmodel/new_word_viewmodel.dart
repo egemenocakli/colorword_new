@@ -83,6 +83,32 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
 
   @override
   Future<bool> addWord(Word? word) async {
-    return await _newWordService.addWord(word);
+    bool isSame = false;
+
+    isSame = await compareWordWithList(word!);
+
+    //eslesme != true ? await _newWordService.addWord(word) : false;
+    if (isSame != true) {
+      return await _newWordService.addWord(word);
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> compareWordWithList(Word newWord) async {
+    bool isSame = false;
+    if (homeScreenViewModel.words?.length != null || homeScreenViewModel.words!.isNotEmpty) {
+      for (var i = 0; i < homeScreenViewModel.words!.length;) {
+        if (newWord.word == homeScreenViewModel.words![i]!.word) {
+          isSame = true;
+          return isSame;
+        } else {
+          i++;
+        }
+      }
+      return false;
+    } else {
+      return false;
+    }
   }
 }

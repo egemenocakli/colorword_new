@@ -8,8 +8,7 @@
     "mainPage": {
         "exitToolTip": "Çıkış",
         "menuIconToolTip": "Menü Butonu",
-        "words": "İngilizce Kelimeler",
-        "addNewWord": "Yeni Kelime Ekle"
+        "words": "İngilizce Kelimeler"
     },
     "addNewWordPage": {
         "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",
