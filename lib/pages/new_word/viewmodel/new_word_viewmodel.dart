@@ -18,7 +18,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   final gt = SimplyTranslator(EngineType.google);
   String sourceLanguage = "TR";
   String translateLanguage = "EN";
-  final HomeScreenViewModel homeScreenViewModel = locator<HomeScreenViewModel>();
+  final HomeViewModel homeScreenViewModel = locator<HomeViewModel>();
 
   @override
   FutureOr<void> init() {}
@@ -98,7 +98,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   Future<bool> compareWordWithList(Word newWord) async {
     bool isSame = false;
     if (homeScreenViewModel.words?.length != null || homeScreenViewModel.words!.isNotEmpty) {
-      for (var i = 0; i < homeScreenViewModel.words!.length;) {
+      for (int i = 0; i < homeScreenViewModel.words!.length;) {
         if (newWord.word == homeScreenViewModel.words![i]!.word) {
           isSame = true;
           return isSame;

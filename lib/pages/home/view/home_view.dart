@@ -19,7 +19,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final HomeScreenViewModel viewModel = locator<HomeScreenViewModel>();
+  final HomeViewModel viewModel = locator<HomeViewModel>();
 
   @override
   void initState() {
@@ -29,10 +29,10 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<HomeScreenViewModel>(), builder: _buildScreen);
+    return BaseView(viewModelBuilder: (_) => locator<HomeViewModel>(), builder: _buildScreen);
   }
 
-  Widget _buildScreen(BuildContext context, HomeScreenViewModel homeScreenViewModel) {
+  Widget _buildScreen(BuildContext context, HomeViewModel homeScreenViewModel) {
     {
       return WillPopScope(
         onWillPop: onWillPop,
@@ -54,6 +54,12 @@ class _HomeViewState extends State<HomeView> {
             ),
             centerTitle: true,
             actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.menu_book_rounded),
+                onPressed: () {
+                  context.router.push(const ExamRoute());
+                },
+              ),
               IconButton(
                 icon: Icon(Icons.exit_to_app_outlined,
                     size: SizeConstants.appBarLargeIconSize, color: ColorConstants.iconColor),

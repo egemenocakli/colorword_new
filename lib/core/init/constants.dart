@@ -38,4 +38,5 @@ class SizeConstants {
   static double iconSize = 28;
   static double appBarLargeIconSize = 32;
   static double appBarMediumIconSize = 30;
+  static double wordBetweenSize = 20;
 }

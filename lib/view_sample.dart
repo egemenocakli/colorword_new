@@ -21,4 +21,12 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   }
 }
 
+get
+  int get unreadMessagesCount => _unreadMessagesCount;
+set
+  set unreadMessagesCount(int value) {
+    _unreadMessagesCount = value;
+    notifyListeners();
+  }
+
 */

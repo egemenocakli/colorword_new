@@ -7,10 +7,10 @@ import 'package:colorword_new/pages/auth/service/auth_firebase_service.dart';
 import 'package:colorword_new/pages/home/service/home_service.dart';
 import 'package:colorword_new/pages/home/service/home_service_interface.dart';
 
-class HomeScreenViewModel extends BaseViewModel implements IHomeService {
+class HomeViewModel extends BaseViewModel implements IHomeService {
   final HomeService _homeService = HomeService();
 
-  late List<Word?>? words = [];
+  late List<Word?>? _words = [];
   // late Word word = Word();
   Word? onPageWord;
 
@@ -18,17 +18,8 @@ class HomeScreenViewModel extends BaseViewModel implements IHomeService {
   FutureOr<void> init() {}
 
   //getter
-
+  List<Word?>? get words => _words;
   //setter
-/*
-  Future<List<Word?>?> getWordList() async {
-    viewState = ViewState.loading;
-    words = await _firestoreService.readWords();
-    viewState = ViewState.loaded;
-
-    return words;
-  }
-  */
 
   Word createEmptyWord() {
     Word emptyWord = Word(
@@ -76,9 +67,8 @@ class HomeScreenViewModel extends BaseViewModel implements IHomeService {
   @override
   Future<List<Word?>?> readWords() async {
     viewState = ViewState.loading;
-    words = await _homeService.readWords();
+    _words = await _homeService.readWords();
     viewState = ViewState.loaded;
-
-    return words;
+    return _words;
   }
 }
