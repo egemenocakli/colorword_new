@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
-import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
+import 'package:colorword_new/pages/exam/model/quest_model.dart';
 import 'package:colorword_new/pages/exam/viewmodel/exam_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,13 @@ class ExamView extends StatefulWidget {
 }
 
 class _ExamViewState extends State<ExamView> {
-  final ExamViewModel viewmodel = locator<ExamViewModel>();
+  final ExamViewModel viewModel = locator<ExamViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.createExamQuestList(allWords: viewModel.homeViewModel.words);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +40,13 @@ class _ExamViewState extends State<ExamView> {
                 ? buildEmptyWordListPageInfo()
                 : PageView.builder(
                     reverse: false,
-                    itemCount: viewModel.examWords?.length ?? 0,
+                    itemCount: viewModel.examQuestList.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      viewmodel.createOtherOptions(viewModel.examWords, viewModel.homeViewModel.onPageWord);
-                      viewModel.homeViewModel.onPageWord = viewModel.examWords?[index];
-                      print(viewModel.homeViewModel.onPageWord!.word);
-                      return wordPage(context: context, word: viewModel.examWords?[index]);
+                      return wordPage(
+                        context: context,
+                        questModel: viewModel.examQuestList[index],
+                      );
                     },
                   ),
           ),
@@ -50,43 +56,36 @@ class _ExamViewState extends State<ExamView> {
   }
 
   Widget buildEmptyWordListPageInfo() {
-    return wordPage(context: context, word: viewmodel.homeViewModel.createEmptyWord());
+    return wordPage(context: context, questModel: QuestModel(word: null, options: []));
   }
 
-  Container wordPage({required BuildContext context, required Word? word}) {
+  Container wordPage({required BuildContext context, required QuestModel questModel}) {
+    List<Widget> optionsWidget = questModel.options.map((e) {
+      return buildOption(e);
+    }).toList();
+
     return Container(
       height: context.height,
       width: context.width,
-      color: word?.color,
+      color: questModel.word?.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 80),
-          Text(word?.word ?? '-',
-              style: TextStyle(
-                  fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 32, color: ColorConstants.white)),
-          const SizedBox(height: 50),
-          Text(
-            viewmodel.options?[0] ?? '-',
-            style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
-          ),
-          SizedBox(height: SizeConstants.wordBetweenSize),
-          Text(
-            viewmodel.options?[1] ?? '-',
-            style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
-          ),
-          SizedBox(height: SizeConstants.wordBetweenSize),
-          Text(
-            viewmodel.options?[2] ?? '-',
-            style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
-          ),
-          SizedBox(height: SizeConstants.wordBetweenSize),
-          Text(
-            viewmodel.options?[3] ?? '-',
-            style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
-          ),
-        ],
+              const SizedBox(height: 80),
+              Text(questModel.word?.word ?? '-',
+                  style: TextStyle(
+                      fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 32, color: ColorConstants.white)),
+              const SizedBox(height: 50),
+            ] +
+            optionsWidget,
       ),
+    );
+  }
+
+  Text buildOption(String? option) {
+    return Text(
+      option ?? '-',
+      style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
     );
   }
 }

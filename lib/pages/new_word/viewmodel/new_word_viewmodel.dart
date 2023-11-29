@@ -97,9 +97,9 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
 
   Future<bool> compareWordWithList(Word newWord) async {
     bool isSame = false;
-    if (homeScreenViewModel.words?.length != null || homeScreenViewModel.words!.isNotEmpty) {
-      for (int i = 0; i < homeScreenViewModel.words!.length;) {
-        if (newWord.word == homeScreenViewModel.words![i]!.word) {
+    if (homeScreenViewModel.words.isNotEmpty) {
+      for (int i = 0; i < homeScreenViewModel.words.length;) {
+        if (newWord.word == homeScreenViewModel.words[i]!.word) {
           isSame = true;
           return isSame;
         } else {

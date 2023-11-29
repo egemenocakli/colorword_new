@@ -90,15 +90,15 @@ class _HomeViewState extends State<HomeView> {
             children: [
               Expanded(
                 flex: 1,
-                child: (viewModel.words?.length == null) || ((viewModel.words?.length ?? 0) <= 0)
+                child: (viewModel.words.isEmpty)
                     ? buildEmptyWordListPageInfo()
                     : PageView.builder(
                         reverse: false,
-                        itemCount: viewModel.words?.length ?? 0,
+                        itemCount: viewModel.words.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          viewModel.onPageWord = viewModel.words?[index];
-                          return wordPage(context: context, word: viewModel.words?[index]);
+                          viewModel.onPageWord = viewModel.words[index];
+                          return wordPage(context: context, word: viewModel.words[index]);
                         },
                       ),
               ),

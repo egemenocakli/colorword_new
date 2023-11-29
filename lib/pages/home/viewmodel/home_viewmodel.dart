@@ -10,7 +10,7 @@ import 'package:colorword_new/pages/home/service/home_service_interface.dart';
 class HomeViewModel extends BaseViewModel implements IHomeService {
   final HomeService _homeService = HomeService();
 
-  late List<Word?>? _words = [];
+  late List<Word?> _words = [];
   // late Word word = Word();
   Word? onPageWord;
 
@@ -18,7 +18,8 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
   FutureOr<void> init() {}
 
   //getter
-  List<Word?>? get words => _words;
+  List<Word?> get words => _words;
+
   //setter
 
   Word createEmptyWord() {
@@ -65,9 +66,9 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
   }
 
   @override
-  Future<List<Word?>?> readWords() async {
+  Future<List<Word?>> readWords() async {
     viewState = ViewState.loading;
-    _words = await _homeService.readWords();
+    _words = (await _homeService.readWords()) ?? [];
     viewState = ViewState.loaded;
     return _words;
   }
