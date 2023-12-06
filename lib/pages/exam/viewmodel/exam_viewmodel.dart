@@ -35,6 +35,7 @@ class ExamViewModel extends BaseViewModel {
 
     options.clear();
     options.add(onPageWordTranslate);
+    //randomdan 0-4 arası sayı alıp listeden birini değiştirmek?
     for (int i = 0; i <= 4; i++) {
       options.add(allWords[random.nextInt(allWords.length)]?.translatedWords?.first);
     }
@@ -58,6 +59,7 @@ class ExamViewModel extends BaseViewModel {
       options.addAll(createOptions(allWords: allWords));
 
       List<String?> newList = options.toList().sublist(0, 4);
+      newList.shuffle();
 
       result.add(
         QuestModel(
