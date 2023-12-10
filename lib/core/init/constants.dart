@@ -11,6 +11,11 @@ class ColorConstants {
   static Color deleteButtonColor = Colors.redAccent;
   static Color learnedWordButton = Colors.green;
   static Color iconWhiteColor = Colors.white;
+  //ExamPage
+  static Color optionsButtonDefaultColor = Colors.black12;
+  static Color optionsButtonCorrectColor = Colors.greenAccent;
+  static Color optionsButtonWrongColor = Colors.redAccent;
+
   //_____________
 
   //General

@@ -9,34 +9,6 @@ import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:colorword_new/pages/auth/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
 
-/*
-@RoutePage()
-class HomeScreenView extends StatefulWidget {
-  const HomeScreenView({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreenView> createState() => _HomeScreenViewState();
-}
-
-class _HomeScreenViewState extends State<HomeScreenView> {
-  final HomeScreenViewModel viewModel = locator<HomeScreenViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
-    viewModel.getWordList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<HomeScreenViewModel>(), builder: _buildScreen);
-  }
-
-  Widget _buildScreen(BuildContext context, HomeScreenViewModel homeScreenViewModel) {
-    {
-      return Scaffold(
-*/
-
 @RoutePage()
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -44,24 +16,6 @@ class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
 }
-
-/*
-
-class _HomeScreenViewState extends State<HomeScreenView> {
-  final HomeScreenViewModel viewModel = locator<HomeScreenViewModel>();
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<HomeScreenViewModel>(), builder: _buildScreen);
-  }
-
-  Widget _buildScreen(BuildContext context, HomeScreenViewModel homeScreenViewModel) {
-    {
-      return Scaffold(
-
- */
 
 class _LoginViewState extends State<LoginView> {
   @override
