@@ -149,4 +149,50 @@ class FirestoreService implements DbBase {
     }
     return sonuc;
   }
+
+  Future<bool> increasetheScore({Word? word, required int point}) async {
+    bool sonuc = false;
+    try {
+      word!.score = word.score! + 2;
+
+      await db
+          .collection("users")
+          .doc(appUser?.userId)
+          .collection("words")
+          .doc(word.wordId.toString())
+          .update(word.toMap())
+          .then((value) {
+        sonuc = true;
+      });
+    } catch (e) {
+      sonuc = false;
+      debugPrint("db_firestore_service.increasetheScore işleminde hata:$e");
+    }
+    return sonuc;
+  }
+
+  Future<bool> decreasetheScore({Word? word, required int point}) async {
+    bool sonuc = false;
+
+    try {
+      if (word!.score! >= 1) {
+        word.score = word.score! - point;
+      } else {
+        word.score = 0;
+      }
+      await db
+          .collection("users")
+          .doc(appUser?.userId)
+          .collection("words")
+          .doc(word.wordId.toString())
+          .update(word.toMap())
+          .then((value) {
+        sonuc = true;
+      });
+    } catch (e) {
+      sonuc = false;
+      debugPrint("db_firestore_service.increasetheScore işleminde hata:$e");
+    }
+    return sonuc;
+  }
 }

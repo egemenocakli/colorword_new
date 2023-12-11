@@ -8,7 +8,7 @@ import 'package:colorword_new/pages/home/service/home_service.dart';
 import 'package:colorword_new/pages/home/service/home_service_interface.dart';
 
 class HomeViewModel extends BaseViewModel implements IHomeService {
-  final HomeService _homeService = HomeService();
+  final ExamService _homeService = ExamService();
 
   late List<Word?> _words = [];
   // late Word word = Word();
