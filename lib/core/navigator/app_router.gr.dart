@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ClassicExamRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ClassicExamView(),
+      );
+    },
     ExamRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -33,6 +39,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginView(),
       );
     },
+    LoginRoute2.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LoginView2(),
+      );
+    },
     NewWordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -40,6 +52,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ClassicExamView]
+class ClassicExamRoute extends PageRouteInfo<void> {
+  const ClassicExamRoute({List<PageRouteInfo>? children})
+      : super(
+          ClassicExamRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ClassicExamRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -80,6 +106,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LoginView2]
+class LoginRoute2 extends PageRouteInfo<void> {
+  const LoginRoute2({List<PageRouteInfo>? children})
+      : super(
+          LoginRoute2.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute2';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static const localizationAssetPath = 'assets/translations';
   static const background = 'assets/images/background.png';
+  static const googleIcon = 'assets/images/google_icon.png';
   static const appName = 'ColorWord';
 }
+
+///TODO: GENEL RADİUS DEĞERİ oluştur
 
 class ColorConstants {
   //HomePage
@@ -23,7 +26,7 @@ class ColorConstants {
   static Color white = Colors.white;
   static Color transparent = Colors.transparent;
   static Color black = Colors.black;
-  static Color buttonColor = const Color(0xFF68B2A0);
+  static Color buttonColor = const Color(0xFF6883BC);
   static Color greySh4 = Colors.grey.shade300;
   static Color buttonColorPink = const Color(0xFFCD6688);
   static List<Color> appBarColors = [
@@ -44,4 +47,17 @@ class SizeConstants {
   static double appBarLargeIconSize = 32;
   static double appBarMediumIconSize = 30;
   static double wordBetweenSize = 20;
+}
+
+class MyFlutterApp {
+  MyFlutterApp._();
+
+  static const _kFontFam = 'MyFlutterApp';
+  static const String? _kFontPkg = null;
+
+  static const IconData edit_alt = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData pencil = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData pencil_circled = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit_circled = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

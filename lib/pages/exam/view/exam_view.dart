@@ -33,29 +33,32 @@ class _ExamViewState extends State<ExamView> {
   }
 
   Widget _buildScreen(BuildContext context, ExamViewModel viewModel) {
-    return Scaffold(
-      backgroundColor: viewModel.examWords![1]!.color,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: (viewModel.examWords?.length == null) || ((viewModel.examWords?.length ?? 0) <= 0)
-                ? buildEmptyWordListPageInfo()
-                : PageView.builder(
-                    controller: controller,
-                    reverse: false,
-                    itemCount: viewModel.examQuestList.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return wordPage(
-                        viewModel: viewModel,
-                        context: context,
-                        questModel: viewModel.examQuestList[index],
-                      );
-                    },
-                  ),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        backgroundColor: viewModel.examWords![1]!.color,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: (viewModel.examWords?.length == null) || ((viewModel.examWords?.length ?? 0) <= 0)
+                  ? buildEmptyWordListPageInfo()
+                  : PageView.builder(
+                      controller: controller,
+                      reverse: false,
+                      itemCount: viewModel.examQuestList.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return wordPage(
+                          viewModel: viewModel,
+                          context: context,
+                          questModel: viewModel.examQuestList[index],
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -133,5 +136,10 @@ class _ExamViewState extends State<ExamView> {
     //controller.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8)); //direkt anlık geçiş
     //controller.nextPage(duration: const Duration(seconds: 4), curve: Curves.easeInOutQuint);
     controller.nextPage(duration: const Duration(seconds: 4), curve: Curves.easeInOutQuint);
+  }
+
+  Future<bool> onWillPop() async {
+    await viewModel.reloadWords();
+    return true;
   }
 }

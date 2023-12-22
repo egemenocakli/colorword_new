@@ -32,11 +32,48 @@ class _HomeViewState extends State<HomeView> {
     return BaseView(viewModelBuilder: (_) => locator<HomeViewModel>(), builder: _buildScreen);
   }
 
-  Widget _buildScreen(BuildContext context, HomeViewModel homeScreenViewModel) {
+  Widget _buildScreen(BuildContext context, HomeViewModel viewModel) {
     {
       return WillPopScope(
         onWillPop: onWillPop,
         child: Scaffold(
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                //TODO:alttaki alan
+                const UserAccountsDrawerHeader(
+                  accountName: Text("AppMaking.co"),
+                  accountEmail: Text("sundar@appmaking.co"),
+                  currentAccountPicture: FlutterLogo(),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(AppConstants.background),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.person, color: Colors.blueAccent),
+                  title: const Text("Profile"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
+                  title: const Text("Option Exam"),
+                  onTap: () {
+                    context.router.push(const ExamRoute());
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(MyFlutterApp.edit_alt, color: Colors.orange),
+                  title: const Text("Classic Exam"),
+                  onTap: () {
+                    context.router.push(const ClassicExamRoute());
+                  },
+                ),
+              ],
+            ),
+          ),
           floatingActionButton: Wrap(
               direction: Axis.vertical,
               alignment: WrapAlignment.end,
@@ -54,12 +91,12 @@ class _HomeViewState extends State<HomeView> {
             ),
             centerTitle: true,
             actions: <Widget>[
-              IconButton(
+              /* IconButton(
                 icon: const Icon(Icons.menu_book_rounded),
                 onPressed: () {
                   context.router.push(const ExamRoute());
                 },
-              ),
+              ), */
               IconButton(
                 icon: Icon(Icons.exit_to_app_outlined,
                     size: SizeConstants.appBarLargeIconSize, color: ColorConstants.iconColor),
@@ -79,11 +116,11 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            leading: IconButton(
+            /* leading: IconButton(
               icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: SizeConstants.appBarMediumIconSize),
               tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
               onPressed: () {},
-            ),
+            ), */
           ),
           backgroundColor: ColorConstants.backgroundColor,
           body: Column(
@@ -159,6 +196,12 @@ class _HomeViewState extends State<HomeView> {
             word?.translatedWords?.firstOrNull ?? '-',
             style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text("Score: ${word!.score}",
+              style: TextStyle(
+                  fontFamily: 'Manrope', fontWeight: FontWeight.w500, fontSize: 16, color: ColorConstants.white)),
         ],
       ),
     );

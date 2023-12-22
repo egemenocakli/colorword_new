@@ -1,9 +1,13 @@
 {
     "login": {
         "loginMessage": "Hello \n Please login for continue.",
-        "loginWithGoogle": "Login With Google",
+        "login": "Login",
+        "password": "Password",
+        "signWithGoogle": "Sign in with Google",
         "tr": "Türkçe",
-        "en": "İngilizce"
+        "en": "İngilizce",
+        "signIn": "Sign in",
+        "dontHaveAccount": "Don't have an account?"
     },
     "mainPage": {
         "exitToolTip": "Exit",

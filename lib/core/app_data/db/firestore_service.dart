@@ -191,7 +191,7 @@ class FirestoreService implements DbBase {
       });
     } catch (e) {
       sonuc = false;
-      debugPrint("db_firestore_service.increasetheScore işleminde hata:$e");
+      debugPrint("db_firestore_service.decreasetheScore işleminde hata:$e");
     }
     return sonuc;
   }

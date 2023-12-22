@@ -56,6 +56,10 @@ class ExamViewModel extends BaseViewModel implements IExamService {
     });
   }
 
+  Future<void> reloadWords() async {
+    await homeViewModel.readWords();
+  }
+
   List<String?> createOptions({required List<Word?> allWords}) {
     var random = Random(4);
 

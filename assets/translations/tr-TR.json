@@ -1,9 +1,13 @@
 {
     "login": {
         "loginMessage": "Merhaba \n Devam etmek için lütfen giriş yapınız.",
-        "loginWithGoogle": "Google ile giriş",
+        "login": "Giriş",
+        "password": "Şifre",
+        "signWithGoogle": "Google ile giriş",
         "tr": "Türkçe",
-        "en": "İngilizce"
+        "en": "İngilizce",
+        "signIn": "Kayıt ol",
+        "dontHaveAccount": "Henüz kayıt olmadınız mı?"
     },
     "mainPage": {
         "exitToolTip": "Çıkış",
