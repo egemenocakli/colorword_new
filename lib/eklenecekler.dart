@@ -53,3 +53,8 @@ her kullanıcıya ait users altında bir unique kod açılıp words ona yazılma
           child: const Text("Throw Test Exception"),
         ),
         */
+
+
+
+//Kullanıcının bilgilerini alıp home ekranında Drawer arayüzünde göstermek istiyorum 
+//abim bunun için viewmodel olan bir usermanager oluşturup oradan çağırmamı istedi yapamadım

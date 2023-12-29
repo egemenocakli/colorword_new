@@ -7,11 +7,14 @@ import 'package:colorword_new/core/utility/helpers.dart';
 import 'package:colorword_new/core/utility/view_helper.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
+import 'package:colorword_new/pages/auth/widgets/app_name_animation_widget.dart';
 import 'package:colorword_new/pages/auth/widgets/login_button_widget.dart';
 import 'package:colorword_new/pages/auth/widgets/language_text_button_widget.dart';
 import 'package:colorword_new/pages/auth/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// ignore: unused_import
+import 'package:easy_localization/easy_localization.dart';
 
 @RoutePage()
 class LoginView extends StatefulWidget with ViewHelper {
@@ -23,6 +26,7 @@ class LoginView extends StatefulWidget with ViewHelper {
 
 class _LoginViewState extends State<LoginView> {
   late Color backgroundColor;
+  late AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,8 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget _buildScreen(BuildContext context, AuthViewModel viewModel) {
+    // ignore: avoid_print some package problems, when i delete this doesnt work localizations.
+    print(context.locale);
     return Scaffold(
         backgroundColor: backgroundColor,
         body: Padding(
@@ -45,8 +51,6 @@ class _LoginViewState extends State<LoginView> {
             children: [
               appName(),
               loginForm(viewModel),
-              //TODO:dil değişince ekran yenilenmeli önceki halinde ekstra bir şeye gerek duyulmamıştı loginView2 de kullanılabiliyor
-              //languageWidget(context),
               LanguageTextButtonWidget(
                 context: context,
               ),
@@ -56,24 +60,22 @@ class _LoginViewState extends State<LoginView> {
         ));
   }
 
-  Padding languageWidget(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: LanguageTextButtonWidget(
-        context: context,
-      ),
-    );
-  }
-
-  Expanded appName() {
+  Widget appName() {
     return Expanded(
       flex: 3,
       child: Padding(
-        padding: const EdgeInsets.only(top: 150),
-        child: Text(
-          AppConstants.appName,
-          style:
-              TextStyle(fontFamily: 'Manrope', fontWeight: FontWeight.w700, fontSize: 36, color: ColorConstants.white),
+        //bottom azalttım telefonda iyi olması için
+        padding: const EdgeInsets.only(top: 150, bottom: 80, left: 20, right: 20),
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: ColorConstants.white),
+          child: Center(
+            child: AppNameAnimationWidget(
+                text: AppConstants.appName,
+                textStyle: const TextStyle(
+                    fontFamily: AppConstants.fontFamilyManrope, fontSize: 46, fontWeight: FontWeight.w700),
+                duration: const Duration(milliseconds: 500),
+                startColor: backgroundColor),
+          ),
         ),
       ),
     );
@@ -136,20 +138,22 @@ class _LoginViewState extends State<LoginView> {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white10),
-            //color: Colors.black12,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //TODO: sayfa rengi değişince bozuluyor
-                Text(LocaleKeys.login_dontHaveAccount.locale, style: GoogleFonts.roboto(fontWeight: FontWeight.w400)),
-                TextButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Text(LocaleKeys.login_dontHaveAccount.locale,
+                    style: GoogleFonts.roboto(fontWeight: FontWeight.w600, color: Colors.white38)),
+              ),
+              Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white12),
+                child: TextButton(
                     onPressed: () {},
-                    child: Text("Sign in",
-                        style: GoogleFonts.roboto(color: Colors.white54, fontSize: 20, fontWeight: FontWeight.w700)))
-              ],
-            ),
+                    child: Text(LocaleKeys.login_signIn.locale,
+                        style: GoogleFonts.roboto(color: Colors.white54, fontSize: 20, fontWeight: FontWeight.w700))),
+              )
+            ],
           ),
         )
       ],

@@ -153,7 +153,7 @@ class FirestoreService implements DbBase {
   Future<bool> increasetheScore({Word? word, required int point}) async {
     bool sonuc = false;
     try {
-      word!.score = word.score! + 2;
+      word!.score = word.score! + point;
 
       await db
           .collection("users")

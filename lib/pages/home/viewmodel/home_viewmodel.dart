@@ -3,16 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/core/utility/helpers.dart';
+import 'package:colorword_new/pages/auth/model/app_user_model.dart';
 import 'package:colorword_new/pages/auth/service/auth_firebase_service.dart';
+import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:colorword_new/pages/home/service/home_service.dart';
 import 'package:colorword_new/pages/home/service/home_service_interface.dart';
 
 class HomeViewModel extends BaseViewModel implements IHomeService {
-  final ExamService _homeService = ExamService();
+  final HomeService _homeService = HomeService();
+  final AuthViewModel _authViewModel = AuthViewModel();
 
   late List<Word?> _words = [];
   // late Word word = Word();
   Word? onPageWord;
+  AppUser? _currentAppUser;
 
   @override
   FutureOr<void> init() {}
@@ -20,7 +24,18 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
   //getter
   List<Word?> get words => _words;
 
+  AppUser? get currentAppUser => _currentAppUser;
+
   //setter
+
+  set currentAppUser(AppUser? value) {
+    _currentAppUser = value;
+    notifyListeners();
+  }
+
+  Future<AppUser?> getUserInfos() async {
+    return await _authViewModel.getCurrentUser();
+  }
 
   Word createEmptyWord() {
     Word emptyWord = Word(

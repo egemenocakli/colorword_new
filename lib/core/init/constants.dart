@@ -5,6 +5,7 @@ class AppConstants {
   static const background = 'assets/images/background.png';
   static const googleIcon = 'assets/images/google_icon.png';
   static const appName = 'ColorWord';
+  static const fontFamilyManrope = 'Manrope';
 }
 
 ///TODO: GENEL RADİUS DEĞERİ oluştur
@@ -49,8 +50,8 @@ class SizeConstants {
   static double wordBetweenSize = 20;
 }
 
-class MyFlutterApp {
-  MyFlutterApp._();
+class FontPackage {
+  FontPackage._();
 
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;

@@ -25,6 +25,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     viewModel.readWords();
+    //viewModel.getUserInfos();
   }
 
   @override
@@ -38,11 +39,13 @@ class _HomeViewState extends State<HomeView> {
         onWillPop: onWillPop,
         child: Scaffold(
           drawer: Drawer(
+            //TODO:Kullanıcının bilgilerini alıp home ekranında Drawer arayüzünde göstermek istiyorum
+            //abim bunun için viewmodel olan bir usermanager oluşturup oradan çağırmamı istedi yapamadım
             child: ListView(
               children: [
                 //TODO:alttaki alan
                 const UserAccountsDrawerHeader(
-                  accountName: Text("AppMaking.co"),
+                  accountName: Text(""),
                   accountEmail: Text("sundar@appmaking.co"),
                   currentAccountPicture: FlutterLogo(),
                   decoration: BoxDecoration(
@@ -59,16 +62,16 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
-                  title: const Text("Option Exam"),
+                  title: const Text("Multiple-Choice Exam"),
                   onTap: () {
                     context.router.push(const ExamRoute());
                   },
                 ),
                 ListTile(
-                  leading: const Icon(MyFlutterApp.edit_alt, color: Colors.orange),
-                  title: const Text("Classic Exam"),
+                  leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
+                  title: const Text("Written Exam"),
                   onTap: () {
-                    context.router.push(const ClassicExamRoute());
+                    context.router.push(const WrittenExamRoute());
                   },
                 ),
               ],
