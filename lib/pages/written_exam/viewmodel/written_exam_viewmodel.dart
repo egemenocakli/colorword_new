@@ -10,6 +10,7 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   final WrittenExamService _writtenExamService = WrittenExamService();
   int _mistakes = 3;
   int _pageIndex = 0;
+  late int lastPageNumber;
 
   @override
   FutureOr<void> init() {}

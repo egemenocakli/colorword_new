@@ -27,6 +27,7 @@ class _HomeViewState extends State<WrittenExamView> {
   void initState() {
     super.initState();
     focusNode = List.generate(homeViewModel.words.length, (index) => FocusNode());
+    viewModel.lastPageNumber = homeViewModel.words.length - 1;
   }
 
   @override
@@ -91,15 +92,9 @@ class _HomeViewState extends State<WrittenExamView> {
       child: Column(
         children: [
           arrowBackButton(context),
-          mistakeIcons(),
+          centerOfWord(word),
           textFieldWidget(pageIndex, word),
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Text(
-              word?.translatedWords?.firstOrNull ?? '-',
-              style: TextStyle(fontFamily: AppConstants.fontFamilyManrope, color: ColorConstants.white, fontSize: 20),
-            ),
-          ),
+          mistakeIcons(),
           const SizedBox(
             height: 10,
           ),
@@ -137,27 +132,23 @@ class _HomeViewState extends State<WrittenExamView> {
     );
   }
 
-  Padding mistakeIcons() {
+  Padding centerOfWord(Word? word) {
     return Padding(
-      padding: const EdgeInsets.only(right: 50, top: 200),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Icon(viewModel.mistakes < 1 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
-              color: Colors.redAccent),
-          Icon(viewModel.mistakes < 2 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
-              color: Colors.redAccent),
-          Icon(viewModel.mistakes < 3 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
-              color: Colors.redAccent),
-        ],
+      padding: const EdgeInsets.only(top: 200.0),
+      child: Text(
+        word?.translatedWords?.firstOrNull ?? '-',
+        style: TextStyle(
+          fontFamily: AppConstants.fontFamilyManrope,
+          color: ColorConstants.white,
+          fontSize: 26,
+        ),
       ),
     );
   }
 
   Padding textFieldWidget(pageIndex, Word? word) {
     return Padding(
-      padding: const EdgeInsets.only(top: 70, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 50, left: 50, right: 50),
       child: TextField(
         style: const TextStyle(
           letterSpacing: 10,
@@ -182,9 +173,7 @@ class _HomeViewState extends State<WrittenExamView> {
             } else if (word?.word != controller.text && controller.text.length == word?.word?.length) {
               viewModel.mistakes = viewModel.mistakes - 1;
               if (viewModel.mistakes <= 0) {
-                print("başarısız deneme sayısı " "${viewModel.mistakes}");
                 viewModel.decreasetheScore(point: 2, word: word);
-
                 nextPage();
                 controller.clear();
                 //TODO:Bilemediniz animasyonu
@@ -215,8 +204,29 @@ class _HomeViewState extends State<WrittenExamView> {
     );
   }
 
+  Widget mistakeIcons() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 45),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(viewModel.mistakes < 1 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent),
+          Icon(viewModel.mistakes < 2 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent),
+          Icon(viewModel.mistakes < 3 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent),
+        ],
+      ),
+    );
+  }
+
   void nextPage() {
-    pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+    if (viewModel.pageIndex != viewModel.lastPageNumber) {
+      pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+    } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
+      context.router.pop();
+    }
   }
 }
 

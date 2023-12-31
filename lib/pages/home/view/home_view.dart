@@ -45,8 +45,9 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 //TODO:alttaki alan
                 const UserAccountsDrawerHeader(
-                  accountName: Text(""),
-                  accountEmail: Text("sundar@appmaking.co"),
+                  accountName: Text("", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
+                  accountEmail:
+                      Text("sundar@appmaking.co", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
                   currentAccountPicture: FlutterLogo(),
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -57,19 +58,20 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.person, color: Colors.blueAccent),
-                  title: const Text("Profile"),
+                  title: const Text("Profile", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
                   onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
-                  title: const Text("Multiple-Choice Exam"),
+                  title:
+                      const Text("Multiple-Choice Exam", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
                   onTap: () {
                     context.router.push(const ExamRoute());
                   },
                 ),
                 ListTile(
                   leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
-                  title: const Text("Written Exam"),
+                  title: const Text("Written Exam", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
                   onTap: () {
                     context.router.push(const WrittenExamRoute());
                   },
@@ -77,20 +79,28 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
           ),
-          floatingActionButton: Wrap(
-              direction: Axis.vertical,
-              alignment: WrapAlignment.end,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              children: [
-                deleteWordButton(viewModel.onPageWord),
-                addNewWordFAB(),
-              ]),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //direction: Axis.horizontal,
+                //alignment: WrapAlignment.end,
+                //crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  deleteWordButton(viewModel.onPageWord),
+                  addNewWordFAB(),
+                ]),
+          ),
           appBar: AppBar(
             elevation: 2,
             title: Text(
               AppConstants.appName,
               style: TextStyle(
-                  fontFamily: 'Manrope', fontWeight: FontWeight.w700, fontSize: 26, color: ColorConstants.white),
+                  fontFamily: AppConstants.fontFamilyManrope,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26,
+                  color: ColorConstants.white),
             ),
             centerTitle: true,
             actions: <Widget>[
@@ -194,17 +204,23 @@ class _HomeViewState extends State<HomeView> {
         children: [
           Text(word?.word ?? '-',
               style: TextStyle(
-                  fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 32, color: ColorConstants.white)),
+                  fontFamily: AppConstants.fontFamilyManrope,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 32,
+                  color: ColorConstants.white)),
           Text(
             word?.translatedWords?.firstOrNull ?? '-',
-            style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
+            style: TextStyle(fontFamily: AppConstants.fontFamilyManrope, color: ColorConstants.white, fontSize: 20),
           ),
           const SizedBox(
             height: 10,
           ),
           Text("Score: ${word!.score}",
               style: TextStyle(
-                  fontFamily: 'Manrope', fontWeight: FontWeight.w500, fontSize: 16, color: ColorConstants.white)),
+                  fontFamily: AppConstants.fontFamilyManrope,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: ColorConstants.white)),
         ],
       ),
     );
