@@ -2,15 +2,19 @@ import 'dart:async';
 
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/models/word_model.dart';
+import 'package:colorword_new/locator.dart';
+import 'package:colorword_new/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:colorword_new/pages/written_exam/service/written_exam_interface.dart';
 import 'package:colorword_new/pages/written_exam/service/written_exam_service.dart';
 import 'package:flutter/material.dart';
 
 class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService {
   final WrittenExamService _writtenExamService = WrittenExamService();
+  final HomeViewModel homeViewModel = locator<HomeViewModel>();
   int _mistakes = 3;
   int _pageIndex = 0;
   late int lastPageNumber;
+  late List<bool> _examResultList = List.filled(homeViewModel.words.length, false);
 
   @override
   FutureOr<void> init() {}
@@ -19,6 +23,13 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   Future<void> refreshData() {
     // TODO: implement refreshData
     throw UnimplementedError();
+  }
+
+  List<bool> get examResultList => _examResultList;
+
+  set examResultList(List<bool> value) {
+    _examResultList = value;
+    notifyListeners();
   }
 
   int get pageIndex => _pageIndex;

@@ -19,5 +19,10 @@ abstract class  LocaleKeys {
   static const addNewWordPage_translate = 'addNewWordPage.translate';
   static const addNewWordPage_enterNewWord = 'addNewWordPage.enterNewWord';
   static const addNewWordPage = 'addNewWordPage';
+  static const writtenExam_congratulations = 'writtenExam.congratulations';
+  static const writtenExam_totalQuestion = 'writtenExam.totalQuestion';
+  static const writtenExam_totalCorrectAnswer = 'writtenExam.totalCorrectAnswer';
+  static const writtenExam_totalWrongAnswer = 'writtenExam.totalWrongAnswer';
+  static const writtenExam = 'writtenExam';
 
 }

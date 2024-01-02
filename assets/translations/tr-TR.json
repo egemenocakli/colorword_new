@@ -19,5 +19,11 @@
         "cantFindWord": "Bir şeyler yanlış.",
         "translate": "Çevir",
         "enterNewWord": "Yeni Kelime Girin"
+    },
+    "writtenExam": {
+        "congratulations": "Tebrikler",
+        "totalQuestion": "Toplam soru sayısı: ",
+        "totalCorrectAnswer": "Doğru cevap sayınız: ",
+        "totalWrongAnswer": "Yanlış cevap sayınız: "
     }
 }

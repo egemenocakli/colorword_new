@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
+import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
+import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/core/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/pages/written_exam/viewmodel/written_exam_viewmodel.dart';
@@ -22,6 +24,8 @@ class _HomeViewState extends State<WrittenExamView> {
   TextEditingController controller = TextEditingController();
   PageController pageController = PageController(keepPage: false);
   List<FocusNode> focusNode = [];
+  late int falseAnswers;
+  late int correctAnswers;
 
   @override
   void initState() {
@@ -168,12 +172,14 @@ class _HomeViewState extends State<WrittenExamView> {
           setState(() {
             if (word?.word == controller.text) {
               viewModel.increasetheScore(point: 3, word: word);
+              viewModel.examResultList[pageIndex] = true;
               nextPage();
               controller.clear();
             } else if (word?.word != controller.text && controller.text.length == word?.word?.length) {
               viewModel.mistakes = viewModel.mistakes - 1;
               if (viewModel.mistakes <= 0) {
                 viewModel.decreasetheScore(point: 2, word: word);
+                viewModel.examResultList[pageIndex] = false;
                 nextPage();
                 controller.clear();
                 //TODO:Bilemediniz animasyonu
@@ -184,6 +190,7 @@ class _HomeViewState extends State<WrittenExamView> {
         onEditingComplete: () {
           if (word?.word == controller.text) {
             viewModel.increasetheScore(point: 3, word: word);
+            viewModel.examResultList[pageIndex] = true;
             nextPage();
             controller.clear();
             //TODO:Bildiniz animasyonu
@@ -221,111 +228,36 @@ class _HomeViewState extends State<WrittenExamView> {
     );
   }
 
-  void nextPage() {
+  Future<void> nextPage() async {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
       pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
+      answerCounter();
+      await snackbarWidget();
+      await Future.delayed(const Duration(seconds: 5));
+      // ignore: use_build_context_synchronously
       context.router.pop();
     }
   }
-}
 
-
-
-//Gelecekte klasik test yöntemini değiştirirsem kullanacağım
-/* import 'package:auto_route/auto_route.dart';
-import 'package:colorword_new/core/base/view/base_view.dart';
-import 'package:colorword_new/locator.dart';
-import 'package:colorword_new/pages/classic_exam/viewmodel/classic_exam_viewmodel.dart';
-import 'package:flutter/material.dart';
-
-@RoutePage()
-class ClassicExamView extends StatefulWidget {
-  const ClassicExamView({Key? key}) : super(key: key);
-
-  @override
-  State<ClassicExamView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<ClassicExamView> {
-  //final HomeViewModel viewModel = locator<HomeViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
+  void answerCounter() {
+    //TODO:Word objesinde kaç kere yanlış bilindiğini tutabiliriz.
+    falseAnswers = viewModel.examResultList.where((element) => element == false).length;
+    correctAnswers = viewModel.examResultList.where((element) => element == true).length;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<ClassicExamViewModel>(), builder: _buildScreen);
-  }
-
-  List<TextEditingController> controllers = List.generate(5, (index) => TextEditingController());
-  List<FocusNode> focusNodes = List.generate(5, (index) => FocusNode());
-
-  @override
-  void dispose() {
-    for (var controller in controllers) {
-      controller.dispose();
-    }
-    for (var focusNode in focusNodes) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
-
-  Widget _buildScreen(BuildContext context, ClassicExamViewModel viewModel) {
-    {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Harf Girişi'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  5,
-                  (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: SizedBox(
-                      width: 30.0,
-                      child: TextField(
-                        controller: controllers[index],
-                        focusNode: focusNodes[index],
-                        maxLength: 1,
-                        obscureText: false, // Metni gizle
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          counter: SizedBox.shrink(), // Counter'ı gizle
-                        ),
-                        onChanged: (value) {
-                          if (value.length == 1 && index < 4) {
-                            FocusScope.of(context).requestFocus(focusNodes[index + 1]);
-                          } else if (value.isEmpty && index > 0) {
-                            FocusScope.of(context).requestFocus(focusNodes[index - 1]);
-                          }
-                        },
-                        onEditingComplete: () {
-                          //eğer cevapla eşleşmiyorsa belki burada hepsini sildiririm
-                          if (index > 0) {
-                            FocusScope.of(context).requestFocus(focusNodes[index - 1]);
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
+  Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget() async {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      content: Column(children: [
+        Text(LocaleKeys.writtenExam_congratulations.locale),
+        Text(LocaleKeys.writtenExam_totalQuestion.locale + homeViewModel.words.length.toString()),
+        Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
+        Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
+      ]),
+      duration: const Duration(seconds: 5),
+    ));
   }
 }
- */

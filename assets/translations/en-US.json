@@ -19,5 +19,11 @@
         "cantFindWord": "Something is Wrong.",
         "translate": "Translate",
         "enterNewWord": "Enter New Word"
+    },
+    "writtenExam": {
+        "congratulations": "Congratulations",
+        "totalQuestion": "Number of questions you answered: ",
+        "totalCorrectAnswer": "Your number of correct answers: ",
+        "totalWrongAnswer": "Your number of wrong answers: "
     }
 }
