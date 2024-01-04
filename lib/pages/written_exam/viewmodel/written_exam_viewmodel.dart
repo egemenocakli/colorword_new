@@ -15,6 +15,7 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   int _pageIndex = 0;
   late int lastPageNumber;
   late List<bool> _examResultList = List.filled(homeViewModel.words.length, false);
+  String _hintText = "";
 
   @override
   FutureOr<void> init() {}
@@ -23,6 +24,15 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   Future<void> refreshData() {
     // TODO: implement refreshData
     throw UnimplementedError();
+  }
+
+  String get hintText => _hintText;
+
+  set hintText(String value) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _hintText = value;
+      notifyListeners();
+    });
   }
 
   List<bool> get examResultList => _examResultList;

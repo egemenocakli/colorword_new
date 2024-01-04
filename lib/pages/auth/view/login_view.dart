@@ -62,10 +62,10 @@ class _LoginViewState extends State<LoginView> {
 
   Widget appName() {
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: Padding(
         //bottom azalttım telefonda iyi olması için
-        padding: const EdgeInsets.only(top: 150, bottom: 80, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 150, bottom: 120, left: 20, right: 20),
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: ColorConstants.white),
           child: Center(

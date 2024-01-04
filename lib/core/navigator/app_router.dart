@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/pages/auth/view/login_view.dart';
-import 'package:colorword_new/pages/auth/view/login_view2.dart';
 import 'package:colorword_new/pages/written_exam/view/written_exam_view.dart';
 import 'package:colorword_new/pages/exam/view/exam_view.dart';
 import 'package:colorword_new/pages/home/view/home_view.dart';

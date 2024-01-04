@@ -26,6 +26,7 @@ class _HomeViewState extends State<WrittenExamView> {
   List<FocusNode> focusNode = [];
   late int falseAnswers;
   late int correctAnswers;
+  int hintIndex = 0;
 
   @override
   void initState() {
@@ -58,8 +59,10 @@ class _HomeViewState extends State<WrittenExamView> {
                       onPageChanged: (int pageIndex) {
                         changeFocus(pageIndex);
                       },
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: pageController,
                       pageSnapping: true,
+                      allowImplicitScrolling: false,
                       reverse: false,
                       itemCount: homeViewModel.words.length,
                       scrollDirection: Axis.horizontal,
@@ -97,11 +100,10 @@ class _HomeViewState extends State<WrittenExamView> {
         children: [
           arrowBackButton(context),
           centerOfWord(word),
+          hintWord(word),
           textFieldWidget(pageIndex, word),
           mistakeIcons(),
-          const SizedBox(
-            height: 10,
-          ),
+          hintButton(word),
         ],
       ),
     );
@@ -145,6 +147,20 @@ class _HomeViewState extends State<WrittenExamView> {
           fontFamily: AppConstants.fontFamilyManrope,
           color: ColorConstants.white,
           fontSize: 26,
+        ),
+      ),
+    );
+  }
+
+  Padding hintWord(Word? word) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: Text(
+        viewModel.hintText,
+        style: TextStyle(
+          fontFamily: AppConstants.fontFamilyManrope,
+          color: ColorConstants.white,
+          fontSize: 18,
         ),
       ),
     );
@@ -230,6 +246,7 @@ class _HomeViewState extends State<WrittenExamView> {
 
   Future<void> nextPage() async {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
+      cleanHintText();
       pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
       answerCounter();
@@ -238,6 +255,11 @@ class _HomeViewState extends State<WrittenExamView> {
       // ignore: use_build_context_synchronously
       context.router.pop();
     }
+  }
+
+  void cleanHintText() {
+    viewModel.hintText = "";
+    hintIndex = 0;
   }
 
   void answerCounter() {
@@ -259,5 +281,31 @@ class _HomeViewState extends State<WrittenExamView> {
       ]),
       duration: const Duration(seconds: 5),
     ));
+  }
+
+  Widget hintButton(Word? word) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 40.0),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: InkWell(
+          onTap: () {
+            if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
+              _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
+              hintIndex = hintIndex + 1;
+            }
+          },
+          child: Icon(
+            Icons.lightbulb_outlined,
+            color: Colors.grey.shade300,
+            size: 26,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _addLetterToController(String letter) {
+    viewModel.hintText += letter;
   }
 }

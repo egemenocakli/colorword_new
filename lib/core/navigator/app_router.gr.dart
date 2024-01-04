@@ -33,12 +33,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginView(),
       );
     },
-    LoginRoute2.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const LoginView2(),
-      );
-    },
     NewWordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
