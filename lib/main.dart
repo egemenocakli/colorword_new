@@ -2,7 +2,7 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/language_manager.dart';
 import 'package:colorword_new/core/navigator/app_router.dart';
 import 'package:colorword_new/firebase_options.dart';
-import 'package:colorword_new/pages/auth/viewmodel/auth_viewmodel.dart';
+import 'package:colorword_new/app/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
