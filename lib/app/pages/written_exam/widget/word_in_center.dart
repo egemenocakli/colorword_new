@@ -7,9 +7,9 @@ class WordInCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 200.0),
+    return Flexible(
       child: Text(
+        maxLines: 2,
         translatedWord ?? '-',
         style: TextStyle(
           fontFamily: AppConstants.fontFamilyManrope,

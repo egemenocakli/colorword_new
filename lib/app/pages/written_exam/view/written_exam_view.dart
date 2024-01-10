@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:colorword_new/app/pages/written_exam/widget/hint_button_widget.dart';
+import 'package:colorword_new/app/pages/written_exam/widget/text_field_widget.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
@@ -102,73 +104,93 @@ class _HomeViewState extends State<WrittenExamView> {
       child: Column(
         children: [
           ArrowBackPageNumberWidget(
-              context: context, wordsLength: homeViewModel.words.length, pageIndex: viewModel.pageIndex),
+            context: context,
+            wordsLength: homeViewModel.words.length,
+            pageIndex: viewModel.pageIndex,
+          ),
+          hintButtonWidget(word),
           WordInCenter(translatedWord: word?.translatedWords?.firstOrNull ?? '-'),
           HintWordWidget(hintText: viewModel.hintText),
-          textFieldWidget(pageIndex, word),
-          MistakeIconsWidget(mistakes: viewModel.mistakes),
-          hintButton(word),
+          examTextFieldWidget(pageIndex, word),
+          //MistakeIconsWidget(mistakes: viewModel.mistakes),
         ],
       ),
     );
   }
 
-  Padding textFieldWidget(pageIndex, Word? word) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50, left: 50, right: 50),
-      child: TextField(
-        style: const TextStyle(
-          letterSpacing: 10,
-          fontSize: 26,
-          color: Colors.white60,
-        ),
-        focusNode: focusNode[pageIndex],
-        autocorrect: false,
-        autofillHints: const [],
-        keyboardType: TextInputType.visiblePassword,
-        textInputAction: TextInputAction.done,
-        controller: controller,
-        maxLines: 1,
-        maxLength: word?.word?.length ?? 1,
-        autofocus: true,
-        onChanged: (value) {
-          setState(() {
-            if (word?.word == controller.text) {
-              viewModel.increasetheScore(point: 3, word: word);
-              viewModel.examResultList[pageIndex] = true;
-              nextPage();
-              controller.clear();
-            } else if (word?.word != controller.text && controller.text.length == word?.word?.length) {
-              viewModel.mistakes = viewModel.mistakes - 1;
-              if (viewModel.mistakes <= 0) {
-                viewModel.decreasetheScore(point: 2, word: word);
-                viewModel.examResultList[pageIndex] = false;
-                nextPage();
-                controller.clear();
-                //TODO:Bilemediniz animasyonu
-              }
-            }
-          });
-        },
-        onEditingComplete: () {
+//TODO:snackbar textleri translate edilcek
+  ExamTextFieldWidget examTextFieldWidget(pageIndex, Word? word) {
+    return ExamTextFieldWidget(
+      controller: controller,
+      focusNode: focusNode[pageIndex],
+      onChanged: (value) {
+        setState(() {
           if (word?.word == controller.text) {
             viewModel.increasetheScore(point: 3, word: word);
             viewModel.examResultList[pageIndex] = true;
+            snackbarWidget(
+                content: const Text("Correct!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
             nextPage();
             controller.clear();
-            //TODO:Bildiniz animasyonu
+          } else if (word?.word != controller.text && controller.text.length == word?.word?.length) {
+            viewModel.mistakes = viewModel.mistakes - 1;
+            if (viewModel.mistakes <= 0) {
+              viewModel.decreasetheScore(point: 2, word: word);
+              viewModel.examResultList[pageIndex] = false;
+              snackbarWidget(
+                  content: const Text("Wrong!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
+              nextPage();
+              controller.clear();
+              //TODO:Bilemediniz animasyonu
+            }
           }
-        },
-        cursorColor: Colors.white12,
-        decoration: const InputDecoration(
-          counterStyle: TextStyle(color: Colors.white54),
-          border: InputBorder.none,
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white54),
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
+        });
+      },
+      onEditingComplete: () {
+        if (word?.word == controller.text) {
+          viewModel.increasetheScore(point: 3, word: word);
+          viewModel.examResultList[pageIndex] = true;
+          snackbarWidget(
+              content: const Text("Correct!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
+          nextPage();
+          controller.clear();
+          //TODO:Bildiniz animasyonu
+        }
+      },
+      word: word,
+    );
+  }
+
+  Widget hintButtonWidget(Word? word) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0, right: 20),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            HintButtonWidget(
+              onTap: () {
+                if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
+                  _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
+                  hintIndex = hintIndex + 1;
+                  viewModel.mistakes = viewModel.mistakes - 1;
+                  if (viewModel.mistakes <= 0) {
+                    viewModel.decreasetheScore(point: 2, word: word);
+                    viewModel.examResultList[viewModel.pageIndex] = false;
+                    nextPage();
+                    controller.clear();
+                  }
+                }
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 5.0, top: 20),
+              child: MistakeIconsWidget(
+                mistakes: viewModel.mistakes,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -180,7 +202,7 @@ class _HomeViewState extends State<WrittenExamView> {
       pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
       answerCounter();
-      await snackbarWidget();
+      await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));
       await Future.delayed(const Duration(seconds: 5));
       // ignore: use_build_context_synchronously
       context.router.pop();
@@ -198,51 +220,41 @@ class _HomeViewState extends State<WrittenExamView> {
     correctAnswers = viewModel.examResultList.where((element) => element == true).length;
   }
 
-  Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget() async {
+  Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget(
+      {required Widget content, required Duration duration}) async {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      content: Column(children: [
-        Text(LocaleKeys.writtenExam_congratulations.locale),
-        Text(LocaleKeys.writtenExam_totalQuestion.locale + homeViewModel.words.length.toString()),
-        Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
-        Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
-      ]),
-      duration: const Duration(seconds: 5),
+      content: content,
+      duration: duration,
     ));
   }
 
-  Widget hintButton(Word? word) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 40.0),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: InkWell(
-          onTap: () {
-            if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
-              _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
-              hintIndex = hintIndex + 1;
-              viewModel.mistakes = viewModel.mistakes - 1;
-              if (viewModel.mistakes <= 0) {
-                viewModel.decreasetheScore(point: 2, word: word);
-                viewModel.examResultList[viewModel.pageIndex] = false;
-                nextPage();
-                controller.clear();
-              }
-            }
-          },
-          child: Icon(
-            Icons.lightbulb_outlined,
-            color: Colors.grey.shade300,
-            size: 26,
-          ),
-        ),
-      ),
-    );
+  void hintButtonOnTap(Word? word) {
+    if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
+      _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
+      hintIndex = hintIndex + 1;
+      viewModel.mistakes = viewModel.mistakes - 1;
+      if (viewModel.mistakes <= 0) {
+        viewModel.decreasetheScore(point: 2, word: word);
+        viewModel.examResultList[viewModel.pageIndex] = false;
+        nextPage();
+        controller.clear();
+      }
+    }
   }
 
   void _addLetterToController(String letter) {
     viewModel.hintText += letter;
+  }
+
+  Widget endOfExamWidget() {
+    return Column(children: [
+      Text(LocaleKeys.writtenExam_congratulations.locale),
+      Text(LocaleKeys.writtenExam_totalQuestion.locale + homeViewModel.words.length.toString()),
+      Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
+      Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
+    ]);
   }
 }
