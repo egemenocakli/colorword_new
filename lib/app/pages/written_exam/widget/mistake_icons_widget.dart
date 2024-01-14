@@ -1,3 +1,4 @@
+import 'package:colorword_new/core/init/constants.dart';
 import 'package:flutter/material.dart';
 
 class MistakeIconsWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class MistakeIconsWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: AllBorderRadius.xlargeBorderRadius(),
         color: Colors.black12,
       ),
       child: Padding(
@@ -21,11 +22,31 @@ class MistakeIconsWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(mistakes <= 0 ? Icons.favorite_outline_rounded : Icons.favorite_rounded, color: Colors.redAccent),
-            Icon(mistakes < 2 ? Icons.favorite_outline_rounded : Icons.favorite_rounded, color: Colors.redAccent),
-            Icon(mistakes < 3 ? Icons.favorite_outline_rounded : Icons.favorite_rounded, color: Colors.redAccent),
-            Icon(mistakes < 4 ? Icons.favorite_outline_rounded : Icons.favorite_rounded, color: Colors.redAccent),
-            Icon(mistakes < 5 ? Icons.favorite_outline_rounded : Icons.favorite_rounded, color: Colors.redAccent),
+            Icon(
+              mistakes <= 0 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent,
+              size: SizeConstants.iconSmallSize,
+            ),
+            Icon(
+              mistakes < 2 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent,
+              size: SizeConstants.iconSmallSize,
+            ),
+            Icon(
+              mistakes < 3 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent,
+              size: SizeConstants.iconSmallSize,
+            ),
+            Icon(
+              mistakes < 4 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent,
+              size: SizeConstants.iconSmallSize,
+            ),
+            Icon(
+              mistakes < 5 ? Icons.favorite_outline_rounded : Icons.favorite_rounded,
+              color: Colors.redAccent,
+              size: SizeConstants.iconSmallSize,
+            ),
           ],
         ),
       ),

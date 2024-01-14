@@ -189,7 +189,7 @@ class _HomeViewState extends State<HomeView> {
           backgroundColor: ColorConstants.deleteButtonColor,
           child: Icon(
             Icons.delete_outline_rounded,
-            size: SizeConstants.iconSize,
+            size: SizeConstants.iconLSize,
             color: ColorConstants.iconWhiteColor,
           ),
         ));
@@ -208,7 +208,7 @@ class _HomeViewState extends State<HomeView> {
           context.router.push(const NewWordRoute());
         },
         backgroundColor: ColorConstants.learnedWordButton,
-        child: Icon(Icons.add, size: SizeConstants.iconSize, color: ColorConstants.iconWhiteColor),
+        child: Icon(Icons.add, size: SizeConstants.iconLSize, color: ColorConstants.iconWhiteColor),
       ),
     );
   }

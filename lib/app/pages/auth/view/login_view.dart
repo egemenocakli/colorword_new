@@ -67,7 +67,7 @@ class _LoginViewState extends State<LoginView> {
         //bottom azalttım telefonda iyi olması için, emülatör harici bottom 80, düzenlemem gerekli
         padding: const EdgeInsets.only(top: 150, bottom: 120, left: 20, right: 20),
         child: Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: ColorConstants.white),
+          decoration: BoxDecoration(borderRadius: AllBorderRadius.mediumBorderRadius(), color: Colors.white),
           child: Center(
             child: AppNameAnimationWidget(
                 text: AppConstants.appName,
@@ -117,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
             height: 50,
             width: 200,
             child: Material(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: AllBorderRadius.mediumBorderRadius(),
               color: Colors.white,
               child: InkWell(
                 child: Row(
@@ -147,7 +147,7 @@ class _LoginViewState extends State<LoginView> {
                     style: GoogleFonts.roboto(fontWeight: FontWeight.w600, color: Colors.white38)),
               ),
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white12),
+                decoration: BoxDecoration(borderRadius: AllBorderRadius.mediumBorderRadius(), color: Colors.white12),
                 child: TextButton(
                     onPressed: () {},
                     child: Text(LocaleKeys.login_signIn.locale,

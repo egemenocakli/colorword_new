@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/hint_button_widget.dart';
+import 'package:colorword_new/app/pages/written_exam/widget/skip_button_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/text_field_widget.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
+import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
@@ -108,18 +110,16 @@ class _HomeViewState extends State<WrittenExamView> {
             wordsLength: homeViewModel.words.length,
             pageIndex: viewModel.pageIndex,
           ),
-          hintButtonWidget(word),
+          hintButtonWidget(word: word, pageIndex: pageIndex),
           WordInCenter(translatedWord: word?.translatedWords?.firstOrNull ?? '-'),
           HintWordWidget(hintText: viewModel.hintText),
-          examTextFieldWidget(pageIndex, word),
-          //MistakeIconsWidget(mistakes: viewModel.mistakes),
+          examTextFieldWidget(pageIndex: pageIndex, word: word),
         ],
       ),
     );
   }
 
-//TODO:snackbar textleri translate edilcek
-  ExamTextFieldWidget examTextFieldWidget(pageIndex, Word? word) {
+  ExamTextFieldWidget examTextFieldWidget({pageIndex, Word? word}) {
     return ExamTextFieldWidget(
       controller: controller,
       focusNode: focusNode[pageIndex],
@@ -129,7 +129,9 @@ class _HomeViewState extends State<WrittenExamView> {
             viewModel.increasetheScore(point: 3, word: word);
             viewModel.examResultList[pageIndex] = true;
             snackbarWidget(
-                content: const Text("Correct!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
+                content: Text(LocaleKeys.writtenExam_correct.locale,
+                    textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+                duration: const Duration(seconds: 1));
             nextPage();
             controller.clear();
           } else if (word?.word != controller.text && controller.text.length == word?.word?.length) {
@@ -138,10 +140,12 @@ class _HomeViewState extends State<WrittenExamView> {
               viewModel.decreasetheScore(point: 2, word: word);
               viewModel.examResultList[pageIndex] = false;
               snackbarWidget(
-                  content: const Text("Wrong!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
+                content: Text(LocaleKeys.writtenExam_false.locale,
+                    textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+                duration: const Duration(seconds: 1),
+              );
               nextPage();
               controller.clear();
-              //TODO:Bilemediniz animasyonu
             }
           }
         });
@@ -151,28 +155,30 @@ class _HomeViewState extends State<WrittenExamView> {
           viewModel.increasetheScore(point: 3, word: word);
           viewModel.examResultList[pageIndex] = true;
           snackbarWidget(
-              content: const Text("Correct!", textAlign: TextAlign.center), duration: const Duration(seconds: 1));
+              content: Text(LocaleKeys.writtenExam_correct.locale,
+                  textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+              duration: const Duration(seconds: 1));
           nextPage();
           controller.clear();
-          //TODO:Bildiniz animasyonu
         }
       },
       word: word,
     );
   }
 
-  Widget hintButtonWidget(Word? word) {
+  Widget hintButtonWidget({Word? word, pageIndex}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0, right: 20),
+      padding: const EdgeInsets.only(right: 20),
       child: Align(
         alignment: Alignment.centerRight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            skipButtonWidget(word, pageIndex),
             HintButtonWidget(
               onTap: () {
                 if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
-                  _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
+                  addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
                   hintIndex = hintIndex + 1;
                   viewModel.mistakes = viewModel.mistakes - 1;
                   if (viewModel.mistakes <= 0) {
@@ -185,7 +191,7 @@ class _HomeViewState extends State<WrittenExamView> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 5.0, top: 20),
+              padding: const EdgeInsets.only(right: 5.0, top: 10),
               child: MistakeIconsWidget(
                 mistakes: viewModel.mistakes,
               ),
@@ -194,6 +200,23 @@ class _HomeViewState extends State<WrittenExamView> {
         ),
       ),
     );
+  }
+
+  Widget skipButtonWidget(Word? word, pageIndex) {
+    return SkipButtonWidget(onTap: () {
+      viewModel.mistakes = viewModel.mistakes - 5;
+      if (viewModel.mistakes <= 0) {
+        viewModel.decreasetheScore(point: 2, word: word);
+        viewModel.examResultList[pageIndex] = false;
+        snackbarWidget(
+          content:
+              Text(LocaleKeys.writtenExam_skip.locale, textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+          duration: const Duration(seconds: 1),
+        );
+        nextPage();
+        controller.clear();
+      }
+    });
   }
 
   Future<void> nextPage() async {
@@ -223,8 +246,14 @@ class _HomeViewState extends State<WrittenExamView> {
   Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget(
       {required Widget content, required Duration duration}) async {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.black,
+      showCloseIcon: true,
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      padding: const EdgeInsets.only(right: 5.0, left: 15.0, bottom: 8.0, top: 8.0),
+      closeIconColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
       content: content,
       duration: duration,
@@ -233,7 +262,7 @@ class _HomeViewState extends State<WrittenExamView> {
 
   void hintButtonOnTap(Word? word) {
     if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
-      _addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
+      addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
       hintIndex = hintIndex + 1;
       viewModel.mistakes = viewModel.mistakes - 1;
       if (viewModel.mistakes <= 0) {
@@ -245,7 +274,7 @@ class _HomeViewState extends State<WrittenExamView> {
     }
   }
 
-  void _addLetterToController(String letter) {
+  void addLetterToController(String letter) {
     viewModel.hintText += letter;
   }
 

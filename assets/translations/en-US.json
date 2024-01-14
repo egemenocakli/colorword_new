@@ -24,6 +24,9 @@
         "congratulations": "Congratulations",
         "totalQuestion": "Number of questions you answered: ",
         "totalCorrectAnswer": "Your number of correct answers: ",
-        "totalWrongAnswer": "Your number of wrong answers: "
+        "totalWrongAnswer": "Your number of wrong answers: ",
+        "correct": "Correct!",
+        "false": "False!",
+        "skip": "You missed this word."
     }
 }

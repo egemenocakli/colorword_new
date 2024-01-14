@@ -14,7 +14,7 @@ class HintWordWidget extends StatelessWidget {
         style: TextStyle(
           fontFamily: AppConstants.fontFamilyManrope,
           color: ColorConstants.white,
-          fontSize: 18,
+          fontSize: SizeConstants.iconxSmallSize,
         ),
       ),
     );

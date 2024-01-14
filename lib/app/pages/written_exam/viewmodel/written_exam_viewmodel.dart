@@ -45,6 +45,7 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   int get pageIndex => _pageIndex;
 
   set pageIndex(int value) {
+    if (_pageIndex == value) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageIndex = value;
       notifyListeners();

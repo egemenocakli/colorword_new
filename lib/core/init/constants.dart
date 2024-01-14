@@ -8,8 +8,6 @@ class AppConstants {
   static const fontFamilyManrope = 'Manrope';
 }
 
-///TODO: GENEL RADİUS DEĞERİ oluştur
-
 class ColorConstants {
   //HomePage
   static Color deleteButtonColor = Colors.redAccent;
@@ -41,10 +39,15 @@ class ColorConstants {
     const Color(0xFF119DA4),
   ];
   static Color iconColor = const Color(0xFF273748);
+  static Color iconOrangeAccentColor = Colors.orangeAccent;
+  static Color iconShadeColor = Colors.black12;
 }
 
 class SizeConstants {
-  static double iconSize = 28;
+  static double iconxSmallSize = 18;
+  static double iconSmallSize = 24;
+  static double iconMSize = 26;
+  static double iconLSize = 28;
   static double appBarLargeIconSize = 32;
   static double appBarMediumIconSize = 30;
   static double wordBetweenSize = 20;
@@ -61,4 +64,32 @@ class FontPackage {
   static const IconData pencil = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData pencil_circled = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData edit_circled = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+}
+
+class MidTextStyle {
+  static TextStyle midTextStyle({double? fontSize}) {
+    return TextStyle(fontFamily: AppConstants.fontFamilyManrope, fontSize: (fontSize ?? 16));
+  }
+
+  static TextStyle largeTextStyle({double? fontSize}) {
+    return TextStyle(fontFamily: AppConstants.fontFamilyManrope, fontSize: (fontSize ?? 26));
+  }
+}
+
+class AllBorderRadius {
+  static BorderRadius xlargeBorderRadius() {
+    return BorderRadius.circular(30);
+  }
+
+  static BorderRadius largeBorderRadius() {
+    return BorderRadius.circular(20);
+  }
+
+  static BorderRadius mediumBorderRadius() {
+    return BorderRadius.circular(15);
+  }
+
+  static BorderRadius smallBorderRadius() {
+    return BorderRadius.circular(12);
+  }
 }

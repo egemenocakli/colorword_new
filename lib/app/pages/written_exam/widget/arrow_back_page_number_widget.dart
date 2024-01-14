@@ -20,11 +20,8 @@ class ArrowBackPageNumberWidget extends StatelessWidget {
               onPressed: () {
                 context.router.pop();
               },
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: ColorConstants.black,
-                size: 32,
-              )),
+              icon: Icon(Icons.arrow_back_ios_new_rounded,
+                  color: ColorConstants.black, size: SizeConstants.appBarLargeIconSize)),
         ),
         pageNumber(context, wordsLength, pageIndex)
       ],
@@ -32,7 +29,7 @@ class ArrowBackPageNumberWidget extends StatelessWidget {
   }
 }
 
-Padding pageNumber(BuildContext context, int wordsLength, int pageIndex) {
+Widget pageNumber(BuildContext context, int wordsLength, int pageIndex) {
   return Padding(
     padding: EdgeInsets.only(top: 20.0, left: context.width - 100),
     child: Text("${pageIndex + 1}" "/" "$wordsLength",

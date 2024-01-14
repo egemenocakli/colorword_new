@@ -24,6 +24,9 @@
         "congratulations": "Tebrikler",
         "totalQuestion": "Toplam soru sayısı: ",
         "totalCorrectAnswer": "Doğru cevap sayınız: ",
-        "totalWrongAnswer": "Yanlış cevap sayınız: "
+        "totalWrongAnswer": "Yanlış cevap sayınız: ",
+        "correct": "Doğru!",
+        "false": "Yanlış!",
+        "skip": "Bu kelimeyi atladınız."
     }
 }

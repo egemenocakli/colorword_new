@@ -1,3 +1,4 @@
+import 'package:colorword_new/core/init/constants.dart';
 import 'package:flutter/material.dart';
 
 class HintButtonWidget extends StatelessWidget {
@@ -11,20 +12,21 @@ class HintButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.black12),
+      decoration:
+          BoxDecoration(borderRadius: AllBorderRadius.xlargeBorderRadius(), color: ColorConstants.iconShadeColor),
       height: 40,
       width: 40,
       child: Material(
-        color: Colors.transparent,
+        color: ColorConstants.transparent,
         child: InkWell(
           customBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: AllBorderRadius.xlargeBorderRadius(),
           ),
           onTap: onTap,
-          child: const Icon(
+          child: Icon(
             Icons.lightbulb_outlined,
-            color: Colors.orangeAccent,
-            size: 26,
+            color: ColorConstants.iconOrangeAccentColor,
+            size: SizeConstants.iconMSize,
           ),
         ),
       ),

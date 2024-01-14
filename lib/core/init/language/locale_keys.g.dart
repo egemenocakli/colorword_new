@@ -23,6 +23,9 @@ abstract class  LocaleKeys {
   static const writtenExam_totalQuestion = 'writtenExam.totalQuestion';
   static const writtenExam_totalCorrectAnswer = 'writtenExam.totalCorrectAnswer';
   static const writtenExam_totalWrongAnswer = 'writtenExam.totalWrongAnswer';
+  static const writtenExam_correct = 'writtenExam.correct';
+  static const writtenExam_false = 'writtenExam.false';
+  static const writtenExam_skip = 'writtenExam.skip';
   static const writtenExam = 'writtenExam';
 
 }
