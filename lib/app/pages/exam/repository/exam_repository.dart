@@ -7,7 +7,7 @@ class ExamRepository implements IExamService {
 
   @override
   Future<bool> decreasetheScore({Word? word, required int point}) async {
-    return await _examService.decreasetheScore(point: point);
+    return await _examService.decreasetheScore(word: word, point: point);
   }
 
   @override

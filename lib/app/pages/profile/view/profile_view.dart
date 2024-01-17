@@ -77,8 +77,6 @@ class _ProfileViewState extends State<ProfileView> {
                               viewModel.textEditEnable = true;
                               viewModel.nameFocusNode = FocusNode();
                               viewModel.nameFocusNode?.requestFocus();
-                              //TODO:Otomatik olarak Focus atmıyor
-                              //viewModel.nameFocusNode?.requestFocus();
                             },
                             sendOnTap: () {
                               if (viewModel.fullName != viewModel.userNametextController?.text) {
