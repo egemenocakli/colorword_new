@@ -21,6 +21,9 @@ class ExamViewModel extends BaseViewModel implements IExamService {
   late Word? onPageWord;
   Color _optionsButtonColor = ColorConstants.optionsButtonDefaultColor;
   bool _isTap = false;
+  int? _pageIndex;
+  late int lastPageNumber;
+  late List<bool> _examResultList = List.filled(homeViewModel.words.length, false);
 
   @override
   Future<void> refreshData() {
@@ -37,7 +40,22 @@ class ExamViewModel extends BaseViewModel implements IExamService {
   //getter
   Color get optionsButtonColor => _optionsButtonColor;
   bool get isTap => _isTap;
+  int? get pageIndex => _pageIndex;
+  List<bool> get examResultList => _examResultList;
   //setter
+
+  set examResultList(List<bool> value) {
+    _examResultList = value;
+    notifyListeners();
+  }
+
+  set pageIndex(int? value) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pageIndex = value;
+      notifyListeners();
+    });
+  }
+
   set optionsButtonColor(Color value) {
     viewState = ViewState.loading;
     _optionsButtonColor = value;
@@ -81,6 +99,8 @@ class ExamViewModel extends BaseViewModel implements IExamService {
     for (var element in allWords) {
       onPageWord = element;
       options.addAll(createOptions(allWords: allWords));
+
+      ///TODO: burası 7 kelime eklenmeden sayfayı çalıştırmıyor
       List<String?> newList = options.toList().sublist(0, 4);
       newList.shuffle();
 

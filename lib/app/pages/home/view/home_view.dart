@@ -6,6 +6,7 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/core/navigator/app_router.dart';
+import 'package:colorword_new/core/widgets/my_appbar.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +71,24 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  AppBar buildAppBar(HomeViewModel viewModel, BuildContext context) {
-    return AppBar(
+  MyAppBar buildAppBar(HomeViewModel viewModel, BuildContext context) {
+    return MyAppBar(
+      leading: DrawerButton(style: ButtonStyle(iconSize: MaterialStatePropertyAll(SizeConstants.iconLSize))),
+      context: context,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.exit_to_app_outlined,
+              size: SizeConstants.appBarLargeIconSize, color: ColorConstants.iconColor),
+          tooltip: LocaleKeys.mainPage_exitToolTip.locale,
+          onPressed: () {
+            viewModel.signOutFromHome();
+            context.replaceRoute(const LoginRoute());
+          },
+        ),
+      ],
+    );
+
+    /* AppBar(
       elevation: 2,
       title: Text(
         AppConstants.appName,
@@ -108,12 +125,8 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       ),
-      /* leading: IconButton(
-            icon: Icon(Icons.menu, color: ColorConstants.iconColor, size: SizeConstants.appBarMediumIconSize),
-            tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,
-            onPressed: () {},
-          ), */
-    );
+
+    ); */
   }
 
   Padding buildFab(HomeViewModel viewModel) {
@@ -154,7 +167,9 @@ class _HomeViewState extends State<HomeView> {
             title: const Text("Profile", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
 
             ///TODO:
-            onTap: () {},
+            onTap: () {
+              context.router.push(const ProfileRoute());
+            },
           ),
           ListTile(
             leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),

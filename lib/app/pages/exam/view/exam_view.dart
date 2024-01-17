@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
+import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
+import 'package:colorword_new/core/init/language/locale_keys.g.dart';
+import 'package:colorword_new/core/widgets/arrow_back_page_number_widget.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/exam/model/option_model.dart';
 import 'package:colorword_new/app/pages/exam/model/quest_model.dart';
@@ -20,11 +23,15 @@ class ExamView extends StatefulWidget {
 class _ExamViewState extends State<ExamView> {
   final ExamViewModel viewModel = locator<ExamViewModel>();
   final controller = PageController(initialPage: 0);
+  late int falseAnswers;
+  late int correctAnswers;
 
   @override
   void initState() {
     super.initState();
     viewModel.createExamQuestList(allWords: viewModel.homeViewModel.words);
+    viewModel.lastPageNumber = viewModel.examQuestList.length - 1;
+    viewModel.examResultList = List.filled(viewModel.homeViewModel.words.length, false);
   }
 
   @override
@@ -44,15 +51,18 @@ class _ExamViewState extends State<ExamView> {
               child: (viewModel.examWords?.length == null) || ((viewModel.examWords?.length ?? 0) <= 0)
                   ? buildEmptyWordListPageInfo()
                   : PageView.builder(
+                      allowImplicitScrolling: false,
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: controller,
                       reverse: false,
                       itemCount: viewModel.examQuestList.length,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (BuildContext context, int pageIndex) {
+                        viewModel.pageIndex = pageIndex;
                         return wordPage(
                           viewModel: viewModel,
                           context: context,
-                          questModel: viewModel.examQuestList[index],
+                          questModel: viewModel.examQuestList[pageIndex],
                         );
                       },
                     ),
@@ -68,27 +78,31 @@ class _ExamViewState extends State<ExamView> {
   }
 
   Container wordPage(
-      {required BuildContext context, required QuestModel questModel, required ExamViewModel viewModel}) {
+      {required BuildContext context,
+      required QuestModel questModel,
+      required ExamViewModel viewModel,
+      int? pageIndex}) {
     return Container(
       height: context.height,
       width: context.width,
       color: questModel.word?.color,
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const SizedBox(height: 80),
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: ArrowBackPageNumberWidget(
+              wordsLength: viewModel.examQuestList.length, pageIndex: viewModel.pageIndex ?? 1, context: context),
+        ),
         Text(questModel.word?.word ?? '-',
             style: TextStyle(
                 fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 32, color: ColorConstants.white)),
         const SizedBox(height: 50),
-        buildOption(optionModelList: questModel.options, questModel: questModel),
+        buildOption(optionModelList: questModel.options, questModel: questModel, pageIndex: pageIndex),
       ]),
     );
   }
 
-//option model, text,renk, buton renk değişim optionState adında enum oluştur
-//optionWidget sadece optionModel alsın
-
-  //Column buildOption({required List<String?> option, required ExamViewModel viewModel}) {
-  Widget buildOption({required List<OptionModel?> optionModelList, required QuestModel questModel}) {
+  Widget buildOption(
+      {required List<OptionModel?> optionModelList, required QuestModel questModel, required int? pageIndex}) {
     return optionModelList.isEmpty
         ? Container()
         : ListView.builder(
@@ -98,7 +112,7 @@ class _ExamViewState extends State<ExamView> {
               return OptionWidget(
                 optionModel: optionModelList[index],
                 onTap: () {
-                  onTapStation(questModel, optionModelList, index);
+                  onTapStation(questModel, optionModelList, index, pageIndex);
                 },
               );
             },
@@ -106,17 +120,28 @@ class _ExamViewState extends State<ExamView> {
   }
 
   //sadece bir kere tıklanabilmeli
-  void onTapStation(QuestModel questModel, List<OptionModel?> optionModelList, int index) {
+  void onTapStation(QuestModel questModel, List<OptionModel?> optionModelList, int index, int? pageIndex) {
     setState(() {
-      changeThePage(controller);
+      nextPage(controller);
       if (questModel.word?.translatedWords?[0] == optionModelList[index]?.optionText) {
         viewModel.increasetheScore(word: questModel.word, point: 2);
+        viewModel.examResultList[index] = true;
+        snackbarWidget(
+            content: Text(LocaleKeys.writtenExam_correct.locale,
+                textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
+            duration: const Duration(seconds: 1));
         for (var element in optionModelList) {
           element?.optionState = OptionState.wrong;
         }
         optionModelList[index]?.optionState = OptionState.correct;
       } else {
         viewModel.decreasetheScore(word: questModel.word, point: 1);
+        viewModel.examResultList[index] = false;
+        snackbarWidget(
+          content: Text(LocaleKeys.writtenExam_false.locale,
+              textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
+          duration: const Duration(seconds: 1),
+        );
         for (var element in optionModelList) {
           if (questModel.word?.translatedWords?[0] == element?.optionText) {
             element?.optionState = OptionState.correct;
@@ -128,14 +153,48 @@ class _ExamViewState extends State<ExamView> {
     });
   }
 
-  //belki geçişi doğru yanlış bildiriminden sonra yapmalıyız
-  //kişi doğru yanlışı görebilmeli sonra sayfa değişmeli
-  //eğer son sayfadaysa durumunu ele al
-  void changeThePage(PageController controller) {
-    //controller.nextPage(duration: const Duration(seconds: 2), curve: const ElasticInCurve(4));
-    //controller.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8)); //direkt anlık geçiş
-    //controller.nextPage(duration: const Duration(seconds: 4), curve: Curves.easeInOutQuint);
-    controller.nextPage(duration: const Duration(seconds: 4), curve: Curves.easeInOutQuint);
+  Future<void> nextPage(PageController controller) async {
+    if (viewModel.pageIndex != viewModel.lastPageNumber) {
+      controller.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8));
+    } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
+      answerCounter();
+      await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
+      // ignore: use_build_context_synchronously
+      context.router.pop();
+    }
+  }
+
+  //TODO:pratik hale getirilecek
+  Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget(
+      {required Widget content, required Duration duration}) async {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.black,
+      showCloseIcon: true,
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      padding: const EdgeInsets.only(right: 5.0, left: 15.0, bottom: 8.0, top: 8.0),
+      closeIconColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      content: content,
+      duration: duration,
+    ));
+  }
+
+  void answerCounter() {
+    falseAnswers = viewModel.examResultList.where((element) => element == false).length;
+    correctAnswers = viewModel.examResultList.where((element) => element == true).length;
+  }
+
+  Widget endOfExamWidget() {
+    return Column(children: [
+      Text(LocaleKeys.writtenExam_congratulations.locale),
+      Text(LocaleKeys.writtenExam_totalQuestion.locale + viewModel.examWords!.length.toString()),
+      Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
+      Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
+    ]);
   }
 
   Future<bool> onWillPop() async {

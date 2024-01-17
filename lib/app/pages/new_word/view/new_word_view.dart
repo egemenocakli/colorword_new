@@ -5,6 +5,7 @@ import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/app/models/word_model.dart';
+import 'package:colorword_new/core/widgets/my_appbar.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/new_word/viewmodel/new_word_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -33,34 +34,14 @@ class _NewWordViewState extends State<NewWordView> {
   }
 
   Widget _buildScreen(BuildContext context, NewWordViewModel newWordViewModel) {
-    /*
-    TextEditingController textController = TextEditingController();
-    String translatedWord = "";
-    */
-
     {
       return WillPopScope(
         onWillPop: onWillPop,
         child: Scaffold(
           floatingActionButton: addNewWordFAB(),
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            elevation: 2,
-            title: Text(
-              AppConstants.appName,
-              style: TextStyle(
-                  fontFamily: 'Manrope', fontWeight: FontWeight.w700, fontSize: 26, color: ColorConstants.white),
-            ),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: ColorConstants.appBarColors,
-                ),
-              ),
-            ),
+          appBar: MyAppBar(
+            context: context,
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined, color: ColorConstants.iconColor, size: 30),
               tooltip: LocaleKeys.mainPage_menuIconToolTip.locale,

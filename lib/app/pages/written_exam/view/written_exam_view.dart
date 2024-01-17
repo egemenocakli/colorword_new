@@ -11,7 +11,7 @@ import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/written_exam/viewmodel/written_exam_viewmodel.dart';
 import 'package:colorword_new/app/pages/home/viewmodel/home_viewmodel.dart';
-import 'package:colorword_new/app/pages/written_exam/widget/arrow_back_page_number_widget.dart';
+import 'package:colorword_new/core/widgets/arrow_back_page_number_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/hint_word_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/mistake_icons_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/word_in_center.dart';
@@ -40,6 +40,7 @@ class _HomeViewState extends State<WrittenExamView> {
     super.initState();
     focusNode = List.generate(homeViewModel.words.length, (index) => FocusNode());
     viewModel.lastPageNumber = homeViewModel.words.length - 1;
+    viewModel.examResultList = List.filled(viewModel.homeViewModel.words.length, false);
   }
 
   @override
@@ -130,7 +131,7 @@ class _HomeViewState extends State<WrittenExamView> {
             viewModel.examResultList[pageIndex] = true;
             snackbarWidget(
                 content: Text(LocaleKeys.writtenExam_correct.locale,
-                    textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+                    textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
                 duration: const Duration(seconds: 1));
             nextPage();
             controller.clear();
@@ -141,7 +142,7 @@ class _HomeViewState extends State<WrittenExamView> {
               viewModel.examResultList[pageIndex] = false;
               snackbarWidget(
                 content: Text(LocaleKeys.writtenExam_false.locale,
-                    textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+                    textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
                 duration: const Duration(seconds: 1),
               );
               nextPage();
@@ -156,7 +157,7 @@ class _HomeViewState extends State<WrittenExamView> {
           viewModel.examResultList[pageIndex] = true;
           snackbarWidget(
               content: Text(LocaleKeys.writtenExam_correct.locale,
-                  textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+                  textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
               duration: const Duration(seconds: 1));
           nextPage();
           controller.clear();
@@ -209,8 +210,8 @@ class _HomeViewState extends State<WrittenExamView> {
         viewModel.decreasetheScore(point: 2, word: word);
         viewModel.examResultList[pageIndex] = false;
         snackbarWidget(
-          content:
-              Text(LocaleKeys.writtenExam_skip.locale, textAlign: TextAlign.center, style: MidTextStyle.midTextStyle()),
+          content: Text(LocaleKeys.writtenExam_skip.locale,
+              textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
           duration: const Duration(seconds: 1),
         );
         nextPage();
@@ -222,7 +223,8 @@ class _HomeViewState extends State<WrittenExamView> {
   Future<void> nextPage() async {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
       cleanHintText();
-      pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+      /* pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear); */
+      pageController.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8));
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
       answerCounter();
       await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));
@@ -243,6 +245,7 @@ class _HomeViewState extends State<WrittenExamView> {
     correctAnswers = viewModel.examResultList.where((element) => element == true).length;
   }
 
+  //TODO:pratik hale getirilecek
   Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget(
       {required Widget content, required Duration duration}) async {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(

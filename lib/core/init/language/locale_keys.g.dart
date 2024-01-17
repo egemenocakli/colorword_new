@@ -27,5 +27,15 @@ abstract class  LocaleKeys {
   static const writtenExam_false = 'writtenExam.false';
   static const writtenExam_skip = 'writtenExam.skip';
   static const writtenExam = 'writtenExam';
+  static const profilePage_userInfos = 'profilePage.userInfos';
+  static const profilePage_fullName = 'profilePage.fullName';
+  static const profilePage_email = 'profilePage.email';
+  static const profilePage_userId = 'profilePage.userId';
+  static const profilePage_deleteThisAccount = 'profilePage.deleteThisAccount';
+  static const profilePage_deleteAccount = 'profilePage.deleteAccount';
+  static const profilePage_deleteInfoMessage = 'profilePage.deleteInfoMessage';
+  static const profilePage_confirm = 'profilePage.confirm';
+  static const profilePage_cancel = 'profilePage.cancel';
+  static const profilePage = 'profilePage';
 
 }

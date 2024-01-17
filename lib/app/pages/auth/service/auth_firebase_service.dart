@@ -29,7 +29,11 @@ class FirebaseAuthService implements AuthServiceInterface {
         _appUser = _userFromFirebase(userCredential.user!);
       }
     }
-    print((_appUser?.email) ?? "giriş yapan email null");
+    print("Giriş yapan kullanıcı bilgileri:\n"
+        "${_appUser?.name} "
+        "${_appUser?.lastname} "
+        "${_appUser?.email} "
+        "${_appUser?.userId}");
 
     return _appUser;
   }
@@ -53,5 +57,43 @@ class FirebaseAuthService implements AuthServiceInterface {
         lastname: user.displayName!.split(" ").isNotEmpty ? user.displayName!.split(" ")[1] : "",
         photo: user.photoURL!);
     return _appUser;
+  }
+
+  @override
+  Future<bool> updateName(String? displayName) async {
+    try {
+      if (displayName != null) {
+        await _firebaseAuth.currentUser?.updateDisplayName(displayName);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateEmail(String? email) async {
+    try {
+      if (email != null) {
+        await _firebaseAuth.currentUser?.updateEmail(email);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> deleteAccount() async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

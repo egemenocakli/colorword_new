@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/app/pages/auth/view/login_view.dart';
+import 'package:colorword_new/app/pages/profile/view/profile_view.dart';
 import 'package:colorword_new/app/pages/written_exam/view/written_exam_view.dart';
 import 'package:colorword_new/app/pages/exam/view/exam_view.dart';
 import 'package:colorword_new/app/pages/home/view/home_view.dart';
@@ -16,6 +17,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: HomeRoute.page),
         AutoRoute(page: NewWordRoute.page),
         AutoRoute(page: ExamRoute.page),
-        AutoRoute(page: WrittenExamRoute.page)
+        AutoRoute(page: WrittenExamRoute.page),
+        AutoRoute(page: ProfileRoute.page)
       ];
 }

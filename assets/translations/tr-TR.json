@@ -28,5 +28,16 @@
         "correct": "Doğru!",
         "false": "Yanlış!",
         "skip": "Bu kelimeyi atladınız."
+    },
+    "profilePage": {
+        "userInfos": "Kullanıcı Bilgileri",
+        "fullName": "Ad Soyad",
+        "email": "Email",
+        "userId": "Kullanıcı Id",
+        "deleteThisAccount": "Bu Hesabı Kalıcı Olarak Sil",
+        "deleteAccount": "Bu Hesabı Sil",
+        "deleteInfoMessage": "Kullanmakta olduğunuz uygulamaya ait hesabınızı silmek istediğinize emin misiniz? Silme işlemini gerçekleştirmeniz durumunda kayıtlı kelimeleriniz ve bilgileriniz silinecektir.",
+        "confirm": "Onayla",
+        "cancel": "Vazgeç"
     }
 }

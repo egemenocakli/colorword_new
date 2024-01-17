@@ -38,6 +38,7 @@ class ColorConstants {
     const Color(0xFF6868AC),
     const Color(0xFF119DA4),
   ];
+  static Color alertDialogBackgroundColor = const Color(0xFF43719c);
   static Color iconColor = const Color(0xFF273748);
   static Color iconOrangeAccentColor = Colors.orangeAccent;
   static Color iconShadeColor = Colors.black12;
@@ -66,13 +67,37 @@ class FontPackage {
   static const IconData edit_circled = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
 
-class MidTextStyle {
-  static TextStyle midTextStyle({double? fontSize}) {
-    return TextStyle(fontFamily: AppConstants.fontFamilyManrope, fontSize: (fontSize ?? 16));
+class MyTextStyle {
+  static TextStyle smallTextStyle(
+      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+    return TextStyle(
+      fontFamily: AppConstants.fontFamilyManrope,
+      fontSize: (fontSize ?? 16),
+      overflow: overflow,
+      color: textColor ?? ColorConstants.white,
+      fontWeight: fontWeight,
+    );
   }
 
-  static TextStyle largeTextStyle({double? fontSize}) {
-    return TextStyle(fontFamily: AppConstants.fontFamilyManrope, fontSize: (fontSize ?? 26));
+  static TextStyle midTextStyle({double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+    return TextStyle(
+      fontFamily: AppConstants.fontFamilyManrope,
+      fontSize: (fontSize ?? 20),
+      overflow: overflow,
+      color: textColor ?? ColorConstants.white,
+      fontWeight: fontWeight,
+    );
+  }
+
+  static TextStyle largeTextStyle(
+      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+    return TextStyle(
+      fontFamily: AppConstants.fontFamilyManrope,
+      fontSize: (fontSize ?? 26),
+      overflow: overflow,
+      color: textColor ?? ColorConstants.white,
+      fontWeight: fontWeight,
+    );
   }
 }
 
@@ -91,5 +116,13 @@ class AllBorderRadius {
 
   static BorderRadius smallBorderRadius() {
     return BorderRadius.circular(12);
+  }
+}
+
+class AllButtonStyle {
+  static ButtonStyle alertDialog({Color? backgroundColor, required BorderRadiusGeometry borderRadius}) {
+    return ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(backgroundColor),
+        shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: borderRadius)));
   }
 }

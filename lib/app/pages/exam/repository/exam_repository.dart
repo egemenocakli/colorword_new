@@ -12,6 +12,6 @@ class ExamRepository implements IExamService {
 
   @override
   Future<bool> increasetheScore({Word? word, required int point}) async {
-    return await _examService.increasetheScore(point: point);
+    return await _examService.increasetheScore(word: word, point: point);
   }
 }

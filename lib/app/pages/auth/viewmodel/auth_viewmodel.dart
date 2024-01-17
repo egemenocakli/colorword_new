@@ -50,7 +50,21 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
 
   @override
   Future<void> refreshData() {
-    // TODO: implement refreshData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> deleteAccount() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> updateName(String? displayName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> updateEmail(String? email) {
     throw UnimplementedError();
   }
 }

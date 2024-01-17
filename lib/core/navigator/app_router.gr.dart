@@ -39,6 +39,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NewWordView(),
       );
     },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileView(),
+      );
+    },
     WrittenExamRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -91,20 +97,6 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginView2]
-class LoginRoute2 extends PageRouteInfo<void> {
-  const LoginRoute2({List<PageRouteInfo>? children})
-      : super(
-          LoginRoute2.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginRoute2';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [NewWordView]
 class NewWordRoute extends PageRouteInfo<void> {
   const NewWordRoute({List<PageRouteInfo>? children})
@@ -114,6 +106,20 @@ class NewWordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NewWordRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileView]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
