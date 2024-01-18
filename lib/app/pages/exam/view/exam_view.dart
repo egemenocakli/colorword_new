@@ -49,7 +49,7 @@ class _ExamViewState extends State<ExamView> {
             Expanded(
               flex: 1,
               child: (viewModel.examWords?.length == null) || ((viewModel.examWords?.length ?? 0) <= 0)
-                  ? buildEmptyWordListPageInfo()
+                  ? buildEmptyWordListPageInfo(viewModel.pageIndex ?? 1)
                   : PageView.builder(
                       allowImplicitScrolling: false,
                       physics: const NeverScrollableScrollPhysics(),
@@ -60,10 +60,10 @@ class _ExamViewState extends State<ExamView> {
                       itemBuilder: (BuildContext context, int pageIndex) {
                         viewModel.pageIndex = pageIndex;
                         return wordPage(
-                          viewModel: viewModel,
-                          context: context,
-                          questModel: viewModel.examQuestList[pageIndex],
-                        );
+                            viewModel: viewModel,
+                            context: context,
+                            questModel: viewModel.examQuestList[pageIndex],
+                            pageIndex: pageIndex);
                       },
                     ),
             ),
@@ -73,15 +73,16 @@ class _ExamViewState extends State<ExamView> {
     );
   }
 
-  Widget buildEmptyWordListPageInfo() {
-    return wordPage(context: context, questModel: QuestModel(word: null, options: []), viewModel: viewModel);
+  Widget buildEmptyWordListPageInfo(int pageIndex) {
+    return wordPage(
+        context: context, questModel: QuestModel(word: null, options: []), viewModel: viewModel, pageIndex: pageIndex);
   }
 
   Container wordPage(
       {required BuildContext context,
       required QuestModel questModel,
       required ExamViewModel viewModel,
-      int? pageIndex}) {
+      required int pageIndex}) {
     return Container(
       height: context.height,
       width: context.width,
@@ -90,7 +91,7 @@ class _ExamViewState extends State<ExamView> {
         Padding(
           padding: const EdgeInsets.only(bottom: 100.0),
           child: ArrowBackPageNumberWidget(
-              wordsLength: viewModel.examQuestList.length, pageIndex: viewModel.pageIndex ?? 1, context: context),
+              wordsLength: viewModel.examQuestList.length, pageIndex: pageIndex, context: context),
         ),
         Text(questModel.word?.word ?? '-',
             style: TextStyle(
@@ -102,7 +103,7 @@ class _ExamViewState extends State<ExamView> {
   }
 
   Widget buildOption(
-      {required List<OptionModel?> optionModelList, required QuestModel questModel, required int? pageIndex}) {
+      {required List<OptionModel?> optionModelList, required QuestModel questModel, required int pageIndex}) {
     return optionModelList.isEmpty
         ? Container()
         : ListView.builder(
@@ -120,12 +121,11 @@ class _ExamViewState extends State<ExamView> {
   }
 
   //sadece bir kere tıklanabilmeli
-  void onTapStation(QuestModel questModel, List<OptionModel?> optionModelList, int index, int? pageIndex) {
+  void onTapStation(QuestModel questModel, List<OptionModel?> optionModelList, int index, int pageIndex) {
     setState(() {
-      nextPage(controller);
       if (questModel.word?.translatedWords?[0] == optionModelList[index]?.optionText) {
         viewModel.increasetheScore(word: questModel.word, point: 2);
-        viewModel.examResultList[index] = true;
+        viewModel.examResultList[pageIndex] = true;
         snackbarWidget(
             content: Text(LocaleKeys.writtenExam_correct.locale,
                 textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
@@ -134,9 +134,10 @@ class _ExamViewState extends State<ExamView> {
           element?.optionState = OptionState.wrong;
         }
         optionModelList[index]?.optionState = OptionState.correct;
+        nextPage(controller);
       } else {
         viewModel.decreasetheScore(word: questModel.word, point: 1);
-        viewModel.examResultList[index] = false;
+        viewModel.examResultList[pageIndex] = false;
         snackbarWidget(
           content: Text(LocaleKeys.writtenExam_false.locale,
               textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
@@ -149,6 +150,7 @@ class _ExamViewState extends State<ExamView> {
             element?.optionState = OptionState.wrong;
           }
         }
+        nextPage(controller);
       }
     });
   }
@@ -186,6 +188,9 @@ class _ExamViewState extends State<ExamView> {
   void answerCounter() {
     falseAnswers = viewModel.examResultList.where((element) => element == false).length;
     correctAnswers = viewModel.examResultList.where((element) => element == true).length;
+    print(viewModel.examResultList.length);
+    print(falseAnswers);
+    print(correctAnswers);
   }
 
   Widget endOfExamWidget() {
