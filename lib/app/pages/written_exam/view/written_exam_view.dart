@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:colorword_new/app/pages/written_exam/widget/end_of_exam_result_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/hint_button_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/skip_button_widget.dart';
 import 'package:colorword_new/app/pages/written_exam/widget/text_field_widget.dart';
@@ -31,9 +32,6 @@ class _HomeViewState extends State<WrittenExamView> {
   TextEditingController controller = TextEditingController();
   PageController pageController = PageController(keepPage: false);
   List<FocusNode> focusNode = [];
-  late int falseAnswers;
-  late int correctAnswers;
-  int hintIndex = 0;
 
   @override
   void initState() {
@@ -109,7 +107,7 @@ class _HomeViewState extends State<WrittenExamView> {
           ArrowBackPageNumberWidget(
             context: context,
             wordsLength: homeViewModel.words.length,
-            pageIndex: viewModel.pageIndex,
+            pageIndex: pageIndex,
           ),
           hintButtonWidget(word: word, pageIndex: pageIndex),
           WordInCenter(translatedWord: word?.translatedWords?.firstOrNull ?? '-'),
@@ -178,9 +176,9 @@ class _HomeViewState extends State<WrittenExamView> {
             skipButtonWidget(word, pageIndex),
             HintButtonWidget(
               onTap: () {
-                if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
-                  addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
-                  hintIndex = hintIndex + 1;
+                if (viewModel.hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
+                  viewModel.addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![viewModel.hintIndex]);
+                  viewModel.hintIndex = viewModel.hintIndex + 1;
                   viewModel.mistakes = viewModel.mistakes - 1;
                   if (viewModel.mistakes <= 0) {
                     viewModel.decreasetheScore(point: 2, word: word);
@@ -222,27 +220,21 @@ class _HomeViewState extends State<WrittenExamView> {
 
   Future<void> nextPage() async {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
-      cleanHintText();
+      viewModel.cleanHintText();
       /* pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear); */
       pageController.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8));
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
-      answerCounter();
-      await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));
+      viewModel.answerCounter();
+      await snackbarWidget(
+          content: EndOfExamResultWidget(
+              totalQuestions: homeViewModel.words.length,
+              correctAnswers: viewModel.correctAnswers,
+              falseAnswers: viewModel.falseAnswers),
+          duration: const Duration(seconds: 5));
       await Future.delayed(const Duration(seconds: 5));
       // ignore: use_build_context_synchronously
       context.router.pop();
     }
-  }
-
-  void cleanHintText() {
-    viewModel.hintText = "";
-    hintIndex = 0;
-  }
-
-  void answerCounter() {
-    //TODO:Word objesinde kaç kere yanlış bilindiğini tutabiliriz.
-    falseAnswers = viewModel.examResultList.where((element) => element == false).length;
-    correctAnswers = viewModel.examResultList.where((element) => element == true).length;
   }
 
   //TODO:pratik hale getirilecek
@@ -264,9 +256,9 @@ class _HomeViewState extends State<WrittenExamView> {
   }
 
   void hintButtonOnTap(Word? word) {
-    if (hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
-      addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![hintIndex]);
-      hintIndex = hintIndex + 1;
+    if (viewModel.hintIndex < homeViewModel.words[viewModel.pageIndex]!.word!.length) {
+      viewModel.addLetterToController(homeViewModel.words[viewModel.pageIndex]!.word![viewModel.hintIndex]);
+      viewModel.hintIndex = viewModel.hintIndex + 1;
       viewModel.mistakes = viewModel.mistakes - 1;
       if (viewModel.mistakes <= 0) {
         viewModel.decreasetheScore(point: 2, word: word);
@@ -275,18 +267,5 @@ class _HomeViewState extends State<WrittenExamView> {
         controller.clear();
       }
     }
-  }
-
-  void addLetterToController(String letter) {
-    viewModel.hintText += letter;
-  }
-
-  Widget endOfExamWidget() {
-    return Column(children: [
-      Text(LocaleKeys.writtenExam_congratulations.locale),
-      Text(LocaleKeys.writtenExam_totalQuestion.locale + homeViewModel.words.length.toString()),
-      Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
-      Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
-    ]);
   }
 }

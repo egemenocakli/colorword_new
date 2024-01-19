@@ -13,6 +13,10 @@ abstract class  LocaleKeys {
   static const mainPage_exitToolTip = 'mainPage.exitToolTip';
   static const mainPage_menuIconToolTip = 'mainPage.menuIconToolTip';
   static const mainPage_words = 'mainPage.words';
+  static const mainPage_profile = 'mainPage.profile';
+  static const mainPage_multipleChoise = 'mainPage.multipleChoise';
+  static const mainPage_writtenExam = 'mainPage.writtenExam';
+  static const mainPage_score = 'mainPage.score';
   static const mainPage = 'mainPage';
   static const addNewWordPage_addNewWord = 'addNewWordPage.addNewWord';
   static const addNewWordPage_cantFindWord = 'addNewWordPage.cantFindWord';

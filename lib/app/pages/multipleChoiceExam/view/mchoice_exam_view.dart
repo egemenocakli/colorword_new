@@ -6,40 +6,38 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/core/widgets/arrow_back_page_number_widget.dart';
 import 'package:colorword_new/locator.dart';
-import 'package:colorword_new/app/pages/exam/model/option_model.dart';
-import 'package:colorword_new/app/pages/exam/model/quest_model.dart';
-import 'package:colorword_new/app/pages/exam/viewmodel/exam_viewmodel.dart';
-import 'package:colorword_new/app/pages/exam/widgets/option_widget.dart';
+import 'package:colorword_new/app/pages/multipleChoiceExam/model/option_model.dart';
+import 'package:colorword_new/app/pages/multipleChoiceExam/model/quest_model.dart';
+import 'package:colorword_new/app/pages/multipleChoiceExam/viewmodel/mchoice_exam_viewmodel.dart';
+import 'package:colorword_new/app/pages/multipleChoiceExam/widgets/option_widget.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class ExamView extends StatefulWidget {
-  const ExamView({super.key});
+class MChoiceExamView extends StatefulWidget {
+  const MChoiceExamView({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ExamViewState();
+  State<StatefulWidget> createState() => _MChoiceExamViewState();
 }
 
-class _ExamViewState extends State<ExamView> {
-  final ExamViewModel viewModel = locator<ExamViewModel>();
+class _MChoiceExamViewState extends State<MChoiceExamView> {
+  final MChoiceExamViewModel viewModel = locator<MChoiceExamViewModel>();
   final controller = PageController(initialPage: 0);
-  late int falseAnswers;
-  late int correctAnswers;
 
   @override
   void initState() {
     super.initState();
-    viewModel.createExamQuestList(allWords: viewModel.homeViewModel.words);
+    viewModel.createExamQuestList(allWords: viewModel.examWords!); //viewModel.homeViewModel.words);
     viewModel.lastPageNumber = viewModel.examQuestList.length - 1;
     viewModel.examResultList = List.filled(viewModel.homeViewModel.words.length, false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<ExamViewModel>(), builder: _buildScreen);
+    return BaseView(viewModelBuilder: (_) => locator<MChoiceExamViewModel>(), builder: _buildScreen);
   }
 
-  Widget _buildScreen(BuildContext context, ExamViewModel viewModel) {
+  Widget _buildScreen(BuildContext context, MChoiceExamViewModel viewModel) {
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -81,7 +79,7 @@ class _ExamViewState extends State<ExamView> {
   Container wordPage(
       {required BuildContext context,
       required QuestModel questModel,
-      required ExamViewModel viewModel,
+      required MChoiceExamViewModel viewModel,
       required int pageIndex}) {
     return Container(
       height: context.height,
@@ -93,11 +91,14 @@ class _ExamViewState extends State<ExamView> {
           child: ArrowBackPageNumberWidget(
               wordsLength: viewModel.examQuestList.length, pageIndex: pageIndex, context: context),
         ),
-        Text(questModel.word?.word ?? '-',
-            style: TextStyle(
-                fontFamily: 'Manrope', fontWeight: FontWeight.w600, fontSize: 32, color: ColorConstants.white)),
-        const SizedBox(height: 50),
-        buildOption(optionModelList: questModel.options, questModel: questModel, pageIndex: pageIndex),
+        Text(
+          questModel.word?.word ?? '-',
+          style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600, fontSize: 32),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 50.0),
+          child: buildOption(optionModelList: questModel.options, questModel: questModel, pageIndex: pageIndex),
+        ),
       ]),
     );
   }
@@ -159,7 +160,7 @@ class _ExamViewState extends State<ExamView> {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
       controller.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8));
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
-      answerCounter();
+      viewModel.answerCounter();
       await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));
       await Future.delayed(const Duration(seconds: 5));
       // ignore: use_build_context_synchronously
@@ -185,20 +186,24 @@ class _ExamViewState extends State<ExamView> {
     ));
   }
 
-  void answerCounter() {
-    falseAnswers = viewModel.examResultList.where((element) => element == false).length;
-    correctAnswers = viewModel.examResultList.where((element) => element == true).length;
-    print(viewModel.examResultList.length);
-    print(falseAnswers);
-    print(correctAnswers);
-  }
-
   Widget endOfExamWidget() {
     return Column(children: [
-      Text(LocaleKeys.writtenExam_congratulations.locale),
-      Text(LocaleKeys.writtenExam_totalQuestion.locale + viewModel.examWords!.length.toString()),
-      Text(LocaleKeys.writtenExam_totalCorrectAnswer.locale + correctAnswers.toString()),
-      Text(LocaleKeys.writtenExam_totalWrongAnswer.locale + falseAnswers.toString())
+      Text(
+        LocaleKeys.writtenExam_congratulations.locale,
+        style: MyTextStyle.smallTextStyle(),
+      ),
+      Text(
+        LocaleKeys.writtenExam_totalQuestion.locale + viewModel.examWords!.length.toString(),
+        style: MyTextStyle.smallTextStyle(),
+      ),
+      Text(
+        LocaleKeys.writtenExam_totalCorrectAnswer.locale + viewModel.correctAnswers.toString(),
+        style: MyTextStyle.smallTextStyle(),
+      ),
+      Text(
+        LocaleKeys.writtenExam_totalWrongAnswer.locale + viewModel.falseAnswers.toString(),
+        style: MyTextStyle.smallTextStyle(),
+      )
     ]);
   }
 

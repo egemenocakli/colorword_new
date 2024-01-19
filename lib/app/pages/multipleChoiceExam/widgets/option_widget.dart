@@ -1,5 +1,5 @@
 import 'package:colorword_new/core/init/constants.dart';
-import 'package:colorword_new/app/pages/exam/model/option_model.dart';
+import 'package:colorword_new/app/pages/multipleChoiceExam/model/option_model.dart';
 import 'package:flutter/material.dart';
 
 class OptionWidget extends StatelessWidget {

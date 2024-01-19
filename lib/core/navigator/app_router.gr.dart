@@ -18,7 +18,7 @@ abstract class _$AppRouter extends RootStackRouter {
     ExamRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ExamView(),
+        child: const MChoiceExamView(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -55,7 +55,7 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [ExamView]
+/// [MChoiceExamView]
 class ExamRoute extends PageRouteInfo<void> {
   const ExamRoute({List<PageRouteInfo>? children})
       : super(

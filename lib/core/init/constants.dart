@@ -42,6 +42,7 @@ class ColorConstants {
   static Color iconColor = const Color(0xFF273748);
   static Color iconOrangeAccentColor = Colors.orangeAccent;
   static Color iconShadeColor = Colors.black12;
+  static Color grey = Colors.grey;
 }
 
 class SizeConstants {
@@ -68,6 +69,19 @@ class FontPackage {
 }
 
 class MyTextStyle {
+  ///FontSize:14  Color:Colors.white
+  static TextStyle xsmallTextStyle(
+      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+    return TextStyle(
+      fontFamily: AppConstants.fontFamilyManrope,
+      fontSize: (fontSize ?? 14),
+      overflow: overflow,
+      color: textColor ?? ColorConstants.white,
+      fontWeight: fontWeight,
+    );
+  }
+
+  ///FontSize:16  Color:Colors.white
   static TextStyle smallTextStyle(
       {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
     return TextStyle(
@@ -79,6 +93,7 @@ class MyTextStyle {
     );
   }
 
+  ///FontSize:20  Color:Colors.white
   static TextStyle midTextStyle({double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
     return TextStyle(
       fontFamily: AppConstants.fontFamilyManrope,
@@ -89,6 +104,7 @@ class MyTextStyle {
     );
   }
 
+  ///FontSize:26  Color:Colors.white
   static TextStyle largeTextStyle(
       {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
     return TextStyle(
@@ -99,21 +115,37 @@ class MyTextStyle {
       fontWeight: fontWeight,
     );
   }
+
+  ///FontSize:32  Color:Colors.white
+  static TextStyle xlargeTextStyle(
+      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+    return TextStyle(
+      fontFamily: AppConstants.fontFamilyManrope,
+      fontSize: (fontSize ?? 32),
+      overflow: overflow,
+      color: textColor ?? ColorConstants.white,
+      fontWeight: fontWeight,
+    );
+  }
 }
 
 class AllBorderRadius {
+  ///30
   static BorderRadius xlargeBorderRadius() {
     return BorderRadius.circular(30);
   }
 
+  ///20
   static BorderRadius largeBorderRadius() {
     return BorderRadius.circular(20);
   }
 
+  ///15
   static BorderRadius mediumBorderRadius() {
     return BorderRadius.circular(15);
   }
 
+  ///12
   static BorderRadius smallBorderRadius() {
     return BorderRadius.circular(12);
   }

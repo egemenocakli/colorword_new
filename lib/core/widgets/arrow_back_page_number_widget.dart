@@ -31,8 +31,9 @@ class ArrowBackPageNumberWidget extends StatelessWidget {
 
 Widget pageNumber(BuildContext context, int wordsLength, int pageIndex) {
   return Padding(
-    padding: EdgeInsets.only(top: 20.0, left: context.width - 100),
-    child: Text("${pageIndex + 1}" "/" "$wordsLength",
-        style: const TextStyle(fontFamily: AppConstants.fontFamilyManrope, fontWeight: FontWeight.w600)),
-  );
+      padding: EdgeInsets.only(top: 20.0, left: context.width - 100),
+      child: Text(
+        "${pageIndex + 1}" "/" "$wordsLength",
+        style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black, fontSize: 14, fontWeight: FontWeight.w600),
+      ));
 }

@@ -16,6 +16,9 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   late int lastPageNumber;
   late List<bool> _examResultList = List.filled(homeViewModel.words.length, false);
   String _hintText = "";
+  late int falseAnswers;
+  late int correctAnswers;
+  int hintIndex = 0;
 
   @override
   FutureOr<void> init() {}
@@ -81,5 +84,20 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
     } else {
       return false;
     }
+  }
+
+  void cleanHintText() {
+    hintText = "";
+    hintIndex = 0;
+  }
+
+  void answerCounter() {
+    //TODO:Word objesinde kaç kere yanlış bilindiğini tutabiliriz.
+    falseAnswers = examResultList.where((element) => element == false).length;
+    correctAnswers = examResultList.where((element) => element == true).length;
+  }
+
+  void addLetterToController(String letter) {
+    hintText += letter;
   }
 }

@@ -26,7 +26,6 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     viewModel.readWords();
-    //viewModel.getUserInfos();
   }
 
   @override
@@ -87,61 +86,16 @@ class _HomeViewState extends State<HomeView> {
         ),
       ],
     );
-
-    /* AppBar(
-      elevation: 2,
-      title: Text(
-        AppConstants.appName,
-        style: TextStyle(
-            fontFamily: AppConstants.fontFamilyManrope,
-            fontWeight: FontWeight.w700,
-            fontSize: 26,
-            color: ColorConstants.white),
-      ),
-      centerTitle: true,
-      actions: <Widget>[
-        /* IconButton(
-              icon: const Icon(Icons.menu_book_rounded),
-              onPressed: () {
-                context.router.push(const ExamRoute());
-              },
-            ), */
-        IconButton(
-          icon: Icon(Icons.exit_to_app_outlined,
-              size: SizeConstants.appBarLargeIconSize, color: ColorConstants.iconColor),
-          tooltip: LocaleKeys.mainPage_exitToolTip.locale,
-          onPressed: () {
-            viewModel.signOutFromHome();
-            context.replaceRoute(const LoginRoute());
-          },
-        ),
-      ],
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: ColorConstants.appBarColors,
-          ),
-        ),
-      ),
-
-    ); */
   }
 
   Padding buildFab(HomeViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.only(left: 30.0),
-      child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //direction: Axis.horizontal,
-          //alignment: WrapAlignment.end,
-          //crossAxisAlignment: WrapCrossAlignment.end,
-          children: [
-            deleteWordButton(viewModel.onPageWord),
-            addNewWordFAB(),
-          ]),
+      child:
+          Row(crossAxisAlignment: CrossAxisAlignment.end, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        deleteWordButton(viewModel.onPageWord),
+        addNewWordFAB(),
+      ]),
     );
   }
 
@@ -151,10 +105,9 @@ class _HomeViewState extends State<HomeView> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text("${viewModel.signedUser?.name}" " " "${viewModel.signedUser?.lastname}",
-                style: const TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
-            accountEmail: Text(viewModel.signedUser?.email ?? '',
-                style: const TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
-            currentAccountPicture: const FlutterLogo(),
+                style: MyTextStyle.midTextStyle()),
+            accountEmail: Text(viewModel.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
+            //currentAccountPicture: const FlutterLogo(),
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppConstants.background),
@@ -164,26 +117,29 @@ class _HomeViewState extends State<HomeView> {
           ),
           ListTile(
             leading: const Icon(Icons.person, color: Colors.blueAccent),
-            title: const Text("Profile", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
+            title: Text(LocaleKeys.mainPage_profile.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
 
-            ///TODO:
+            ///TODO: autoroute guard
             onTap: () {
               context.router.push(const ProfileRoute());
             },
           ),
           ListTile(
             leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
-            title: const Text("Multiple-Choice Exam", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
+            title: Text(LocaleKeys.mainPage_multipleChoise.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
 
-            ///TODO:
+            ///TODO:autoroute guard
             onTap: () {
               context.router.push(const ExamRoute());
             },
           ),
           ListTile(
-            ///TODO:
+            ///TODO:autoroute guard
             leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
-            title: const Text("Written Exam", style: TextStyle(fontFamily: AppConstants.fontFamilyManrope)),
+            title: Text(LocaleKeys.mainPage_writtenExam.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
             onTap: () {
               context.router.push(const WrittenExamRoute());
             },
@@ -236,25 +192,14 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(word?.word ?? '-',
-              style: TextStyle(
-                  fontFamily: AppConstants.fontFamilyManrope,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 32,
-                  color: ColorConstants.white)),
-          Text(
-            word?.translatedWords?.firstOrNull ?? '-',
-            style: TextStyle(fontFamily: AppConstants.fontFamilyManrope, color: ColorConstants.white, fontSize: 20),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text("Score: ${word!.score}",
-              style: TextStyle(
-                  fontFamily: AppConstants.fontFamilyManrope,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: ColorConstants.white)),
+          Text(word?.word ?? '-', style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600)),
+          Text(word?.translatedWords?.firstOrNull ?? '-', style: MyTextStyle.midTextStyle()),
+          Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                "${LocaleKeys.mainPage_score.locale}: ${word!.score}",
+                style: MyTextStyle.smallTextStyle(fontWeight: FontWeight.w500),
+              )),
         ],
       ),
     );

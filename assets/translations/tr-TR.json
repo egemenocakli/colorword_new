@@ -12,7 +12,11 @@
     "mainPage": {
         "exitToolTip": "Çıkış",
         "menuIconToolTip": "Menü Butonu",
-        "words": "İngilizce Kelimeler"
+        "words": "İngilizce Kelimeler",
+        "profile": "Profil",
+        "multipleChoise": "Seçenekli Test",
+        "writtenExam": "Klasik Test",
+        "score": "Skor"
     },
     "addNewWordPage": {
         "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",

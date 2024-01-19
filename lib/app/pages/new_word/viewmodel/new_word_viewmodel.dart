@@ -19,6 +19,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   String sourceLanguage = "TR";
   String translateLanguage = "EN";
   final HomeViewModel homeViewModel = locator<HomeViewModel>();
+  bool isSame = false;
 
   @override
   FutureOr<void> init() {}
@@ -83,20 +84,17 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
 
   @override
   Future<bool> addWord(Word? word) async {
-    bool isSame = false;
-
     isSame = await compareWordWithList(word!);
 
     //eslesme != true ? await _newWordService.addWord(word) : false;
     if (isSame != true) {
       return await _newWordService.addWord(word);
     } else {
-      return false;
+      return isSame;
     }
   }
 
   Future<bool> compareWordWithList(Word newWord) async {
-    bool isSame = false;
     if (homeViewModel.words.isNotEmpty) {
       for (int i = 0; i < homeViewModel.words.length;) {
         if (newWord.word == homeViewModel.words[i]!.word) {
