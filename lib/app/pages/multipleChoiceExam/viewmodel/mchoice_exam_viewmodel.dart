@@ -69,13 +69,13 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
   }
 
   List<String?> createOptions({required List<Word?>? allWords}) {
-    var random = Random(4);
+    Random random = Random.secure();
 
     options.clear();
     options.add(onPageWord?.translatedWords?[0]);
     //neden bilmiyorum yeni kelime eklediğimde aşağıdaki <=4 durumunda 3 tane eleman geldi bu yüzden 5 yaptım
     for (int i = 0; i <= 4; i++) {
-      options.add(allWords?[random.nextInt(allWords.length)]?.translatedWords?.first);
+      options.add(allWords![random.nextInt(allWords.length)]?.translatedWords?.first);
     }
     return options.toList();
   }

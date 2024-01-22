@@ -23,7 +23,6 @@ class AppNameAnimationWidget extends StatefulWidget {
 class _AppNameAnimationWidgetState extends State<AppNameAnimationWidget> with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
-  late List<Color> _randomColors;
   late String _visibleText;
   late List<Timer> _timers;
 
@@ -43,19 +42,13 @@ class _AppNameAnimationWidgetState extends State<AppNameAnimationWidget> with Ti
       return Tween<double>(begin: 0, end: 1).animate(controller);
     }).toList();
 
-// Başlangıç rengi üzerinden tonlar arasında geçiş yap
-    _randomColors = List.generate(widget.text.length, (index) {
-      double opacity = (index + 3) / widget.text.length;
-      return widget.startColor.withOpacity(opacity > 1.0 ? 1.0 : opacity);
-    });
-
     // Görünen metni sıfırla
     _visibleText = '';
 
     // Timer'ları başlat
     _timers = [];
     for (int i = 0; i < widget.text.length; i++) {
-      _timers.add(Timer(Duration(milliseconds: (i + 1) * 100), () {
+      _timers.add(Timer(Duration(milliseconds: (i + 1) * 170), () {
         _controllers[i].forward();
         setState(() {
           _visibleText += widget.text[i];
@@ -73,7 +66,7 @@ class _AppNameAnimationWidgetState extends State<AppNameAnimationWidget> with Ti
           opacity: _animations[index],
           child: Text(
             _visibleText.length > index ? _visibleText[index] : '',
-            style: widget.textStyle.copyWith(color: _randomColors[index]),
+            style: widget.textStyle.copyWith(color: widget.startColor),
           ),
         );
       }),

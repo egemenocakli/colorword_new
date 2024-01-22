@@ -19,7 +19,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   String sourceLanguage = "TR";
   String translateLanguage = "EN";
   final HomeViewModel homeViewModel = locator<HomeViewModel>();
-  bool isSame = false;
+  bool _isSame = false;
 
   @override
   FutureOr<void> init() {}
@@ -31,8 +31,13 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   }
 
   //getter
+  bool get isSame => _isSame;
 
   //setter
+  set isSame(bool value) {
+    _isSame = value;
+    notifyListeners();
+  }
 
   Future<void> reloadWords() async {
     await homeViewModel.readWords();

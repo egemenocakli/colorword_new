@@ -15,10 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    ExamRoute.name: (routeData) {
+    AuthRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MChoiceExamView(),
+        child: const AuthView(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -27,10 +27,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeView(),
       );
     },
-    LoginRoute.name: (routeData) {
+    MChoiceExamRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginView(),
+        child: const MChoiceExamView(),
       );
     },
     NewWordRoute.name: (routeData) {
@@ -55,15 +55,15 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [MChoiceExamView]
-class ExamRoute extends PageRouteInfo<void> {
-  const ExamRoute({List<PageRouteInfo>? children})
+/// [AuthView]
+class AuthRoute extends PageRouteInfo<void> {
+  const AuthRoute({List<PageRouteInfo>? children})
       : super(
-          ExamRoute.name,
+          AuthRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ExamRoute';
+  static const String name = 'AuthRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -83,15 +83,15 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginView]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [MChoiceExamView]
+class MChoiceExamRoute extends PageRouteInfo<void> {
+  const MChoiceExamRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          MChoiceExamRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'MChoiceExamRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -81,7 +81,7 @@ class _HomeViewState extends State<HomeView> {
           tooltip: LocaleKeys.mainPage_exitToolTip.locale,
           onPressed: () {
             viewModel.signOutFromHome();
-            context.replaceRoute(const LoginRoute());
+            context.replaceRoute(const AuthRoute());
           },
         ),
       ],
@@ -132,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
 
             ///TODO:autoroute guard
             onTap: () {
-              context.router.push(const ExamRoute());
+              context.router.push(const MChoiceExamRoute());
             },
           ),
           ListTile(

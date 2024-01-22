@@ -45,7 +45,7 @@ class _NewWordViewState extends State<NewWordView> {
         child: Scaffold(
           floatingActionButton: AddWordFabButtonWidget(
             viewModel: viewModel,
-            onPressed: () {
+            onPressed: () async {
               viewModel.translateResponse != null && viewModel.translateResponse != "" ? addWord : null;
             },
           ),
@@ -102,7 +102,7 @@ class _NewWordViewState extends State<NewWordView> {
   }
 
   //TODO: aynı kelime varsa uyarı, bu kelime zaten ekli
-  void addWord(context) async {
+  Future<void> addWord() async {
     viewModel
         .addWord(
       Word(

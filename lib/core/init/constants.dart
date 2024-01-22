@@ -71,61 +71,82 @@ class FontPackage {
 class MyTextStyle {
   ///FontSize:14  Color:Colors.white
   static TextStyle xsmallTextStyle(
-      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+      {double? fontSize,
+      Color? textColor,
+      TextOverflow? overflow,
+      FontWeight? fontWeight,
+      TextDecoration? decoration}) {
     return TextStyle(
-      fontFamily: AppConstants.fontFamilyManrope,
-      fontSize: (fontSize ?? 14),
-      overflow: overflow,
-      color: textColor ?? ColorConstants.white,
-      fontWeight: fontWeight,
-    );
+        fontFamily: AppConstants.fontFamilyManrope,
+        fontSize: (fontSize ?? 14),
+        overflow: overflow,
+        color: textColor ?? ColorConstants.white,
+        fontWeight: fontWeight,
+        decoration: decoration);
   }
 
   ///FontSize:16  Color:Colors.white
   static TextStyle smallTextStyle(
-      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+      {double? fontSize,
+      Color? textColor,
+      TextOverflow? overflow,
+      FontWeight? fontWeight,
+      TextDecoration? decoration}) {
     return TextStyle(
-      fontFamily: AppConstants.fontFamilyManrope,
-      fontSize: (fontSize ?? 16),
-      overflow: overflow,
-      color: textColor ?? ColorConstants.white,
-      fontWeight: fontWeight,
-    );
+        fontFamily: AppConstants.fontFamilyManrope,
+        fontSize: (fontSize ?? 16),
+        overflow: overflow,
+        color: textColor ?? ColorConstants.white,
+        fontWeight: fontWeight,
+        decoration: decoration);
   }
 
   ///FontSize:20  Color:Colors.white
-  static TextStyle midTextStyle({double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+  static TextStyle midTextStyle(
+      {double? fontSize,
+      Color? textColor,
+      TextOverflow? overflow,
+      FontWeight? fontWeight,
+      TextDecoration? decoration}) {
     return TextStyle(
-      fontFamily: AppConstants.fontFamilyManrope,
-      fontSize: (fontSize ?? 20),
-      overflow: overflow,
-      color: textColor ?? ColorConstants.white,
-      fontWeight: fontWeight,
-    );
+        fontFamily: AppConstants.fontFamilyManrope,
+        fontSize: (fontSize ?? 20),
+        overflow: overflow,
+        color: textColor ?? ColorConstants.white,
+        fontWeight: fontWeight,
+        decoration: decoration);
   }
 
   ///FontSize:26  Color:Colors.white
   static TextStyle largeTextStyle(
-      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+      {double? fontSize,
+      Color? textColor,
+      TextOverflow? overflow,
+      FontWeight? fontWeight,
+      TextDecoration? decoration}) {
     return TextStyle(
-      fontFamily: AppConstants.fontFamilyManrope,
-      fontSize: (fontSize ?? 26),
-      overflow: overflow,
-      color: textColor ?? ColorConstants.white,
-      fontWeight: fontWeight,
-    );
+        fontFamily: AppConstants.fontFamilyManrope,
+        fontSize: (fontSize ?? 26),
+        overflow: overflow,
+        color: textColor ?? ColorConstants.white,
+        fontWeight: fontWeight,
+        decoration: decoration);
   }
 
   ///FontSize:32  Color:Colors.white
   static TextStyle xlargeTextStyle(
-      {double? fontSize, Color? textColor, TextOverflow? overflow, FontWeight? fontWeight}) {
+      {double? fontSize,
+      Color? textColor,
+      TextOverflow? overflow,
+      FontWeight? fontWeight,
+      TextDecoration? decoration}) {
     return TextStyle(
-      fontFamily: AppConstants.fontFamilyManrope,
-      fontSize: (fontSize ?? 32),
-      overflow: overflow,
-      color: textColor ?? ColorConstants.white,
-      fontWeight: fontWeight,
-    );
+        fontFamily: AppConstants.fontFamilyManrope,
+        fontSize: (fontSize ?? 32),
+        overflow: overflow,
+        color: textColor ?? ColorConstants.white,
+        fontWeight: fontWeight,
+        decoration: decoration);
   }
 }
 
