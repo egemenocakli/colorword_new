@@ -30,7 +30,9 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(viewModelBuilder: (_) => locator<HomeViewModel>(), builder: _buildScreen);
+    return BaseView(
+        viewModelBuilder: (_) => locator<HomeViewModel>(),
+        builder: _buildScreen);
   }
 
   ///TODO: sayfadaki widgetlar parçalanacak widgets klasörüne taşınacak
@@ -62,7 +64,8 @@ class _HomeViewState extends State<HomeView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     viewModel.onPageWord = viewModel.words[index];
-                    return wordPage(context: context, word: viewModel.words[index]);
+                    return wordPage(
+                        context: context, word: viewModel.words[index]);
                   },
                 ),
         ),
@@ -72,12 +75,15 @@ class _HomeViewState extends State<HomeView> {
 
   MyAppBar buildAppBar(HomeViewModel viewModel, BuildContext context) {
     return MyAppBar(
-      leading: DrawerButton(style: ButtonStyle(iconSize: MaterialStatePropertyAll(SizeConstants.iconLSize))),
+      leading: DrawerButton(
+          style: ButtonStyle(
+              iconSize: MaterialStatePropertyAll(SizeConstants.iconLSize))),
       context: context,
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.exit_to_app_outlined,
-              size: SizeConstants.appBarLargeIconSize, color: ColorConstants.iconColor),
+              size: SizeConstants.appBarLargeIconSize,
+              color: ColorConstants.iconColor),
           tooltip: LocaleKeys.mainPage_exitToolTip.locale,
           onPressed: () {
             viewModel.signOutFromHome();
@@ -91,11 +97,13 @@ class _HomeViewState extends State<HomeView> {
   Padding buildFab(HomeViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.only(left: 30.0),
-      child:
-          Row(crossAxisAlignment: CrossAxisAlignment.end, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        deleteWordButton(viewModel.onPageWord),
-        addNewWordFAB(),
-      ]),
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            deleteWordButton(viewModel.onPageWord),
+            addNewWordFAB(),
+          ]),
     );
   }
 
@@ -104,9 +112,13 @@ class _HomeViewState extends State<HomeView> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("${viewModel.signedUser?.name}" " " "${viewModel.signedUser?.lastname}",
+            accountName: Text(
+                "${viewModel.signedUser?.name}"
+                " "
+                "${viewModel.signedUser?.lastname}",
                 style: MyTextStyle.midTextStyle()),
-            accountEmail: Text(viewModel.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
+            accountEmail: Text(viewModel.signedUser?.email ?? '',
+                style: MyTextStyle.xsmallTextStyle()),
             //currentAccountPicture: const FlutterLogo(),
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -118,7 +130,8 @@ class _HomeViewState extends State<HomeView> {
           ListTile(
             leading: const Icon(Icons.person, color: Colors.blueAccent),
             title: Text(LocaleKeys.mainPage_profile.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+                style: MyTextStyle.smallTextStyle(
+                    textColor: ColorConstants.black)),
 
             ///TODO: autoroute guard
             onTap: () {
@@ -126,9 +139,11 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
+            leading: const Icon(Icons.app_registration_rounded,
+                color: Colors.redAccent),
             title: Text(LocaleKeys.mainPage_multipleChoise.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+                style: MyTextStyle.smallTextStyle(
+                    textColor: ColorConstants.black)),
 
             ///TODO:autoroute guard
             onTap: () {
@@ -139,7 +154,8 @@ class _HomeViewState extends State<HomeView> {
             ///TODO:autoroute guard
             leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
             title: Text(LocaleKeys.mainPage_writtenExam.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+                style: MyTextStyle.smallTextStyle(
+                    textColor: ColorConstants.black)),
             onTap: () {
               context.router.push(const WrittenExamRoute());
             },
@@ -179,7 +195,9 @@ class _HomeViewState extends State<HomeView> {
           context.router.push(const NewWordRoute());
         },
         backgroundColor: ColorConstants.learnedWordButton,
-        child: Icon(Icons.add, size: SizeConstants.iconLSize, color: ColorConstants.iconWhiteColor),
+        child: Icon(Icons.add,
+            size: SizeConstants.iconLSize,
+            color: ColorConstants.iconWhiteColor),
       ),
     );
   }
@@ -192,8 +210,10 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(word?.word ?? '-', style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600)),
-          Text(word?.translatedWords?.firstOrNull ?? '-', style: MyTextStyle.midTextStyle()),
+          Text(word?.word ?? '-',
+              style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600)),
+          Text(word?.translatedWords?.firstOrNull ?? '-',
+              style: MyTextStyle.midTextStyle()),
           Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
@@ -209,3 +229,4 @@ class _HomeViewState extends State<HomeView> {
     return false;
   }
 }
+///TODO:another pc github control
