@@ -20,6 +20,7 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
   bool? _selectedChoise;
   FocusNode? _nameFocusNode = FocusNode(canRequestFocus: true);
   FocusNode? _emailFocusNode = FocusNode(canRequestFocus: true);
+  late int _timeCounterValue;
 
   @override
   FutureOr<void> init() {
@@ -31,6 +32,16 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
     _textEditNameEnable = false;
     _textEditMailEnable = false;
     _selectedChoise = false;
+    _timeCounterValue = 10;
+  }
+
+  int get timeCounterValue => _timeCounterValue;
+
+  set timeCounterValue(int value) {
+    print(timeCounterValue);
+
+    _timeCounterValue = value;
+    notifyListeners();
   }
 
   FocusNode? get nameFocusNode => _nameFocusNode;
@@ -84,7 +95,7 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
   @override
   Future<bool> deleteAccount() async {
     return false;
-    //TODO: yayınlanırken açılacak
+    //TODO: yayınlanırken açılacak, silindikten sonra login e atmalıyız.
     //return await _profileServiceService.deleteAccount();
   }
 
@@ -96,5 +107,15 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
   @override
   Future<bool> updateEmail(String? email) async {
     return await _profileServiceService.updateEmail(email);
+  }
+
+  void startCountdown() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (timeCounterValue > 0) {
+        timeCounterValue--;
+      } else if (timeCounterValue <= 0) {
+        timer.cancel();
+      }
+    });
   }
 }

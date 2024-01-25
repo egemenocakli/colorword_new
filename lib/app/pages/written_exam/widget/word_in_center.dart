@@ -16,6 +16,7 @@ class WordInCenter extends StatelessWidget {
           color: ColorConstants.white,
           fontSize: 26,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -91,10 +91,8 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
           child: ArrowBackPageNumberWidget(
               wordsLength: viewModel.examQuestList.length, pageIndex: pageIndex, context: context),
         ),
-        Text(
-          questModel.word?.word ?? '-',
-          style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600, fontSize: 32),
-        ),
+        Text(questModel.word?.word ?? '-',
+            style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600, fontSize: 32), textAlign: TextAlign.center),
         Padding(
           padding: const EdgeInsets.only(top: 50.0),
           child: buildOption(optionModelList: questModel.options, questModel: questModel, pageIndex: pageIndex),
@@ -125,24 +123,24 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
   void onTapStation(QuestModel questModel, List<OptionModel?> optionModelList, int index, int pageIndex) {
     setState(() {
       if (questModel.word?.translatedWords?[0] == optionModelList[index]?.optionText) {
-        viewModel.increasetheScore(word: questModel.word, point: 2);
+        viewModel.increasetheScore(word: questModel.word, point: 3);
         viewModel.examResultList[pageIndex] = true;
         snackbarWidget(
             content: Text(LocaleKeys.writtenExam_correct.locale,
                 textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
-            duration: const Duration(seconds: 1));
+            duration: const Duration(milliseconds: 1200));
         for (var element in optionModelList) {
           element?.optionState = OptionState.wrong;
         }
         optionModelList[index]?.optionState = OptionState.correct;
         nextPage(controller);
       } else {
-        viewModel.decreasetheScore(word: questModel.word, point: 1);
+        viewModel.decreasetheScore(word: questModel.word, point: 2);
         viewModel.examResultList[pageIndex] = false;
         snackbarWidget(
           content: Text(LocaleKeys.writtenExam_false.locale,
               textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
-          duration: const Duration(seconds: 1),
+          duration: const Duration(milliseconds: 1200),
         );
         for (var element in optionModelList) {
           if (questModel.word?.translatedWords?[0] == element?.optionText) {
@@ -158,7 +156,7 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
 
   Future<void> nextPage(PageController controller) async {
     if (viewModel.pageIndex != viewModel.lastPageNumber) {
-      controller.nextPage(duration: const Duration(seconds: 1), curve: const Threshold(0.8));
+      controller.nextPage(duration: const Duration(seconds: 3), curve: const Threshold(0.8));
     } else if (viewModel.pageIndex == viewModel.lastPageNumber) {
       viewModel.answerCounter();
       await snackbarWidget(content: endOfExamWidget(), duration: const Duration(seconds: 5));

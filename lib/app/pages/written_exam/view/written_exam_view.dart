@@ -125,7 +125,7 @@ class _HomeViewState extends State<WrittenExamView> {
       onChanged: (value) {
         setState(() {
           if (word?.word == controller.text) {
-            viewModel.increasetheScore(point: 3, word: word);
+            viewModel.increasetheScore(point: 5, word: word);
             viewModel.examResultList[pageIndex] = true;
             snackbarWidget(
                 content: Text(LocaleKeys.writtenExam_correct.locale,
@@ -151,7 +151,7 @@ class _HomeViewState extends State<WrittenExamView> {
       },
       onEditingComplete: () {
         if (word?.word == controller.text) {
-          viewModel.increasetheScore(point: 3, word: word);
+          viewModel.increasetheScore(point: 5, word: word);
           viewModel.examResultList[pageIndex] = true;
           snackbarWidget(
               content: Text(LocaleKeys.writtenExam_correct.locale,
@@ -241,12 +241,12 @@ class _HomeViewState extends State<WrittenExamView> {
   Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> snackbarWidget(
       {required Widget content, required Duration duration}) async {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.black,
+      backgroundColor: ColorConstants.black,
       showCloseIcon: true,
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
       padding: const EdgeInsets.only(right: 5.0, left: 15.0, bottom: 8.0, top: 8.0),
-      closeIconColor: Colors.white,
+      closeIconColor: ColorConstants.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),

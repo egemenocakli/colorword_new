@@ -192,14 +192,17 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(word?.word ?? '-', style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600)),
-          Text(word?.translatedWords?.firstOrNull ?? '-', style: MyTextStyle.midTextStyle()),
+          Text(word?.word ?? '-',
+              style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(word?.translatedWords?.firstOrNull ?? '-',
+                style: MyTextStyle.midTextStyle(), textAlign: TextAlign.center),
+          ),
           Padding(
               padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                "${LocaleKeys.mainPage_score.locale}: ${word!.score}",
-                style: MyTextStyle.smallTextStyle(fontWeight: FontWeight.w500),
-              )),
+              child: Text("${LocaleKeys.mainPage_score.locale}: ${word!.score}",
+                  style: MyTextStyle.smallTextStyle(fontWeight: FontWeight.w500), textAlign: TextAlign.center)),
         ],
       ),
     );

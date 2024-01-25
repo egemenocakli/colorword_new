@@ -1,18 +1,24 @@
+import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
+import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
 class MyAlertDialog extends StatelessWidget {
   final String title;
   final String content;
-  final String confirmButtonText;
+  final String? confirmButtonText;
   final String? rejectButtonText;
+  final Text? confirmTextWidget;
+  final Text? rejectTextWidget;
 
   const MyAlertDialog({
     super.key,
     required this.title,
     required this.content,
-    required this.confirmButtonText,
+    this.confirmButtonText,
     this.rejectButtonText,
+    this.confirmTextWidget,
+    this.rejectTextWidget,
   });
 
   @override
@@ -30,7 +36,7 @@ class MyAlertDialog extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: Text(rejectButtonText!, style: MyTextStyle.smallTextStyle()),
+            child: rejectTextWidget ?? Text(rejectButtonText!, style: MyTextStyle.smallTextStyle()),
           ),
         TextButton(
           style: AllButtonStyle.alertDialog(
@@ -38,7 +44,8 @@ class MyAlertDialog extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context, true);
           },
-          child: Text(confirmButtonText, style: MyTextStyle.smallTextStyle()),
+          child: confirmTextWidget ??
+              Text(confirmButtonText ?? LocaleKeys.profilePage_confirm.locale, style: MyTextStyle.smallTextStyle()),
         ),
       ],
     );

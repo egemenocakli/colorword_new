@@ -113,10 +113,18 @@ class _ProfileViewState extends State<ProfileView> {
                             enabled: false,
                             editOnTap: null,
                           )),
-
-                      //deleteThisAccountButton(viewModel)
-
-                      DeleteThisAccountButton(profileViewModel: viewModel)
+                      DeleteThisAccountButton(
+                        profileViewModel: viewModel,
+                        /* confirmTextWidget: viewModel.timeCounterValue != 0
+                            ? Text("CountDown:  ${viewModel.timeCounterValue}")
+                            : Text(LocaleKeys.profilePage_confirm.locale, style: MyTextStyle.smallTextStyle()), */
+                      ),
+                      /* TextButton(
+                        child: Text("Geri sayım  ${viewModel.timeCounterValue}"),
+                        onPressed: () {
+                          viewModel.startCountdown();
+                        },
+                      ), */
                     ],
                   ),
                 ),
@@ -127,58 +135,4 @@ class _ProfileViewState extends State<ProfileView> {
       );
     }
   }
-
-/*   Padding deleteThisAccountButton(ProfileViewModel viewModel) {
-    return Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          //tıklamayayım diye
-                          if (false) {
-                            viewModel.deleteAccount();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12), // Şekli burada belirleyebilirsiniz
-                          ),
-                        ),
-                        child: Text("Bu Hesabı Kalıcı Olarak Sil",
-                            style: MyTextStyle.smallTextStyle(textColor: Colors.white, fontWeight: FontWeight.w700)),
-                      ),
-                    );
-  } */
-
-/*   SizedBox profileTextField(ProfileViewModel viewModel) {
-    return SizedBox(
-                        height: 50,
-                        width: 400,
-                        child: TextFormField(
-                          enabled: false, //buton ile true ya dönecek
-                          cursorHeight: 24,
-                          maxLines: 1,
-                          controller: viewModel.textController,
-                          style: MyTextStyle.smallTextStyle(),
-                          decoration: InputDecoration(
-                            disabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                borderSide: BorderSide(color: ColorConstants.greySh4)),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                borderSide: BorderSide(color: ColorConstants.greySh4)),
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                borderSide: BorderSide(color: ColorConstants.deleteButtonColor)),
-                            border: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                borderSide: BorderSide(color: ColorConstants.greySh4)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: ColorConstants.greySh4),
-                              borderRadius: const BorderRadius.all(Radius.circular(30)),
-                            ),
-                          ),
-                        ),
-                      );
-  } */
 }

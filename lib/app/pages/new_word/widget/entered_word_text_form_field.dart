@@ -18,6 +18,9 @@ class EnteredWordTextFormField extends StatelessWidget {
         controller: viewModel.textController,
         style: MyTextStyle.midTextStyle(fontWeight: FontWeight.w600, overflow: TextOverflow.fade),
         decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderRadius: AllBorderRadius.xlargeBorderRadius(),
+                borderSide: BorderSide(color: ColorConstants.iconShadeColor)),
             border: OutlineInputBorder(
                 borderRadius: AllBorderRadius.xlargeBorderRadius(),
                 borderSide: BorderSide(color: ColorConstants.buttonColorPink)),

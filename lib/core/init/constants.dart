@@ -15,7 +15,7 @@ class ColorConstants {
   static Color iconWhiteColor = Colors.white;
   //ExamPage
   static Color optionsButtonDefaultColor = Colors.black12;
-  static Color optionsButtonCorrectColor = Colors.greenAccent;
+  static Color optionsButtonCorrectColor = Colors.green.shade700;
   static Color optionsButtonWrongColor = Colors.redAccent;
 
   //_____________
@@ -28,6 +28,7 @@ class ColorConstants {
   static Color buttonColor = const Color(0xFF6883BC);
   static Color greySh4 = Colors.grey.shade300;
   static Color buttonColorPink = const Color(0xFFCD6688);
+  static Color alertCancelButton = Colors.red.shade400;
   static List<Color> appBarColors = [
     const Color(0xFF6868AC),
     const Color(0xFFCF9893),
@@ -43,6 +44,8 @@ class ColorConstants {
   static Color iconOrangeAccentColor = Colors.orangeAccent;
   static Color iconShadeColor = Colors.black12;
   static Color grey = Colors.grey;
+  static Color green = Colors.green;
+  static Color optionShade = Colors.white24;
 }
 
 class SizeConstants {

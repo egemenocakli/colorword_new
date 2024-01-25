@@ -18,24 +18,21 @@ class OptionWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Material(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: AllBorderRadius.xlargeBorderRadius(),
           color: optionModel!.optionState.optionColor,
           child: InkWell(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(30),
-            splashColor: Colors.green,
-            focusColor: Colors.green,
-            hoverColor: Colors.green,
-            highlightColor: Colors.white24,
-            overlayColor: MaterialStateProperty.all(Colors.white24),
+            borderRadius: AllBorderRadius.xlargeBorderRadius(),
+            splashColor: ColorConstants.green,
+            focusColor: ColorConstants.green,
+            hoverColor: ColorConstants.green,
+            highlightColor: ColorConstants.optionShade,
+            overlayColor: MaterialStateProperty.all(ColorConstants.optionShade),
             child: Container(
-              color: Colors.transparent,
-              height: 60,
+              color: ColorConstants.transparent,
               padding: const EdgeInsets.all(12),
-              child: Text(
-                optionModel?.optionText ?? "-",
-                style: TextStyle(fontFamily: 'Manrope', color: ColorConstants.white, fontSize: 20),
-              ),
+              child:
+                  Text(optionModel?.optionText ?? "-", style: MyTextStyle.midTextStyle(), textAlign: TextAlign.center),
             ),
           ),
         ),
