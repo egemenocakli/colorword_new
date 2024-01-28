@@ -7,9 +7,13 @@ abstract class  LocaleKeys {
   static const login_signWithGoogle = 'login.signWithGoogle';
   static const login_tr = 'login.tr';
   static const login_en = 'login.en';
-  static const login_signIn = 'login.signIn';
+  static const login_signUp = 'login.signUp';
   static const login_dontHaveAccount = 'login.dontHaveAccount';
   static const login = 'login';
+  static const signUp_name = 'signUp.name';
+  static const signUp_lastName = 'signUp.lastName';
+  static const signUp_phone = 'signUp.phone';
+  static const signUp = 'signUp';
   static const mainPage_exitToolTip = 'mainPage.exitToolTip';
   static const mainPage_menuIconToolTip = 'mainPage.menuIconToolTip';
   static const mainPage_words = 'mainPage.words';

@@ -6,8 +6,13 @@
         "signWithGoogle": "Google ile giriş",
         "tr": "Türkçe",
         "en": "İngilizce",
-        "signIn": "Kayıt ol",
+        "signUp": "Kayıt ol",
         "dontHaveAccount": "Henüz kayıt olmadınız mı?"
+    },
+    "signUp": {
+        "name": "Ad",
+        "lastName": "Soyad",
+        "phone": "Telefon Numarası"
     },
     "mainPage": {
         "exitToolTip": "Çıkış",

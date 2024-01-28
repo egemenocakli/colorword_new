@@ -4,10 +4,14 @@ import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/app/pages/auth/model/firebase_user_model.dart';
 import 'package:colorword_new/app/pages/auth/repository/auth_repository.dart';
 import 'package:colorword_new/app/pages/auth/service/auth_service_interface.dart';
+import 'package:flutter/material.dart';
 
 class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   late final AuthRepository _authRepository;
   late FirebaseUser? _firebaseUser;
+
+  TextEditingController emailTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
 
   AuthViewModel() {
     _authRepository = AuthRepository();
@@ -67,6 +71,17 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   Future<bool> updateEmail(String? email) {
     throw UnimplementedError();
   }
+
+/*   @override
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Object> signInWithEmailPassword({required String email, required String password}) async {
+    return await _authRepository.signInWithEmailPassword(email: email, password: password);
+  } */
 }
 
 

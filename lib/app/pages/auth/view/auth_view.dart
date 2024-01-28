@@ -53,7 +53,9 @@ class _AuthViewState extends State<AuthView> {
               LanguageTextButtonWidget(
                 context: context,
               ),
-              const FooterWidgets()
+              FooterWidgets(
+                authViewModel: viewModel,
+              )
             ],
           ),
         ));
@@ -64,15 +66,20 @@ class _AuthViewState extends State<AuthView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
-          child: TextfieldWidget(hintText: LocaleKeys.login_login.locale),
+          child: TextfieldWidget(hintText: LocaleKeys.login_login.locale, controller: viewModel.emailTextController),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: TextfieldWidget(hintText: LocaleKeys.login_password.locale),
+          child:
+              TextfieldWidget(hintText: LocaleKeys.login_password.locale, controller: viewModel.passwordTextController),
         ),
+        //TODO:Validate sonrası aktifleştirilecek buton.
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: LoginButtonWidget(viewModel: viewModel),
+          child: LoginButtonWidget(
+              viewModel: viewModel,
+              email: viewModel.emailTextController.text,
+              password: viewModel.passwordTextController.text),
         ),
       ],
     );

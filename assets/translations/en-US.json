@@ -6,8 +6,13 @@
         "signWithGoogle": "Sign in with Google",
         "tr": "Türkçe",
         "en": "İngilizce",
-        "signIn": "Sign in",
+        "signUp": "Sign up",
         "dontHaveAccount": "Don't have an account?"
+    },
+    "signUp": {
+        "name": "Name",
+        "lastName": "Last Name",
+        "phone": "Phone Number"
     },
     "mainPage": {
         "exitToolTip": "Exit",

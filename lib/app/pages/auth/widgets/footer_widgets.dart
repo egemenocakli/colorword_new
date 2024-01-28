@@ -1,11 +1,15 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:colorword_new/app/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
+import 'package:colorword_new/core/navigator/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FooterWidgets extends StatelessWidget {
-  const FooterWidgets({super.key});
+  const FooterWidgets({super.key, required this.authViewModel});
+  final AuthViewModel authViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,13 @@ class FooterWidgets extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await authViewModel.signInWithGoogle().then((value) {
+                          if (value != null) {
+                            context.replaceRoute(const HomeRoute());
+                          } else {}
+                        });
+                      },
                       icon: const Image(image: AssetImage(AppConstants.googleIcon), height: 28),
                     ),
                     Text(
@@ -57,8 +67,10 @@ class FooterWidgets extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(borderRadius: AllBorderRadius.mediumBorderRadius(), color: Colors.white12),
                 child: TextButton(
-                    onPressed: () {},
-                    child: Text(LocaleKeys.login_signIn.locale,
+                    onPressed: () {
+                      context.router.push(const SignUpRoute());
+                    },
+                    child: Text(LocaleKeys.login_signUp.locale,
                         style: GoogleFonts.roboto(color: Colors.white54, fontSize: 20, fontWeight: FontWeight.w700))),
               )
             ],
