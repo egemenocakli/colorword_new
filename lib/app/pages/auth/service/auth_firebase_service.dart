@@ -96,4 +96,24 @@ class FirebaseAuthService implements AuthServiceInterface {
       return false;
     }
   }
+
+  @override
+  Future<bool> signUp({required String email, required String password}) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> loginWithEmailPassword({required String email, required String password}) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

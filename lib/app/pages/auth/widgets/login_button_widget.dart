@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/app/pages/auth/viewmodel/auth_viewmodel.dart';
+import 'package:colorword_new/core/navigator/app_router.dart';
 import 'package:flutter/material.dart';
 
 class LoginButtonWidget extends StatelessWidget {
@@ -28,15 +30,12 @@ class LoginButtonWidget extends StatelessWidget {
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)))),
           onPressed: () async {
             //TODO:validate
-/*             await viewModel.signInWithEmailPassword(email: email, password: password).then((value) {
-              context.replaceRoute(const HomeRoute());
-            }); */
 
-            /* await viewModel.signInWithGoogle().then((value) {
-              if (value != null) {
-                context.replaceRoute(const HomeRoute());
-              } else {}
-            }); */
+            viewModel.loginWithEmailPassword(email: email, password: password).then((value) {
+              context.replaceRoute(const HomeRoute());
+            }).onError((error, stackTrace) {
+              print("Error ${error.toString()}");
+            });
           },
           child: Text(
             LocaleKeys.login_login.locale,

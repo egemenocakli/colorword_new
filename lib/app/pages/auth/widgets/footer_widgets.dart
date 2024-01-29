@@ -35,13 +35,7 @@ class FooterWidgets extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () async {
-                        await authViewModel.signInWithGoogle().then((value) {
-                          if (value != null) {
-                            context.replaceRoute(const HomeRoute());
-                          } else {}
-                        });
-                      },
+                      onPressed: () {},
                       icon: const Image(image: AssetImage(AppConstants.googleIcon), height: 28),
                     ),
                     Text(
@@ -50,6 +44,13 @@ class FooterWidgets extends StatelessWidget {
                     )
                   ],
                 ),
+                onTap: () async {
+                  await authViewModel.signInWithGoogle().then((value) {
+                    if (value != null) {
+                      context.replaceRoute(const HomeRoute());
+                    } else {}
+                  });
+                },
               ),
             ),
           ),

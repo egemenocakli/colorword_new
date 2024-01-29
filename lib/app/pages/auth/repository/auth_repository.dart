@@ -40,4 +40,14 @@ class AuthRepository extends AuthServiceInterface {
   Future<bool> deleteAccount() async {
     return await _firebaseAuthService.deleteAccount();
   }
+
+  @override
+  Future<bool> signUp({required String email, required String password}) async {
+    return await _firebaseAuthService.signUp(email: email, password: password);
+  }
+
+  @override
+  Future<bool> loginWithEmailPassword({required String email, required String password}) async {
+    return await _firebaseAuthService.loginWithEmailPassword(email: email, password: password);
+  }
 }
