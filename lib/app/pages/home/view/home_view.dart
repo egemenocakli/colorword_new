@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:colorword_new/app/pages/home/widgets/add_new_word_fab_button.dart';
+import 'package:colorword_new/app/pages/home/widgets/build_drawer.dart';
+import 'package:colorword_new/app/pages/home/widgets/delete_fab_button.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
@@ -39,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
       return WillPopScope(
         onWillPop: onWillPop,
         child: Scaffold(
-          drawer: buildDrawer(context),
+          drawer: BuildDrawer(homeContext: context),
           floatingActionButton: buildFab(viewModel),
           appBar: buildAppBar(viewModel, context),
           backgroundColor: ColorConstants.backgroundColor,
@@ -93,23 +96,23 @@ class _HomeViewState extends State<HomeView> {
       padding: const EdgeInsets.only(left: 30.0),
       child:
           Row(crossAxisAlignment: CrossAxisAlignment.end, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        deleteWordButton(viewModel.onPageWord),
-        addNewWordFAB(),
+        DeleteFabButton(homeViewModel: viewModel),
+        const AddNewWordFabButton(),
       ]),
     );
   }
 
-  Drawer buildDrawer(BuildContext context) {
+/*   Drawer buildDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-                "${viewModel.signedUser?.name}"
+                "${AuthManager.instance?.signedUser?.name}"
                 " "
-                "${viewModel.signedUser?.lastname}",
+                "${AuthManager.instance?.signedUser?.lastname}",
                 style: MyTextStyle.midTextStyle()),
-            accountEmail: Text(viewModel.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
+            accountEmail: Text(AuthManager.instance?.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
             //currentAccountPicture: const FlutterLogo(),
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -150,41 +153,10 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
     );
-  }
-
-  Container deleteWordButton(Word? onPageWord) {
-    return Container(
-        margin: const EdgeInsets.all(10),
-        child: FloatingActionButton(
-          heroTag: "deleteButton",
-          onPressed: () async {
-            await viewModel.deleteWord(viewModel.onPageWord);
-          },
-          backgroundColor: ColorConstants.deleteButtonColor,
-          child: Icon(
-            Icons.delete_outline_rounded,
-            size: SizeConstants.iconLSize,
-            color: ColorConstants.iconWhiteColor,
-          ),
-        ));
-  }
+  } */
 
   Widget buildEmptyWordListPageInfo() {
     return wordPage(context: context, word: viewModel.createEmptyWord());
-  }
-
-  Container addNewWordFAB() {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      child: FloatingActionButton(
-        heroTag: "addNewButton",
-        onPressed: () {
-          context.router.push(const NewWordRoute());
-        },
-        backgroundColor: ColorConstants.learnedWordButton,
-        child: Icon(Icons.add, size: SizeConstants.iconLSize, color: ColorConstants.iconWhiteColor),
-      ),
-    );
   }
 
   Container wordPage({required BuildContext context, required Word? word}) {
@@ -195,8 +167,10 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(word?.word ?? '-', style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600)),
-          Text(word?.translatedWords?.firstOrNull ?? '-', style: MyTextStyle.midTextStyle()),
+          Text(word?.word ?? '-',
+              style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+          Text(word?.translatedWords?.firstOrNull ?? '-',
+              style: MyTextStyle.midTextStyle(), textAlign: TextAlign.center),
           Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text("${LocaleKeys.mainPage_score.locale}: ${word!.score}",

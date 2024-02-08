@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:colorword_new/app/pages/profile/viewmodel/profile_viewmodel.dart';
 import 'package:colorword_new/app/pages/profile/widget/delete_this_account_button.dart';
 import 'package:colorword_new/app/pages/profile/widget/profile_textfield.dart';
+import 'package:colorword_new/core/auth_manager/auth_manager.dart';
 import 'package:colorword_new/core/base/view/base_view.dart';
 import 'package:colorword_new/core/extensions/context_extension.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
@@ -23,12 +24,22 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  String? _fullName;
+  TextEditingController? userNametextController = TextEditingController();
+  TextEditingController? userLastNametextController = TextEditingController();
+  TextEditingController? userEmailtextController = TextEditingController();
+  TextEditingController? userIDtextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BaseView(viewModelBuilder: (_) => locator<ProfileViewModel>(), builder: _buildScreen);
   }
 
   Widget _buildScreen(BuildContext context, ProfileViewModel viewModel) {
+    _fullName = "${AuthManager.instance?.signedUser?.name}" " " "${AuthManager.instance?.signedUser?.lastname}";
+    userNametextController?.text = _fullName ?? "Unknown";
+    userEmailtextController?.text = AuthManager.instance?.signedUser!.email ?? "Unknown";
+    userIDtextController?.text = AuthManager.instance?.signedUser!.userId ?? "Unknown";
     {
       return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -69,7 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
                       Padding(
                           padding: const EdgeInsets.only(right: 20, left: 20, bottom: 5, top: 30),
                           child: ProfileTextField(
-                            textController: viewModel.userNametextController,
+                            textController: userNametextController,
                             labelText: LocaleKeys.profilePage_fullName.locale,
                             enabled: viewModel.textEditEnable,
                             focusNode: viewModel.nameFocusNode,
@@ -79,8 +90,8 @@ class _ProfileViewState extends State<ProfileView> {
                               viewModel.nameFocusNode?.requestFocus();
                             },
                             sendOnTap: () {
-                              if (viewModel.fullName != viewModel.userNametextController?.text) {
-                                viewModel.updateName(viewModel.userNametextController?.text);
+                              if (_fullName != userNametextController?.text) {
+                                viewModel.updateName(userNametextController?.text);
                               }
 
                               viewModel.textEditEnable = false;
@@ -89,7 +100,7 @@ class _ProfileViewState extends State<ProfileView> {
                       Padding(
                           padding: const EdgeInsets.only(right: 20, left: 20, bottom: 5, top: 30),
                           child: ProfileTextField(
-                            textController: viewModel.userEmailtextController,
+                            textController: userEmailtextController,
                             labelText: LocaleKeys.profilePage_email.locale,
                             enabled: viewModel.textEditMailEnable,
                             focusNode: viewModel.emailFocusNode,
@@ -99,8 +110,8 @@ class _ProfileViewState extends State<ProfileView> {
                               viewModel.emailFocusNode?.requestFocus();
                             },
                             sendOnTap: () {
-                              if (viewModel.signedUser?.email != viewModel.userEmailtextController?.text) {
-                                viewModel.updateEmail(viewModel.userEmailtextController?.text);
+                              if (AuthManager.instance?.signedUser?.email != userEmailtextController?.text) {
+                                viewModel.updateEmail(userEmailtextController?.text);
                               }
                               viewModel.textEditMailEnable = false;
                             },
@@ -108,23 +119,14 @@ class _ProfileViewState extends State<ProfileView> {
                       Padding(
                           padding: const EdgeInsets.only(right: 20, left: 20, bottom: 5, top: 30),
                           child: ProfileTextField(
-                            textController: viewModel.userIDtextController,
+                            textController: userIDtextController,
                             labelText: LocaleKeys.profilePage_userId.locale,
                             enabled: false,
                             editOnTap: null,
                           )),
                       DeleteThisAccountButton(
                         profileViewModel: viewModel,
-                        /* confirmTextWidget: viewModel.timeCounterValue != 0
-                            ? Text("CountDown:  ${viewModel.timeCounterValue}")
-                            : Text(LocaleKeys.profilePage_confirm.locale, style: MyTextStyle.smallTextStyle()), */
                       ),
-                      /* TextButton(
-                        child: Text("Geri sayım  ${viewModel.timeCounterValue}"),
-                        onPressed: () {
-                          viewModel.startCountdown();
-                        },
-                      ), */
                     ],
                   ),
                 ),

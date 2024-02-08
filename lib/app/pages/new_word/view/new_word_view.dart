@@ -46,7 +46,7 @@ class _NewWordViewState extends State<NewWordView> {
           floatingActionButton: AddWordFabButtonWidget(
             viewModel: viewModel,
             onPressed: () async {
-              viewModel.translateResponse != null && viewModel.translateResponse != "" ? addWord : null;
+              viewModel.translateResponse != null && viewModel.translateResponse != "" ? addWord() : null;
             },
           ),
           resizeToAvoidBottomInset: true, //false'dı
@@ -98,6 +98,7 @@ class _NewWordViewState extends State<NewWordView> {
 
   Future<bool> onWillPop() async {
     await viewModel.reloadWords();
+    viewModel.disposeAllValues();
     return true;
   }
 

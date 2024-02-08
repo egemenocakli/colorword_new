@@ -18,7 +18,11 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   }
 
   @override
-  FutureOr<void> init() {}
+  FutureOr<void> init() {
+    //TODO:manuel atandı
+    emailTextController.text = "bobafettkimlan@gmail.com";
+    passwordTextController.text = "123456";
+  }
 
   FirebaseUser? get firebaseUser => _firebaseUser;
 
@@ -73,17 +77,15 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   }
 
   @override
-  Future<bool> signUp({required String email, required String password}) async {
-    return await _authRepository.signUp(email: email, password: password);
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName}) async {
+    return await _authRepository.signUp(email: email, password: password, name: name, lastName: lastName);
   }
 
   @override
-  Future<bool> loginWithEmailPassword({required String email, required String password}) async {
-    bool sonuc;
-    sonuc = await _authRepository.loginWithEmailPassword(
+  Future<FirebaseUser?> loginWithEmailPassword({required String email, required String password}) async {
+    return firebaseUser = await _authRepository.loginWithEmailPassword(
         email: emailTextController.text, password: passwordTextController.text);
-    print("login sonucu: $sonuc");
-    return sonuc;
   }
 }
 

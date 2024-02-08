@@ -7,6 +7,7 @@ abstract class AuthServiceInterface {
   Future<bool> updateName(String? displayName);
   Future<bool> updateEmail(String? email);
   Future<bool> deleteAccount();
-  Future<bool> signUp({required String email, required String password});
-  Future<bool> loginWithEmailPassword({required String email, required String password});
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName});
+  Future<FirebaseUser?> loginWithEmailPassword({required String email, required String password});
 }

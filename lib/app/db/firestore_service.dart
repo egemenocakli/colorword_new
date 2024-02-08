@@ -1,23 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/app/db/db_base.dart';
+import 'package:colorword_new/core/auth_manager/auth_manager.dart';
 import 'package:colorword_new/core/auth_manager/model/user_model.dart';
 import 'package:colorword_new/app/models/word_model.dart';
-import 'package:colorword_new/app/pages/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
-
-import '../../locator.dart';
 
 class FirestoreService implements DbBase {
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  final AuthViewModel _authViewModel = locator<AuthViewModel>();
-  late final appUser = _authViewModel.firebaseUser;
+  //final AuthViewModel _authViewModel = locator<AuthViewModel>();
+  //late final appUser = _authViewModel.firebaseUser;
+  //User? signedUser = AuthManager.instance?.signedUser;
   //üsttekiler ile Appuser bilgilerine ulaşabiliriz
+
+  //Normalde yukarıdaki appUser ı kullanıyordum ancak logout sonrası loginde eski bilgiler kalıyor.
+  //authmanager.instance.signed user ı bir signedUser a atadığımızda yine aynı durum oluyor eski bilgiler kalıyor.
 
   @override
   Future<bool> deleteWord(Word? word) async {
     bool sonuc = false;
     try {
-      await db.collection("users").doc(appUser?.userId).collection("words").doc(word!.wordId).delete().then((value) {
+      await db
+          .collection("users")
+          .doc(AuthManager.instance?.signedUser?.userId)
+          .collection("words")
+          .doc(word!.wordId)
+          .delete()
+          .then((value) {
         sonuc = true;
       });
     } catch (e) {
@@ -33,7 +41,7 @@ class FirestoreService implements DbBase {
     try {
       await db
           .collection("users")
-          .doc(appUser?.userId)
+          .doc(AuthManager.instance?.signedUser?.userId)
           .collection("words")
           .where('wordId', isEqualTo: wordId)
           .get()
@@ -52,7 +60,12 @@ class FirestoreService implements DbBase {
     List<Word> words = [];
 
     try {
-      await db.collection("users").doc(appUser?.userId).collection("words").get().then((value) {
+      await db
+          .collection("users")
+          .doc(AuthManager.instance?.signedUser?.userId)
+          .collection("words")
+          .get()
+          .then((value) {
         for (var element in value.docs) {
           words.add(Word.fromMap(element.data()));
         }
@@ -77,10 +90,15 @@ class FirestoreService implements DbBase {
       word.addDate = Timestamp.now();
       word.lastUpdateDate = Timestamp.now();
 
-      await db.collection("users").doc(appUser?.userId).collection("words").add(word.toMap()).then((value) async {
+      await db
+          .collection("users")
+          .doc(AuthManager.instance?.signedUser?.userId)
+          .collection("words")
+          .add(word.toMap())
+          .then((value) async {
         await db
             .collection("users")
-            .doc(appUser?.userId)
+            .doc(AuthManager.instance?.signedUser?.userId)
             .collection("words")
             .doc(value.id)
             .update({'wordId': value.id});
@@ -104,7 +122,7 @@ class FirestoreService implements DbBase {
 
       await db
           .collection("users")
-          .doc(appUser?.userId)
+          .doc(AuthManager.instance?.signedUser?.userId)
           .collection("words")
           .doc(word.wordId.toString())
           .update(word.toMap())
@@ -137,15 +155,19 @@ class FirestoreService implements DbBase {
     bool sonuc = false;
     try {
       User user = User(
-          email: appUser!.email,
-          userId: appUser!.userId,
-          lastname: appUser!.lastname,
-          name: appUser!.name,
+          email: AuthManager.instance?.signedUser!.email,
+          userId: AuthManager.instance?.signedUser!.userId,
+          lastname: AuthManager.instance?.signedUser!.lastname,
+          name: AuthManager.instance?.signedUser!.name,
           photo: "empty");
-      await db.collection("users").doc(appUser?.userId).collection("userInfo").add(user.toMap());
+      await db
+          .collection("users")
+          .doc(AuthManager.instance?.signedUser?.userId)
+          .collection("userInfo")
+          .add(user.toMap());
     } catch (e) {
       sonuc = false;
-      debugPrint("db_firestore_service.addWord işleminde hata:$e");
+      debugPrint("db_firestore_service.createUserInfo işleminde hata:$e");
     }
     return sonuc;
   }
@@ -157,7 +179,7 @@ class FirestoreService implements DbBase {
 
       await db
           .collection("users")
-          .doc(appUser?.userId)
+          .doc(AuthManager.instance?.signedUser?.userId)
           .collection("words")
           .doc(word.wordId.toString())
           .update(word.toMap())
@@ -182,7 +204,7 @@ class FirestoreService implements DbBase {
       }
       await db
           .collection("users")
-          .doc(appUser?.userId)
+          .doc(AuthManager.instance?.signedUser?.userId)
           .collection("words")
           .doc(word.wordId.toString())
           .update(word.toMap())

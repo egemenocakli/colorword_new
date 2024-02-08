@@ -2,19 +2,12 @@ import 'dart:async';
 
 import 'package:colorword_new/app/pages/profile/service/profile_interface.dart';
 import 'package:colorword_new/app/pages/profile/service/profile_service.dart';
-import 'package:colorword_new/core/auth_manager/auth_manager.dart';
-import 'package:colorword_new/core/auth_manager/model/user_model.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileViewModel extends BaseViewModel implements IProfileService {
   final ProfileService _profileServiceService = ProfileService();
-  TextEditingController? userNametextController = TextEditingController();
-  TextEditingController? userLastNametextController = TextEditingController();
-  TextEditingController? userEmailtextController = TextEditingController();
-  TextEditingController? userIDtextController = TextEditingController();
-  User? signedUser = AuthManager.instance?.signedUser;
-  String? _fullName;
+
   bool? _textEditNameEnable;
   bool? _textEditMailEnable;
   bool? _selectedChoise;
@@ -24,11 +17,6 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
 
   @override
   FutureOr<void> init() {
-    _fullName = "${signedUser?.name}" " " "${signedUser?.lastname}";
-    userNametextController?.text = _fullName ?? "Unknown";
-    userEmailtextController?.text = signedUser!.email ?? "Unknown";
-    userIDtextController?.text = signedUser!.userId ?? "Unknown";
-
     _textEditNameEnable = false;
     _textEditMailEnable = false;
     _selectedChoise = false;
@@ -62,13 +50,6 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
 
   set selectedChoise(bool? value) {
     _selectedChoise = value;
-    notifyListeners();
-  }
-
-  String? get fullName => _fullName;
-
-  set fullName(String? value) {
-    _fullName = value;
     notifyListeners();
   }
 

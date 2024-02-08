@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/app/pages/home/repository/home_repository.dart';
+import 'package:colorword_new/app/pages/profile/viewmodel/profile_viewmodel.dart';
 import 'package:colorword_new/core/auth_manager/auth_manager.dart';
 import 'package:colorword_new/core/auth_manager/model/user_model.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
@@ -14,15 +15,17 @@ import 'package:colorword_new/app/pages/home/service/home_service_interface.dart
 class HomeViewModel extends BaseViewModel implements IHomeService {
   final HomeRepository _homeRepository = HomeRepository();
   final AuthViewModel _authViewModel = AuthViewModel();
-  User? signedUser = AuthManager.instance?.signedUser;
+  late User? signedUser;
+  ProfileViewModel profileViewModel = ProfileViewModel();
 
   late List<Word?> _words = [];
-  // late Word word = Word();
   Word? onPageWord;
   FirebaseUser? _currentAppUser;
 
   @override
-  FutureOr<void> init() {}
+  FutureOr<void> init() {
+    signedUser = AuthManager.instance?.signedUser;
+  }
 
   //getter
   List<Word?> get words => _words;
@@ -56,7 +59,9 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
   Future<void> signOutFromHome() async {
     FirebaseAuthService authenticationFirebaseService = FirebaseAuthService();
 
-    authenticationFirebaseService.signOut();
+    await authenticationFirebaseService.signOut();
+    AuthManager.instance?.signedUser = User(email: "", lastname: "", name: "", photo: "", userId: "");
+    _words = [];
   }
 
   @override
@@ -69,8 +74,7 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
   Future<bool> deleteWord(Word? word) async {
     if (word != null) {
       viewState = ViewState.loading;
-      //await _firestoreService.deleteWord(word).whenComplete(() {
-      _homeRepository.deleteWord(word).whenComplete(
+      await _homeRepository.deleteWord(word).whenComplete(
         () {
           readWords();
         },

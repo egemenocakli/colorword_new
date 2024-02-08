@@ -23,10 +23,11 @@ class SignUpViewModel extends BaseViewModel implements ISignUpService {
   Future<void> refreshData() async {}
 
   @override
-  Future<bool> signUp({required String email, required String password}) async {
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName}) async {
     ///TODO:kayıt başarılı ancak user nesnesi oluşturulup içine bu bilgiler atanacak. eksik db bilgielri doldurulcak
     bool sonuc;
-    sonuc = await _signUpRepository.signUp(email: email, password: password);
+    sonuc = await _signUpRepository.signUp(email: email, password: password, name: name, lastName: lastName);
     print("kayıt sonucu : $sonuc");
     return sonuc;
   }

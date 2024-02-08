@@ -30,6 +30,12 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
     throw UnimplementedError();
   }
 
+  void disposeAllValues() {
+    translatedWord = "";
+    translateResponse = "";
+    textController?.text = "";
+  }
+
   //getter
   bool get isSame => _isSame;
 
@@ -90,8 +96,6 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   @override
   Future<bool> addWord(Word? word) async {
     isSame = await compareWordWithList(word!);
-
-    //eslesme != true ? await _newWordService.addWord(word) : false;
     if (isSame != true) {
       return await _newWordService.addWord(word);
     } else {

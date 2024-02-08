@@ -1,6 +1,8 @@
+import 'package:colorword_new/app/db/firestore_service.dart';
 import 'package:colorword_new/app/pages/auth/model/firebase_user_model.dart';
 import 'package:colorword_new/app/pages/auth/service/auth_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthService implements AuthServiceInterface {
@@ -51,11 +53,12 @@ class FirebaseAuthService implements AuthServiceInterface {
 
   FirebaseUser? _userFromFirebase(fb.User user) {
     _appUser = FirebaseUser(
-        userId: user.uid, //user.providerData[0].uid,
+        userId: user.uid,
         email: user.email!,
-        name: user.displayName!.split(" ")[0],
-        lastname: user.displayName!.split(" ").isNotEmpty ? user.displayName!.split(" ")[1] : "",
-        photo: user.photoURL!);
+        name: user.displayName != null ? user.displayName!.split(" ")[0] : "",
+        lastname:
+            user.displayName != null && user.displayName!.split(" ").length > 1 ? user.displayName!.split(" ")[1] : "",
+        photo: user.photoURL ?? "");
     return _appUser;
   }
 
@@ -98,9 +101,15 @@ class FirebaseAuthService implements AuthServiceInterface {
   }
 
   @override
-  Future<bool> signUp({required String email, required String password}) async {
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential;
+      userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+
+      _appUser = _userFromEmail(uid: userCredential.user!.uid, name: name, lastName: lastName, email: email);
+
+      printUserDetails();
       return true;
     } catch (e) {
       return false;
@@ -108,12 +117,39 @@ class FirebaseAuthService implements AuthServiceInterface {
   }
 
   @override
-  Future<bool> loginWithEmailPassword({required String email, required String password}) async {
+  Future<FirebaseUser?> loginWithEmailPassword({required String email, required String password}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      return true;
+      UserCredential userCredential;
+      userCredential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+
+      _appUser = _userFromFirebase(userCredential.user!);
+      getCurrentUser();
+      printUserDetails();
+      return _appUser;
     } catch (e) {
-      return false;
+      return null;
     }
+  }
+
+  FirebaseUser? _userFromEmail(
+      {required String uid, required String email, required String? name, required String? lastName}) {
+    _appUser = FirebaseUser(
+        userId: uid, //user.providerData[0].uid,
+        email: email,
+        name: name ?? "",
+        lastname: lastName ?? "",
+        photo: "");
+
+    FirestoreService firestoreService = FirestoreService();
+    firestoreService.createUserInfo();
+    return _appUser;
+  }
+
+  void printUserDetails() {
+    print("Kullanıcı bilgileri:\n"
+        "${_appUser?.name} "
+        "${_appUser?.lastname} "
+        "${_appUser?.email} "
+        "${_appUser?.userId}");
   }
 }

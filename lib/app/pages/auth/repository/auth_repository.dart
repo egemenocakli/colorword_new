@@ -42,12 +42,13 @@ class AuthRepository extends AuthServiceInterface {
   }
 
   @override
-  Future<bool> signUp({required String email, required String password}) async {
-    return await _firebaseAuthService.signUp(email: email, password: password);
+  Future<bool> signUp(
+      {required String email, required String password, required String name, required String lastName}) async {
+    return await _firebaseAuthService.signUp(email: email, password: password, lastName: lastName, name: name);
   }
 
   @override
-  Future<bool> loginWithEmailPassword({required String email, required String password}) async {
+  Future<FirebaseUser?> loginWithEmailPassword({required String email, required String password}) async {
     return await _firebaseAuthService.loginWithEmailPassword(email: email, password: password);
   }
 }

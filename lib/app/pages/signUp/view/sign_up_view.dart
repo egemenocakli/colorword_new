@@ -134,17 +134,17 @@ class _SignUpViewState extends State<SignUpView> {
                     onPressed: () async {
                       if (viewModel.nameTextController.text.isNotEmpty &&
                           viewModel.lastNameTextController.text.isNotEmpty &&
-/*                           viewModel.emailTextController.text.isNotEmpty &&
-                          viewModel.phoneTextController.text.isNotEmpty && */
+                          viewModel.emailTextController.text.isNotEmpty &&
+                          viewModel.phoneTextController.text.isNotEmpty &&
                           viewModel.passwordTextController.text.isNotEmpty &&
                           viewModel.repeatPasswordTextController.text.isNotEmpty &&
                           viewModel.passwordTextController.text == viewModel.repeatPasswordTextController.text) {
                         if (formKey.currentState!.validate()) {
                           await viewModel.signUp(
                               email: viewModel.emailTextController.text,
-                              password: viewModel.passwordTextController.text);
-                          /* name: viewModel.nameTextController.text,
-                              lastName: viewModel.lastNameTextController.text);  */
+                              password: viewModel.passwordTextController.text,
+                              name: viewModel.nameTextController.text,
+                              lastName: viewModel.lastNameTextController.text);
                         }
                       }
                     },

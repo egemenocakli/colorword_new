@@ -68,45 +68,56 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
     await homeViewModel.readWords();
   }
 
-  List<String?> createOptions({required List<Word?>? allWords}) {
+  Future<List<String?>> createOptions({required List<Word?>? allWords}) async {
     Random random = Random.secure();
 
     options.clear();
     options.add(onPageWord?.translatedWords?[0]);
-    //neden bilmiyorum yeni kelime eklediğimde aşağıdaki <=4 durumunda 3 tane eleman geldi bu yüzden 5 yaptım
-    for (int i = 0; i <= 4; i++) {
+    for (int i = 0; i < 4; i++) {
       options.add(allWords![random.nextInt(allWords.length)]?.translatedWords?.first);
+    }
+    if (options.length < 4) {
+      for (int i = 0; i < 4; i++) {
+        options.add(allWords![random.nextInt(allWords.length)]?.translatedWords?.first);
+      }
     }
     return options.toList();
   }
 
-  List<QuestModel?> createExamQuestList({required List<Word?>? allWords}) {
+  Future<List<QuestModel?>> createExamQuestList({required List<Word?>? allWords}) async {
     options.clear();
     List<QuestModel> result = [];
     if (allWords != null) {
       for (var element in allWords) {
         onPageWord = element;
-        options.addAll(createOptions(allWords: allWords));
+        options.addAll(await createOptions(allWords: allWords));
 
-        ///TODO: burası 7 kelime eklenmeden sayfayı çalıştırmıyor
-        List<String?> newList = options.toList().sublist(0, 4);
-        newList.shuffle();
+        List<String?> newList;
+        if (options.length > 3) {
+          newList = options.toList().sublist(0, 4);
+          print(newList);
+          newList.shuffle();
 
-        List<OptionModel?> newOptionModelList = [];
-        for (var element in newList) {
-          newOptionModelList.add(
-            OptionModel(
-              optionText: element ?? '',
-              optionState: OptionState.none,
+          List<OptionModel?> newOptionModelList = [];
+          for (var element in newList) {
+            newOptionModelList.add(
+              OptionModel(
+                optionText: element ?? '',
+                optionState: OptionState.none,
+              ),
+            );
+          }
+          result.add(
+            QuestModel(
+              word: element,
+              options: newOptionModelList,
             ),
           );
+        } else {
+          options.addAll(await createOptions(allWords: allWords));
         }
-        result.add(
-          QuestModel(
-            word: element,
-            options: newOptionModelList,
-          ),
-        );
+
+        ///TODO: burası 7 kelime eklenmeden sayfayı çalıştırmıyor
       }
       examQuestList = result;
       return result;
