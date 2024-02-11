@@ -16,7 +16,7 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
   HomeViewModel homeViewModel = locator<HomeViewModel>();
 
   List<QuestModel> examQuestList = [];
-  late List<Word?>? examWords;
+  late List<Word?>? examWords = [];
   Set<String?> options = {};
   late Word? onPageWord;
   Color _optionsButtonColor = ColorConstants.optionsButtonDefaultColor;
@@ -34,7 +34,7 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
 
   @override
   FutureOr<void> init() {
-    examWords = homeViewModel.words;
+    /* examWords?.addAll(homeViewModel.words); */
   }
 
   //getter
@@ -95,7 +95,6 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
         List<String?> newList;
         if (options.length > 3) {
           newList = options.toList().sublist(0, 4);
-          print(newList);
           newList.shuffle();
 
           List<OptionModel?> newOptionModelList = [];
@@ -116,8 +115,6 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
         } else {
           options.addAll(await createOptions(allWords: allWords));
         }
-
-        ///TODO: burası 7 kelime eklenmeden sayfayı çalıştırmıyor
       }
       examQuestList = result;
       return result;
@@ -154,4 +151,8 @@ class MChoiceExamViewModel extends BaseViewModel implements IMChoiceExamService 
     falseAnswers = examResultList.where((element) => element == false).length;
     correctAnswers = examResultList.where((element) => element == true).length;
   }
+
+/*    reloadAllWordList(){
+    examWords?.addAll(homeViewModel.words);
+  } */
 }

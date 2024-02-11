@@ -17,10 +17,10 @@ class AppNameAnimationWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AppNameAnimationWidgetState createState() => _AppNameAnimationWidgetState();
+  AppNameAnimationWidgetState createState() => AppNameAnimationWidgetState();
 }
 
-class _AppNameAnimationWidgetState extends State<AppNameAnimationWidget> with TickerProviderStateMixin {
+class AppNameAnimationWidgetState extends State<AppNameAnimationWidget> with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
   late String _visibleText;

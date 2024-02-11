@@ -39,7 +39,7 @@ class _AuthViewState extends State<AuthView> {
   }
 
   Widget _buildScreen(BuildContext context, AuthViewModel viewModel) {
-    // ignore: avoid_print some package problems, when i delete this doesnt work localizations.
+    // ignore: avoid_print some package problems, when i delete this doesnt work localizations., avoid_print
     print(context.locale);
     return Scaffold(
         backgroundColor: backgroundColor,

@@ -27,8 +27,8 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
   @override
   void initState() {
     super.initState();
-    viewModel.createExamQuestList(allWords: viewModel.examWords!); //viewModel.homeViewModel.words);
-    viewModel.lastPageNumber = viewModel.examQuestList.length - 1;
+    reloadWordList();
+    viewModel.createExamQuestList(allWords: viewModel.examWords!);
     viewModel.examResultList = List.filled(viewModel.homeViewModel.words.length, false);
   }
 
@@ -46,7 +46,9 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
           children: [
             Expanded(
               flex: 1,
-              child: (viewModel.examWords?.length == null) || ((viewModel.examWords?.length ?? 0) <= 0)
+              child: (viewModel.examWords?.length == null) ||
+                      viewModel.options.length < 3 ||
+                      ((viewModel.examWords?.length ?? 0) <= 0)
                   ? buildEmptyWordListPageInfo(viewModel.pageIndex ?? 1)
                   : PageView.builder(
                       allowImplicitScrolling: false,
@@ -208,5 +210,11 @@ class _MChoiceExamViewState extends State<MChoiceExamView> {
   Future<bool> onWillPop() async {
     await viewModel.reloadWords();
     return true;
+  }
+
+  void reloadWordList() async {
+    viewModel.examWords?.clear();
+    viewModel.examWords?.addAll(viewModel.homeViewModel.words);
+    viewModel.lastPageNumber = viewModel.examQuestList.length;
   }
 }
