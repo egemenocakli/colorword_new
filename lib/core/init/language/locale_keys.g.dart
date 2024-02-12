@@ -26,6 +26,7 @@ abstract class  LocaleKeys {
   static const addNewWordPage_cantFindWord = 'addNewWordPage.cantFindWord';
   static const addNewWordPage_translate = 'addNewWordPage.translate';
   static const addNewWordPage_enterNewWord = 'addNewWordPage.enterNewWord';
+  static const addNewWordPage_alreadyAdded = 'addNewWordPage.alreadyAdded';
   static const addNewWordPage = 'addNewWordPage';
   static const writtenExam_congratulations = 'writtenExam.congratulations';
   static const writtenExam_totalQuestion = 'writtenExam.totalQuestion';

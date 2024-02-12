@@ -182,3 +182,20 @@ class AllButtonStyle {
         shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: borderRadius)));
   }
 }
+
+Future<ScaffoldFeatureController<SnackBar, SnackBarClosedReason>> mySnackbarWidget(
+    {required Widget content, required Duration duration, required dynamic context}) async {
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    backgroundColor: Colors.black,
+    showCloseIcon: true,
+    behavior: SnackBarBehavior.floating,
+    margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
+    padding: const EdgeInsets.only(right: 5.0, left: 15.0, bottom: 8.0, top: 8.0),
+    closeIconColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12.0),
+    ),
+    content: content,
+    duration: duration,
+  ));
+}

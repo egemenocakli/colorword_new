@@ -46,7 +46,16 @@ class _NewWordViewState extends State<NewWordView> {
           floatingActionButton: AddWordFabButtonWidget(
             viewModel: viewModel,
             onPressed: () async {
-              viewModel.translateResponse != null && viewModel.translateResponse != "" ? addWord() : null;
+              if (viewModel.textController!.text.isNotEmpty && viewModel.textController?.text != null) {
+                viewModel.translatedWord = await viewModel.wordTranslate(viewModel.textController?.text) ??
+                    LocaleKeys.addNewWordPage_cantFindWord;
+                addWord();
+                mySnackbarWidget(
+                    content: Text(LocaleKeys.addNewWordPage_alreadyAdded.locale,
+                        textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
+                    duration: const Duration(milliseconds: 1200),
+                    context: context);
+              }
             },
           ),
           resizeToAvoidBottomInset: true, //false'dı

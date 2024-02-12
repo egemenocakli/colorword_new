@@ -27,7 +27,8 @@
         "addNewWord": "Please enter the word you want to add.",
         "cantFindWord": "Something is Wrong.",
         "translate": "Translate",
-        "enterNewWord": "Enter New Word"
+        "enterNewWord": "Enter New Word",
+        "alreadyAdded": "This word has already been added."
     },
     "writtenExam": {
         "congratulations": "Congratulations",

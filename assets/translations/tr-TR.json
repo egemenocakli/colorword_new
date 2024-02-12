@@ -27,7 +27,8 @@
         "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",
         "cantFindWord": "Bir şeyler yanlış.",
         "translate": "Çevir",
-        "enterNewWord": "Yeni Kelime Girin"
+        "enterNewWord": "Yeni Kelime Girin",
+        "alreadyAdded": "Bu kelime zaten ekli."
     },
     "writtenExam": {
         "congratulations": "Tebrikler",

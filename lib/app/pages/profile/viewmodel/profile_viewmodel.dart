@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:colorword_new/app/pages/profile/repository/profile_repository.dart';
 import 'package:colorword_new/app/pages/profile/service/profile_interface.dart';
-import 'package:colorword_new/app/pages/profile/service/profile_service.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileViewModel extends BaseViewModel implements IProfileService {
-  final ProfileService _profileServiceService = ProfileService();
-
+  final ProfileRepository _profileRepository = ProfileRepository();
   bool? _textEditNameEnable;
   bool? _textEditMailEnable;
   bool? _selectedChoise;
@@ -82,12 +81,12 @@ class ProfileViewModel extends BaseViewModel implements IProfileService {
 
   @override
   Future<bool> updateName(String? displayName) async {
-    return await _profileServiceService.updateName(displayName);
+    return await _profileRepository.updateName(displayName);
   }
 
   @override
   Future<bool> updateEmail(String? email) async {
-    return await _profileServiceService.updateEmail(email);
+    return await _profileRepository.updateEmail(email);
   }
 
   void startCountdown() {

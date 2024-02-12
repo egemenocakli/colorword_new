@@ -1,15 +1,15 @@
 import 'dart:async';
 
+import 'package:colorword_new/app/pages/written_exam/repository/written_exam_repository.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:colorword_new/app/pages/written_exam/service/written_exam_interface.dart';
-import 'package:colorword_new/app/pages/written_exam/service/written_exam_service.dart';
 import 'package:flutter/material.dart';
 
 class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService {
-  final WrittenExamService _writtenExamService = WrittenExamService();
+  final WrittenExamRepository _writtenExamRepository = WrittenExamRepository();
   final HomeViewModel homeViewModel = locator<HomeViewModel>();
   int _mistakes = 5;
   int _pageIndex = 0;
@@ -25,7 +25,6 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
 
   @override
   Future<void> refreshData() {
-    // TODO: implement refreshData
     throw UnimplementedError();
   }
 
@@ -66,7 +65,7 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   Future<bool> decreasetheScore({Word? word, required int point}) async {
     if (word != null) {
       viewState = ViewState.loading;
-      await _writtenExamService.decreasetheScore(word: word, point: point);
+      await _writtenExamRepository.decreasetheScore(word: word, point: point);
       viewState = ViewState.loaded;
       return true;
     } else {
@@ -78,7 +77,7 @@ class WrittenExamViewModel extends BaseViewModel implements IWrittenExamService 
   Future<bool> increasetheScore({Word? word, required int point}) async {
     if (word != null) {
       viewState = ViewState.loading;
-      await _writtenExamService.increasetheScore(word: word, point: point);
+      await _writtenExamRepository.increasetheScore(word: word, point: point);
       viewState = ViewState.loaded;
       return true;
     } else {

@@ -1,12 +1,12 @@
 /* 
 
 Sıra:
-Abimin attığı şekilde view ve viewmodel değiştirilecek.
-GoogleSign
-Firebase sign işlemleri
+Abimin attığı şekilde view ve viewmodel değiştirilecek.++
+GoogleSign++
+Firebase sign işlemleri++
 
--language ve stringlerin tutulacağı alan
--state yapısı provider
+-language ve stringlerin tutulacağı alan++
+-state yapısı provider++
 Esnek size değerleri öğrenilip eklenecek
 
 AUTOROUTE+
@@ -15,34 +15,34 @@ BASE YAPISI+
 PROVİDER+
 MVVM MANTIKLI KLASÖR MİMARİSİ+
 FİREBASE++
-  Firebase kişinin kelimelerinin gelmesi vs.
+  Firebase kişinin kelimelerinin gelmesi vs.++
 CRASHANALYTCS++
 
 
 
 
-Repository katmanı
+Repository katmanı++
 debug release seçenek katmanı
-kullanıcının giriş çıkış ve o anki user ı tutan katman
+kullanıcının giriş çıkış ve o anki user ı tutan katman++
 fakeuser
-user modeli
+user modeli++
 userviewmodeli
-locator ile tanımlanmış sayfalar
+locator ile tanımlanmış sayfalar++
 
-önce giriş yapma çıkış vs sayfası
+önce giriş yapma çıkış vs sayfası++
 
 splash(force update kontrolü+oturup açıksa otomatik yönlendirme)
 
 
 
 
-Kelimelerin firebase den alındığı bir sayfa
-bu sayfa view- viewmodel- repostory katmanı- kelimelerin alındığı katman şeklinde çağrılcak
+Kelimelerin firebase den alındığı bir sayfa++
+bu sayfa view- viewmodel- repostory katmanı- kelimelerin alındığı katman şeklinde çağrılcak++
 
-şöyle bir sorun var veritabanında userslar ayrılmamış
-bir users ın words listesine kaydediliyor her şey
+şöyle bir sorun var veritabanında userslar ayrılmamış++
+bir users ın words listesine kaydediliyor her şey++
 
-her kullanıcıya ait users altında bir unique kod açılıp words ona yazılmalı ÖNCELİK
+her kullanıcıya ait users altında bir unique kod açılıp words ona yazılmalı ÖNCELİK++
 
 */
 

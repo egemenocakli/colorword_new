@@ -1,17 +1,17 @@
 import 'dart:async';
+import 'package:colorword_new/app/pages/new_word/repository/new_word_repository.dart';
 import 'package:colorword_new/core/base/viewmodel/base_view_model.dart';
 import 'package:colorword_new/core/enums/enum.dart';
 import 'package:colorword_new/core/extensions/string_extension.dart';
 import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/home/viewmodel/home_viewmodel.dart';
-import 'package:colorword_new/app/pages/new_word/service/new_word_service.dart';
 import 'package:colorword_new/app/pages/new_word/service/new_word_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:simplytranslate/simplytranslate.dart';
 
 class NewWordViewModel extends BaseViewModel implements INewWordService {
-  final NewWordService _newWordService = NewWordService();
+  final NewWordRepository _newWordRepository = NewWordRepository();
   TextEditingController? textController = TextEditingController();
   String translatedWord = "";
   String? translateResponse;
@@ -60,8 +60,6 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
       if (translateResponse?.split(' ').first == translateResponse?.split(' ').last) {
         translateResponse = translateResponse?.split(' ').first;
       }
-
-      //TODO:eğerki iki kelime çıkarsa anlam veya cümle çevirirse sıkıntı çıkar. cümle veya kelime olarak seçtirmek lazım
     }
 
     if (translateResponse != null) {
@@ -97,7 +95,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
   Future<bool> addWord(Word? word) async {
     isSame = await compareWordWithList(word!);
     if (isSame != true) {
-      return await _newWordService.addWord(word);
+      return await _newWordRepository.addWord(word);
     } else {
       return isSame;
     }
