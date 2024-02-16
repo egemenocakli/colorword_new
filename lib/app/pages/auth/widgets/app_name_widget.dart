@@ -3,9 +3,9 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppNameWidget extends StatelessWidget {
-  const AppNameWidget({super.key, required this.backgroundColor});
+  const AppNameWidget({super.key, this.backgroundColor});
 
-  final Color backgroundColor;
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Expanded(
