@@ -70,18 +70,6 @@ class _SignUpViewState extends State<SignUpView> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
                   child: CustomTextField(
-                    labelText: LocaleKeys.signUp_phone.locale,
-                    textController: viewModel.phoneTextController,
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.next,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-                  child: CustomTextField(
                     labelText: LocaleKeys.profilePage_email.locale,
                     textController: viewModel.emailTextController,
                     keyboardType: TextInputType.emailAddress,
@@ -118,7 +106,7 @@ class _SignUpViewState extends State<SignUpView> {
                   child: CustomTextField(
                     labelText: "Repeat Password",
                     textController: viewModel.repeatPasswordTextController,
-                    keyboardType: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     validator: (p0) {
                       if (viewModel.passwordTextController.text != viewModel.repeatPasswordTextController.text) {
@@ -135,16 +123,33 @@ class _SignUpViewState extends State<SignUpView> {
                       if (viewModel.nameTextController.text.isNotEmpty &&
                           viewModel.lastNameTextController.text.isNotEmpty &&
                           viewModel.emailTextController.text.isNotEmpty &&
-                          viewModel.phoneTextController.text.isNotEmpty &&
                           viewModel.passwordTextController.text.isNotEmpty &&
                           viewModel.repeatPasswordTextController.text.isNotEmpty &&
                           viewModel.passwordTextController.text == viewModel.repeatPasswordTextController.text) {
                         if (formKey.currentState!.validate()) {
-                          await viewModel.signUp(
+                          bool? signUpResult;
+                          signUpResult = await viewModel.signUp(
                               email: viewModel.emailTextController.text,
                               password: viewModel.passwordTextController.text,
                               name: viewModel.nameTextController.text,
                               lastName: viewModel.lastNameTextController.text);
+
+                          if (signUpResult == true) {
+                            mySnackbarWidget(
+                                content: Text(LocaleKeys.signUp_signUpResultSucces.locale,
+                                    textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
+                                duration: const Duration(seconds: 3),
+                                context: context);
+                            context.router.pop();
+                          } else {
+                            mySnackbarWidget(
+                                content: Text(LocaleKeys.signUp_signUpResultFailed.locale,
+                                    textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),
+                                duration: const Duration(seconds: 3),
+                                context: context);
+                          }
+                          print("kayıt $signUpResult");
+                          return;
                         }
                       }
                     },

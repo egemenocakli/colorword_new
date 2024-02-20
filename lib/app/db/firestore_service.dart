@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/app/db/db_base.dart';
+import 'package:colorword_new/app/pages/auth/model/firebase_user_model.dart';
 import 'package:colorword_new/core/auth_manager/auth_manager.dart';
-import 'package:colorword_new/core/auth_manager/model/user_model.dart';
 import 'package:colorword_new/app/models/word_model.dart';
+import 'package:colorword_new/core/auth_manager/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class FirestoreService implements DbBase {
@@ -72,9 +73,10 @@ class FirestoreService implements DbBase {
       });
 
       //Eğer kişi ilk defa giriyorsa userinfo çalışsın kişi bilgileri kaydedilsin.
-      if (words.isEmpty) {
+      //Şuanlık kalktı
+      /* if (words.isEmpty) {
         createUserInfo();
-      }
+      } */
     } catch (e) {
       debugPrint("db_firestore_service.readWords işleminde hata:$e");
     }
@@ -149,22 +151,18 @@ class FirestoreService implements DbBase {
     return true;
   }
 
-  //Words collectionuyla aynı dizinde bir kullanıcı bilgileri tutmak lazım
-  //loginden sonra bunları eklemek lazım ama sadece bir kere eklenmeli
-  Future<bool> createUserInfo() async {
+  Future<bool> createUserInfo({FirebaseUser? firebaseUser}) async {
     bool sonuc = false;
     try {
-      User user = User(
-          email: AuthManager.instance?.signedUser!.email,
-          userId: AuthManager.instance?.signedUser!.userId,
-          lastname: AuthManager.instance?.signedUser!.lastname,
-          name: AuthManager.instance?.signedUser!.name,
-          photo: "empty");
-      await db
-          .collection("users")
-          .doc(AuthManager.instance?.signedUser?.userId)
-          .collection("userInfo")
-          .add(user.toMap());
+      if (firebaseUser != null) {
+        User user = User(
+            email: firebaseUser.email,
+            userId: firebaseUser.userId,
+            lastname: firebaseUser.lastname,
+            name: firebaseUser.name,
+            photo: "empty");
+        await db.collection("users").doc(firebaseUser.userId).collection("userInfo").add(user.toMap());
+      }
     } catch (e) {
       sonuc = false;
       debugPrint("db_firestore_service.createUserInfo işleminde hata:$e");

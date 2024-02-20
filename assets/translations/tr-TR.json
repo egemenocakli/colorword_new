@@ -12,7 +12,9 @@
     "signUp": {
         "name": "Ad",
         "lastName": "Soyad",
-        "phone": "Telefon Numarası"
+        "phone": "Telefon Numarası",
+        "signUpResultSucces": "Kayıt Başarılı",
+        "signUpResult": "Kayıt Başarısız"
     },
     "mainPage": {
         "exitToolTip": "Çıkış",

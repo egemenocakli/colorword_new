@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   static const localizationAssetPath = 'assets/translations';
-  static const background = 'assets/images/background.png';
+  static const background = 'assets/images/background.png'; //kaldırılacak
   static const googleIcon = 'assets/images/google_icon.png';
   static const appName = 'ColorWord';
   static const fontFamilyManrope = 'Manrope';

@@ -12,7 +12,6 @@ class SignUpViewModel extends BaseViewModel implements ISignUpService {
   TextEditingController nameTextController = TextEditingController();
   TextEditingController lastNameTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
-  TextEditingController phoneTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController repeatPasswordTextController = TextEditingController();
 
@@ -25,7 +24,6 @@ class SignUpViewModel extends BaseViewModel implements ISignUpService {
   @override
   Future<bool> signUp(
       {required String email, required String password, required String name, required String lastName}) async {
-    ///TODO:kayıt başarılı ancak user nesnesi oluşturulup içine bu bilgiler atanacak. eksik db bilgielri doldurulcak
     bool sonuc;
     sonuc = await _signUpRepository.signUp(email: email, password: password, name: name, lastName: lastName);
     print("kayıt sonucu : $sonuc");

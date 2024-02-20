@@ -106,8 +106,12 @@ class FirebaseAuthService implements AuthServiceInterface {
     try {
       UserCredential userCredential;
       userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-
       _appUser = _userFromEmail(uid: userCredential.user!.uid, name: name, lastName: lastName, email: email);
+      FirestoreService firestoreService = FirestoreService();
+      if (_appUser != null) {
+        firestoreService.createUserInfo(firebaseUser: _appUser);
+        updateName("${_appUser?.name} ${_appUser?.lastname}");
+      }
 
       printUserDetails();
       return true;
@@ -139,9 +143,9 @@ class FirebaseAuthService implements AuthServiceInterface {
         name: name ?? "",
         lastname: lastName ?? "",
         photo: "");
-
-    FirestoreService firestoreService = FirestoreService();
-    firestoreService.createUserInfo();
+    //Şuanlık kalktı
+    /* FirestoreService firestoreService = FirestoreService();
+    firestoreService.createUserInfo(); */
     return _appUser;
   }
 

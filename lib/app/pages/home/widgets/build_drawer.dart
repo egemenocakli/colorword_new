@@ -24,10 +24,11 @@ class BuildDrawer extends StatelessWidget {
                 style: MyTextStyle.midTextStyle()),
             accountEmail: Text(AuthManager.instance?.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
             //currentAccountPicture: const FlutterLogo(),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppConstants.background),
-                fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: ColorConstants.backgroundGradientColors,
               ),
             ),
           ),

@@ -13,6 +13,8 @@ abstract class  LocaleKeys {
   static const signUp_name = 'signUp.name';
   static const signUp_lastName = 'signUp.lastName';
   static const signUp_phone = 'signUp.phone';
+  static const signUp_signUpResultSucces = 'signUp.signUpResultSucces';
+  static const signUp_signUpResultFailed = 'signUp.signUpResultFailed';
   static const signUp = 'signUp';
   static const mainPage_exitToolTip = 'mainPage.exitToolTip';
   static const mainPage_menuIconToolTip = 'mainPage.menuIconToolTip';

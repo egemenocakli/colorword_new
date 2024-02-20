@@ -50,6 +50,7 @@ class _NewWordViewState extends State<NewWordView> {
                 viewModel.translatedWord = await viewModel.wordTranslate(viewModel.textController?.text) ??
                     LocaleKeys.addNewWordPage_cantFindWord;
                 addWord();
+                //TODO:hatalı yazı
                 mySnackbarWidget(
                     content: Text(LocaleKeys.addNewWordPage_alreadyAdded.locale,
                         textAlign: TextAlign.center, style: MyTextStyle.smallTextStyle()),

@@ -32,7 +32,7 @@ class LoginButtonWidget extends StatelessWidget {
             //TODO:validate
 
             viewModel.loginWithEmailPassword(email: email, password: password).then((value) {
-              context.replaceRoute(const SplashRoute() /* const HomeRoute() */);
+              context.replaceRoute(/* const SplashRoute() */ const HomeRoute());
             }).onError((error, stackTrace) {
               print("Error ${error.toString()}");
             });

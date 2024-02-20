@@ -12,7 +12,9 @@
     "signUp": {
         "name": "Name",
         "lastName": "Last Name",
-        "phone": "Phone Number"
+        "phone": "Phone Number",
+        "signUpResultSucces": "Registration Successful",
+        "signUpResultFailed": "Registration Failed"
     },
     "mainPage": {
         "exitToolTip": "Exit",
