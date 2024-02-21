@@ -99,3 +99,4 @@ class AuthViewModel extends BaseViewModel implements AuthServiceInterface {
   Future<void> signOut() async {
     _authenticationFirebaseService.signOut();
   }*/
+  //
