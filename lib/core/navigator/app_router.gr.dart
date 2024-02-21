@@ -15,10 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    ExamRoute.name: (routeData) {
+    AuthRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ExamView(),
+        child: const AuthView(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -27,10 +27,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeView(),
       );
     },
-    LoginRoute.name: (routeData) {
+    MChoiceExamRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginView(),
+        child: const MChoiceExamView(),
       );
     },
     NewWordRoute.name: (routeData) {
@@ -39,19 +39,43 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NewWordView(),
       );
     },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileView(),
+      );
+    },
+    SignUpRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpView(),
+      );
+    },
+    SplashRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SplashView(),
+      );
+    },
+    WrittenExamRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WrittenExamView(),
+      );
+    },
   };
 }
 
 /// generated route for
-/// [ExamView]
-class ExamRoute extends PageRouteInfo<void> {
-  const ExamRoute({List<PageRouteInfo>? children})
+/// [AuthView]
+class AuthRoute extends PageRouteInfo<void> {
+  const AuthRoute({List<PageRouteInfo>? children})
       : super(
-          ExamRoute.name,
+          AuthRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ExamRoute';
+  static const String name = 'AuthRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -71,15 +95,15 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginView]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [MChoiceExamView]
+class MChoiceExamRoute extends PageRouteInfo<void> {
+  const MChoiceExamRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          MChoiceExamRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'MChoiceExamRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -94,6 +118,62 @@ class NewWordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NewWordRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileView]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SignUpView]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+      : super(
+          SignUpRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignUpRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashView]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WrittenExamView]
+class WrittenExamRoute extends PageRouteInfo<void> {
+  const WrittenExamRoute({List<PageRouteInfo>? children})
+      : super(
+          WrittenExamRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WrittenExamRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

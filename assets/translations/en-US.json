@@ -1,19 +1,55 @@
 {
     "login": {
         "loginMessage": "Hello \n Please login for continue.",
-        "loginWithGoogle": "Login With Google",
+        "login": "Login",
+        "password": "Password",
+        "signWithGoogle": "Sign in with Google",
         "tr": "Türkçe",
-        "en": "İngilizce"
+        "en": "İngilizce",
+        "signUp": "Sign up",
+        "dontHaveAccount": "Don't have an account?"
+    },
+    "signUp": {
+        "name": "Name",
+        "lastName": "Last Name",
+        "phone": "Phone Number",
+        "signUpResultSucces": "Registration Successful",
+        "signUpResultFailed": "Registration Failed"
     },
     "mainPage": {
         "exitToolTip": "Exit",
         "menuIconToolTip": "Menu Icon",
-        "words": "English Words"
+        "words": "English Words",
+        "profile": "Profile",
+        "multipleChoise": "Multiple-Choice Exam",
+        "writtenExam": "Written Exam",
+        "score": "Score"
     },
     "addNewWordPage": {
         "addNewWord": "Please enter the word you want to add.",
         "cantFindWord": "Something is Wrong.",
         "translate": "Translate",
-        "enterNewWord": "Enter New Word"
+        "enterNewWord": "Enter New Word",
+        "alreadyAdded": "This word has already been added."
+    },
+    "writtenExam": {
+        "congratulations": "Congratulations",
+        "totalQuestion": "Number of questions you answered: ",
+        "totalCorrectAnswer": "Your number of correct answers: ",
+        "totalWrongAnswer": "Your number of wrong answers: ",
+        "correct": "Correct!",
+        "false": "False!",
+        "skip": "You missed this word."
+    },
+    "profilePage": {
+        "userInfos": "User Information",
+        "fullName": "Full Name",
+        "email": "Email",
+        "userId": "User ID",
+        "deleteThisAccount": "Permanently Delete This Account",
+        "deleteAccount": "Delete This Account",
+        "deleteInfoMessage": "Are you sure you want to delete your account for the application you are using? If you perform the deletion process, your saved words and information will be deleted.",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
     }
 }

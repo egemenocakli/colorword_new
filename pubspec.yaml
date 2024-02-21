@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^4.8.4
   firebase_crashlytics: ^3.3.4
   firebase_analytics: ^10.4.4
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -108,6 +109,9 @@ flutter:
         - asset: assets\fonts\manrope\Manrope-SemiBold.ttf
           weight: 600
         - asset: assets\fonts\manrope\Manrope-VariableFont_wght.ttf
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets\fonts\icons\MyFlutterApp.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -1,19 +1,55 @@
 {
     "login": {
         "loginMessage": "Merhaba \n Devam etmek için lütfen giriş yapınız.",
-        "loginWithGoogle": "Google ile giriş",
+        "login": "Giriş",
+        "password": "Şifre",
+        "signWithGoogle": "Google ile giriş",
         "tr": "Türkçe",
-        "en": "İngilizce"
+        "en": "İngilizce",
+        "signUp": "Kayıt ol",
+        "dontHaveAccount": "Henüz kayıt olmadınız mı?"
+    },
+    "signUp": {
+        "name": "Ad",
+        "lastName": "Soyad",
+        "phone": "Telefon Numarası",
+        "signUpResultSucces": "Kayıt Başarılı",
+        "signUpResult": "Kayıt Başarısız"
     },
     "mainPage": {
         "exitToolTip": "Çıkış",
         "menuIconToolTip": "Menü Butonu",
-        "words": "İngilizce Kelimeler"
+        "words": "İngilizce Kelimeler",
+        "profile": "Profil",
+        "multipleChoise": "Seçenekli Test",
+        "writtenExam": "Klasik Test",
+        "score": "Skor"
     },
     "addNewWordPage": {
         "addNewWord": "Lütfen eklemek istediğiniz kelimeyi girin.",
         "cantFindWord": "Bir şeyler yanlış.",
         "translate": "Çevir",
-        "enterNewWord": "Yeni Kelime Girin"
+        "enterNewWord": "Yeni Kelime Girin",
+        "alreadyAdded": "Bu kelime zaten ekli."
+    },
+    "writtenExam": {
+        "congratulations": "Tebrikler",
+        "totalQuestion": "Toplam soru sayısı: ",
+        "totalCorrectAnswer": "Doğru cevap sayınız: ",
+        "totalWrongAnswer": "Yanlış cevap sayınız: ",
+        "correct": "Doğru!",
+        "false": "Yanlış!",
+        "skip": "Bu kelimeyi atladınız."
+    },
+    "profilePage": {
+        "userInfos": "Kullanıcı Bilgileri",
+        "fullName": "Ad Soyad",
+        "email": "Email",
+        "userId": "Kullanıcı Id",
+        "deleteThisAccount": "Bu Hesabı Kalıcı Olarak Sil",
+        "deleteAccount": "Bu Hesabı Sil",
+        "deleteInfoMessage": "Kullanmakta olduğunuz uygulamaya ait hesabınızı silmek istediğinize emin misiniz? Silme işlemini gerçekleştirmeniz durumunda kayıtlı kelimeleriniz ve bilgileriniz silinecektir.",
+        "confirm": "Onayla",
+        "cancel": "Vazgeç"
     }
 }
