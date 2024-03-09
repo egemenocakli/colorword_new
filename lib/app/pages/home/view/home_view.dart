@@ -102,6 +102,59 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+/*   Drawer buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text(
+                "${AuthManager.instance?.signedUser?.name}"
+                " "
+                "${AuthManager.instance?.signedUser?.lastname}",
+                style: MyTextStyle.midTextStyle()),
+            accountEmail: Text(AuthManager.instance?.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
+            //currentAccountPicture: const FlutterLogo(),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppConstants.background),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.person, color: Colors.blueAccent),
+            title: Text(LocaleKeys.mainPage_profile.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+
+            ///TODO: autoroute guard
+            onTap: () {
+              context.router.push(const ProfileRoute());
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
+            title: Text(LocaleKeys.mainPage_multipleChoise.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+
+            ///TODO:autoroute guard
+            onTap: () {
+              context.router.push(const MChoiceExamRoute());
+            },
+          ),
+          ListTile(
+            ///TODO:autoroute guard
+            leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
+            title: Text(LocaleKeys.mainPage_writtenExam.locale,
+                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
+            onTap: () {
+              context.router.push(const WrittenExamRoute());
+            },
+          ),
+        ],
+      ),
+    );
+  } */
+
   Widget buildEmptyWordListPageInfo() {
     return wordPage(context: context, word: viewModel.createEmptyWord());
   }

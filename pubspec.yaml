@@ -42,7 +42,6 @@ dependencies:
   easy_localization: ^3.0.2
   get_it: ^7.6.0
   simplytranslate: ^1.2.4
-  receive_intent: ^0.2.5
 
   #Google Services
   google_sign_in: ^6.1.4
@@ -52,7 +51,6 @@ dependencies:
   firebase_crashlytics: ^3.3.4
   firebase_analytics: ^10.4.4
   google_fonts: ^6.1.0
-  
 
 dev_dependencies:
   flutter_test:
