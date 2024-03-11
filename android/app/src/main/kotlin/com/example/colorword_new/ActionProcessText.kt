@@ -10,12 +10,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.Exception
 import android.content.Intent
+import kotlin.random.Random
+
 
 
 class ActionProcessText : Activity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
+    val rnd = randomHexColor()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,7 @@ class ActionProcessText : Activity() {
                     "wordId" to "",
                     "word" to word,
                     "translatedWords" to arrayListOf<String>(),
-                    "color" to "",
+                    "color" to rnd.toString(),
                     "score" to 0
                 )
 
@@ -69,4 +73,11 @@ class ActionProcessText : Activity() {
             finishAffinity()
         }
     }
+
+        fun randomHexColor(): String {
+    val random = Random.Default
+    val color = java.lang.String.format("#%06X", 0xFFFFFF and random.nextInt(0x1000000))
+    return color
+}
+    
 }
