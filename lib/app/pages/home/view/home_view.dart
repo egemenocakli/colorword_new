@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    viewModel.readWords();
+    viewModel.readWords().whenComplete(() => viewModel.checkAnyEmptyTranslates(wordList: viewModel.words));
   }
 
   @override
@@ -117,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
         children: [
           Text(word?.word ?? '-',
               style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600), textAlign: TextAlign.center),
-          Text(word?.translatedWords?.firstOrNull ?? '-',
+          Text(word?.translatedWords?.firstOrNull ?? "-",
               style: MyTextStyle.midTextStyle(), textAlign: TextAlign.center),
           Padding(
               padding: const EdgeInsets.only(top: 10.0),

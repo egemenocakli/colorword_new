@@ -11,6 +11,11 @@ class HomeService implements IHomeService {
   }
 
   @override
+  Future<bool> updateWord(Word? word) async {
+    return await _firestoreService.updateWord(word);
+  }
+
+  @override
   Future<List<Word?>?> readWords() async {
     return await _firestoreService.readWords();
   }

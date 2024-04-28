@@ -47,7 +47,7 @@ class _NewWordViewState extends State<NewWordView> {
             viewModel: viewModel,
             onPressed: () async {
               if (viewModel.textController!.text.isNotEmpty && viewModel.textController?.text != null) {
-                viewModel.translatedWord = await viewModel.wordTranslate(viewModel.textController?.text) ??
+                viewModel.translatedWord = await viewModel.wordTranslate(word: viewModel.textController?.text) ??
                     LocaleKeys.addNewWordPage_cantFindWord;
                 addWord();
                 //TODO:hatalı yazı

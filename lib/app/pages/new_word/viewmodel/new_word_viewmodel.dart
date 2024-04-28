@@ -49,7 +49,7 @@ class NewWordViewModel extends BaseViewModel implements INewWordService {
     await homeViewModel.readWords();
   }
 
-  Future<String?> wordTranslate(String? word) async {
+  Future<String?> wordTranslate({String? word}) async {
     if (word != null) {
       viewState = ViewState.loading;
       translateResponse = await gt.trSimply(word, translateLanguage, sourceLanguage);

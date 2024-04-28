@@ -116,26 +116,27 @@ class FirestoreService implements DbBase {
   }
 
   @override
-  Future<bool> updateWord(Word word) async {
+  Future<bool> updateWord(Word? word) async {
     bool sonuc = false;
 
-    try {
-      word.lastUpdateDate = Timestamp.now();
+    if (word != null) {
+      try {
+        word.lastUpdateDate = Timestamp.now();
 
-      await db
-          .collection("users")
-          .doc(AuthManager.instance?.signedUser?.userId)
-          .collection("words")
-          .doc(word.wordId.toString())
-          .update(word.toMap())
-          .then((value) {
-        sonuc = true;
-      });
-    } catch (e) {
-      sonuc = false;
-      debugPrint("db_firestore_service.updateWord işleminde hata:$e");
+        await db
+            .collection("users")
+            .doc(AuthManager.instance?.signedUser?.userId)
+            .collection("words")
+            .doc(word.wordId.toString())
+            .update(word.toMap())
+            .then((value) {
+          sonuc = true;
+        });
+      } catch (e) {
+        sonuc = false;
+        debugPrint("db_firestore_service.updateWord işleminde hata:$e");
+      }
     }
-
     return sonuc;
   }
 

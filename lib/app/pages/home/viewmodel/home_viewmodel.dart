@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorword_new/app/pages/home/repository/home_repository.dart';
+import 'package:colorword_new/app/pages/new_word/viewmodel/new_word_viewmodel.dart';
 import 'package:colorword_new/app/pages/profile/viewmodel/profile_viewmodel.dart';
 import 'package:colorword_new/core/auth_manager/auth_manager.dart';
 import 'package:colorword_new/core/auth_manager/model/user_model.dart';
@@ -93,5 +94,56 @@ class HomeViewModel extends BaseViewModel implements IHomeService {
     _words = (await _homeRepository.readWords()) ?? [];
     viewState = ViewState.loaded;
     return _words;
+  }
+
+  bool checkAnyEmptyTranslates({required List<Word?> wordList}) {
+    List<Word?> getList;
+    bool isAnyEmpty = false;
+    getList = wordList;
+
+    for (var word in getList) {
+      if (word!.translatedWords!.isEmpty) {
+        isAnyEmpty = true;
+      } else {}
+    }
+    updateEmptyWords(wordList: wordList);
+    return isAnyEmpty;
+  }
+
+  Future<void> updateEmptyWords({required List<Word?> wordList}) async {
+    NewWordViewModel newWordViewModel = NewWordViewModel();
+    String? translateResponse;
+    List<Word?> getList;
+
+    getList = wordList;
+
+    for (var word in getList) {
+      if (word!.translatedWords!.isEmpty) {
+        translateResponse = await newWordViewModel.wordTranslate(word: word.word);
+
+        Word newTranslatedWord = word;
+        newTranslatedWord.translatedWords?.add(translateResponse);
+
+        updateWord(newTranslatedWord);
+      }
+    }
+    readWords();
+  }
+
+  @override
+  Future<bool> updateWord(Word? word) async {
+    if (word != null) {
+      viewState = ViewState.loading;
+      await _homeRepository.updateWord(word).whenComplete(
+        () {
+          readWords();
+        },
+      );
+
+      viewState = ViewState.loaded;
+      return true;
+    } else {
+      return false;
+    }
   }
 }
