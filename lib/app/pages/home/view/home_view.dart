@@ -9,6 +9,7 @@ import 'package:colorword_new/core/init/constants.dart';
 import 'package:colorword_new/core/init/language/locale_keys.g.dart';
 import 'package:colorword_new/app/models/word_model.dart';
 import 'package:colorword_new/core/navigator/app_router.dart';
+import 'package:colorword_new/core/utility/helpers.dart';
 import 'package:colorword_new/core/widgets/my_appbar.dart';
 import 'package:colorword_new/locator.dart';
 import 'package:colorword_new/app/pages/home/viewmodel/home_viewmodel.dart';
@@ -28,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    viewModel.readWords();
+    viewModel.readWords().whenComplete(() => viewModel.checkAnyEmptyTranslates(wordList: viewModel.words));
   }
 
   @override
@@ -102,59 +103,6 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-/*   Drawer buildDrawer(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(
-                "${AuthManager.instance?.signedUser?.name}"
-                " "
-                "${AuthManager.instance?.signedUser?.lastname}",
-                style: MyTextStyle.midTextStyle()),
-            accountEmail: Text(AuthManager.instance?.signedUser?.email ?? '', style: MyTextStyle.xsmallTextStyle()),
-            //currentAccountPicture: const FlutterLogo(),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppConstants.background),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.person, color: Colors.blueAccent),
-            title: Text(LocaleKeys.mainPage_profile.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
-
-            ///TODO: autoroute guard
-            onTap: () {
-              context.router.push(const ProfileRoute());
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.app_registration_rounded, color: Colors.redAccent),
-            title: Text(LocaleKeys.mainPage_multipleChoise.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
-
-            ///TODO:autoroute guard
-            onTap: () {
-              context.router.push(const MChoiceExamRoute());
-            },
-          ),
-          ListTile(
-            ///TODO:autoroute guard
-            leading: const Icon(FontPackage.edit_alt, color: Colors.orange),
-            title: Text(LocaleKeys.mainPage_writtenExam.locale,
-                style: MyTextStyle.smallTextStyle(textColor: ColorConstants.black)),
-            onTap: () {
-              context.router.push(const WrittenExamRoute());
-            },
-          ),
-        ],
-      ),
-    );
-  } */
-
   Widget buildEmptyWordListPageInfo() {
     return wordPage(context: context, word: viewModel.createEmptyWord());
   }
@@ -163,13 +111,13 @@ class _HomeViewState extends State<HomeView> {
     return Container(
       height: context.height,
       width: context.width,
-      color: word?.color,
+      color: word?.color ?? Helpers.randomColor(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(word?.word ?? '-',
               style: MyTextStyle.xlargeTextStyle(fontWeight: FontWeight.w600), textAlign: TextAlign.center),
-          Text(word?.translatedWords?.firstOrNull ?? '-',
+          Text(word?.translatedWords?.firstOrNull ?? "-",
               style: MyTextStyle.midTextStyle(), textAlign: TextAlign.center),
           Padding(
               padding: const EdgeInsets.only(top: 10.0),

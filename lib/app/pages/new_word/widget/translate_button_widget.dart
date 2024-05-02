@@ -16,8 +16,8 @@ class TranslateButtonWidget extends StatelessWidget {
             backgroundColor: ColorConstants.buttonColorPink,
             textStyle: const TextStyle(fontSize: 20)),
         onPressed: () async {
-          viewModel.translatedWord =
-              await viewModel.wordTranslate(viewModel.textController?.text) ?? LocaleKeys.addNewWordPage_cantFindWord;
+          viewModel.translatedWord = await viewModel.wordTranslate(word: viewModel.textController?.text) ??
+              LocaleKeys.addNewWordPage_cantFindWord;
         },
         child: Text(LocaleKeys.addNewWordPage_translate.locale));
   }

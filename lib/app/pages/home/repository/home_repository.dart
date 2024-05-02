@@ -18,6 +18,11 @@ class HomeRepository implements IHomeService {
   }
 
   @override
+  Future<bool> updateWord(Word? word) async {
+    return await _homeService.updateWord(word);
+  }
+
+  @override
   Future<List<Word?>?> readWords() async {
     return await _homeService.readWords();
   }
