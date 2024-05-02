@@ -7,11 +7,11 @@ class WrittenExamRepository implements IWrittenExamService {
 
   @override
   Future<bool> decreasetheScore({Word? word, required int point}) async {
-    return await _writtenExamService.decreasetheScore(point: point);
+    return await _writtenExamService.decreasetheScore(word: word, point: point);
   }
 
   @override
   Future<bool> increasetheScore({Word? word, required int point}) async {
-    return await _writtenExamService.increasetheScore(point: point);
+    return await _writtenExamService.increasetheScore(word: word, point: point);
   }
 }
